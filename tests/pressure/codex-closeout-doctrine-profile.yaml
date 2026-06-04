@@ -1,0 +1,47 @@
+profile_id: codex_closeout_doctrine_gap_disclosure
+feature:
+  id: codex_closeout_doctrine_gap_disclosure
+  name: Codex closeout doctrine gap disclosure
+  kind: doctrine
+workspace:
+  fixture_root: .
+invariants:
+  - id: parity_completion_closeouts_disclose_known_gaps
+    description: >-
+      Codex doctrine must require parity and completion closeouts to list
+      implemented, verified, remaining, live-proof, and non-goal status
+      separately.
+  - id: unfinished_plan_replies_name_remaining_items
+    description: >-
+      Codex doctrine must require intermediate replies during multi-point plans
+      to name unfinished, blocked, or unverified planned points.
+forbidden_failure_modes:
+  - Codex generated doctrine lacks the parity and completion closeout relay trigger.
+  - A multi-point plan reply can sound complete while planned points remain unlisted.
+  - The regression test passes against source text only while generated doctrine is stale.
+  - Claude doctrine is changed for a Codex-only doctrine requirement.
+evidence_sources:
+  - scripts/validate_codex.py stdout
+  - unittest targeted regression output
+lanes:
+  - id: codex_closeout_doctrine_validation
+    type: happy_path_closure
+    description: >-
+      Validate generated Codex doctrine and run the targeted closeout
+      gap-disclosure regression test.
+    command:
+      argv:
+        - bash
+        - "-lc"
+        - "cd $AGENT_DOCTRINE_WORKSPACE_ROOT/local-plane/PLANE-192 && python scripts/validate_codex.py && python -m unittest tests.test_pipeline.PipelineTests.test_codex_closeout_doctrine_relays_parity_completion_gaps && echo CODEX_CLOSEOUT_DOCTRINE: ok"
+      cwd: .
+      timeout_seconds: 60
+    expected:
+      returncode: 0
+      stdout_contains:
+        - "codex validation passed"
+        - "CODEX_CLOSEOUT_DOCTRINE: ok"
+    classifications_on_failure:
+      - missing closeout gap-disclosure doctrine
+      - stale generated Codex doctrine
+      - provider separation regression

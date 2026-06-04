@@ -1,0 +1,173 @@
+[
+  {
+    "import_path": "source/claude/imports/agents-senses-claude.md",
+    "provider": "claude",
+    "repo": "Agents-Senses",
+    "source_bytes": 12918,
+    "source_lines": 91,
+    "source_path": "<workspace root>/Agents-Senses/CLAUDE.md",
+    "source_sha256": "634d3554b954fd24ede912fa9267216cd9d0fac1b3b0d2f05dd13ba5428a60a2"
+  },
+  {
+    "import_path": "source/claude/imports/comfynative-claude.md",
+    "provider": "claude",
+    "repo": "ComfyNative",
+    "source_bytes": 16436,
+    "source_lines": 335,
+    "source_path": "<workspace root>/ComfyNative/CLAUDE.md",
+    "source_sha256": "a43d0a3ad4b37adc0be5e00ec893cded75375bf66115c7a9a06e6dcb5b53055b"
+  },
+  {
+    "import_path": "source/claude/imports/comfypromptsage-claude.md",
+    "provider": "claude",
+    "repo": "ComfyPromptSage",
+    "source_bytes": 18412,
+    "source_lines": 112,
+    "source_path": "<workspace root>/ComfyPromptSage/CLAUDE.md",
+    "source_sha256": "ddd2b20a44c08227a3fc1ca85579243869822fdb9c16cec256bf7595295c8058"
+  },
+  {
+    "import_path": "source/claude/imports/comfyui-commander-claude.md",
+    "provider": "claude",
+    "repo": "ComfyUI-Commander",
+    "source_bytes": 14345,
+    "source_lines": 198,
+    "source_path": "<workspace root>/ComfyUI-Commander/CLAUDE.md",
+    "source_sha256": "9e8231994622d437e79870e7b982f117443074189f9d63cc0781a6fdf25384c6"
+  },
+  {
+    "import_path": "source/claude/imports/cudagroomtool-claude.md",
+    "provider": "claude",
+    "repo": "CudaGroomTool",
+    "source_bytes": 5715,
+    "source_lines": 100,
+    "source_path": "<workspace root>/CudaGroomTool/CLAUDE.md",
+    "source_sha256": "8018d2d00bc734f7969467a7a530b1fa94a550567d70a18d70fdaaaf062ce75b"
+  },
+  {
+    "import_path": "source/claude/imports/cudagroomtool2-claude.md",
+    "provider": "claude",
+    "repo": "CudaGroomTool2",
+    "source_bytes": 6758,
+    "source_lines": 123,
+    "source_path": "<workspace root>/CudaGroomTool2/CLAUDE.md",
+    "source_sha256": "961a725a0014993b2ff3479d1cd678ab9a87d2e0061444ad73a8725173bb4d17"
+  },
+  {
+    "import_path": "source/claude/imports/cudanurbsmodeller-claude.md",
+    "provider": "claude",
+    "repo": "CudaNurbsModeller",
+    "source_bytes": 614,
+    "source_lines": 11,
+    "source_path": "<workspace root>/CudaNurbsModeller/CLAUDE.md",
+    "source_sha256": "38af042104bd5a1042ee5fc1697907a9facd727ecd1a556d0e4f17a1722b4730"
+  },
+  {
+    "import_path": "source/claude/imports/diffusion-training-dataset-composer-claude.md",
+    "provider": "claude",
+    "repo": "Diffusion_Training_Dataset_Composer",
+    "source_bytes": 4123,
+    "source_lines": 127,
+    "source_path": "<workspace root>/Diffusion_Training_Dataset_Composer/CLAUDE.md",
+    "source_sha256": "66b33f4788158bb53468cb85bda161d63fb17ea88486f01240775b1852dc0842"
+  },
+  {
+    "import_path": "source/claude/imports/guicontrolharnesscreator-claude.md",
+    "provider": "claude",
+    "repo": "GuiControlHarnessCreator",
+    "source_bytes": 35223,
+    "source_lines": 445,
+    "source_path": "<workspace root>/GuiControlHarnessCreator/CLAUDE.md",
+    "source_sha256": "2678ba9172a191e86d76c840fe5a7bee705f55403b40589d69de1b9b4a23de2a"
+  },
+  {
+    "import_path": "source/claude/imports/helmsman-trainer-claude.md",
+    "provider": "claude",
+    "repo": "Helmsman-Trainer",
+    "source_bytes": 81362,
+    "source_lines": 141,
+    "source_path": "<workspace root>/Helmsman-Trainer/CLAUDE.md",
+    "source_sha256": "d4921f9bcc4b2b1c66aee4a503210712148fd8276795ac5109da050a057180ab"
+  },
+  {
+    "import_path": "source/claude/imports/integrity-revenue-claude.md",
+    "provider": "claude",
+    "repo": "Integrity-Revenue",
+    "source_bytes": 7123,
+    "source_lines": 138,
+    "source_path": "<workspace root>/Integrity-Revenue/CLAUDE.md",
+    "source_sha256": "7404c368e7c1ffab65c836e29845492f868eb4fb0ccf71bcb51c579b7f78d0f9"
+  },
+  {
+    "import_path": "source/claude/imports/rewind-claude.md",
+    "provider": "claude",
+    "repo": "Rewind",
+    "source_bytes": 7805,
+    "source_lines": 138,
+    "source_path": "<workspace root>/Rewind/CLAUDE.md",
+    "source_sha256": "5a75d0977c4a5eac16794e02dae58a344d32fdead898f33d0ae621bf7978060e"
+  },
+  {
+    "import_path": "source/claude/imports/understand-anything-claude.md",
+    "provider": "claude",
+    "repo": "Understand-Anything",
+    "source_bytes": 5787,
+    "source_lines": 98,
+    "source_path": "<workspace root>/Understand-Anything/CLAUDE.md",
+    "source_sha256": "a3ca7e9f218d0efff1a7c8ef6622f5c255b943fb407244f44f97b3c7b54dea42"
+  },
+  {
+    "import_path": "source/claude/imports/vs-codecommander-claude.md",
+    "provider": "claude",
+    "repo": "VS-CodeCommander",
+    "source_bytes": 388,
+    "source_lines": 7,
+    "source_path": "<workspace root>/VS-CodeCommander/CLAUDE.md",
+    "source_sha256": "38a10aa80688144849f637034bbacac0896a4a17157794949a55f721db01f471"
+  },
+  {
+    "import_path": "source/claude/imports/captioning-tool-claude.md",
+    "provider": "claude",
+    "repo": "captioning_tool",
+    "source_bytes": 1953,
+    "source_lines": 25,
+    "source_path": "<workspace root>/captioning_tool/CLAUDE.md",
+    "source_sha256": "145053e146fbed1d86bbb8392412008934f69d1a227b0e7360d55901c14d4aa1"
+  },
+  {
+    "import_path": "source/claude/imports/human-domain-visualizer-claude.md",
+    "provider": "claude",
+    "repo": "human-domain-visualizer",
+    "source_bytes": 7928,
+    "source_lines": 104,
+    "source_path": "<workspace root>/human-domain-visualizer/CLAUDE.md",
+    "source_sha256": "59749addef368ee1a4a2d807e21fafef2b930411cd2f649614fc9cc1f149e2a8"
+  },
+  {
+    "import_path": "source/claude/imports/sortie2-claude.md",
+    "provider": "claude",
+    "repo": "sortie2",
+    "source_bytes": 6378,
+    "source_lines": 95,
+    "source_path": "<workspace root>/sortie2/CLAUDE.md",
+    "source_sha256": "5c0d3b3a5af7d085361ea58c71391918df17f2281222f1e05c96495874a3a4e4"
+  },
+  {
+    "import_path": "source/claude/imports/wetbrush-lin-claude.md",
+    "provider": "claude",
+    "repo": "wetbrush_lin",
+    "source_bytes": 1673,
+    "source_lines": 20,
+    "source_path": "<workspace root>/wetbrush_lin/CLAUDE.md",
+    "source_sha256": "ad1d800ec05224372ad42b6de92f72f20a5be3bfa653faa93577124ddf3ada1c"
+  },
+  {
+    "import_path": "source/claude/imports/wetbrush-lin-cas-claude.md",
+    "provider": "claude",
+    "repo": "wetbrush_lin_cas",
+    "source_bytes": 43,
+    "source_lines": 3,
+    "source_path": "<workspace root>/wetbrush_lin_cas/CLAUDE.md",
+    "source_sha256": "824ff185530c3abe61e28be0f570d44cb3aedd08293d708fb84529a93c9c59f5"
+  }
+]

@@ -1,0 +1,13 @@
+{
+  "adopted_install_sha256": "137dd701f9a5cc746b8f3a52fdc758829437cffaef924635200747ef5af2dad9",
+  "adopted_snapshot": "source/claude/adopted/live-user-level-CLAUDE.md",
+  "adopted_source_sha256": "fb0e594b523acc4b8e5f93d0608859c7b0bc448e3d5e37053899f5048d6f91ca",
+  "adoption_scope": "explicit live user-level doctrine import",
+  "filename": "CLAUDE.md",
+  "note": "The exact adopted baseline remains recoverable from the snapshot path. This manifest is source-side audit metadata, not inline runtime doctrine.",
+  "provider": "claude",
+  "provider_lane": "claude",
+  "reply_verbosity_relay_adopted_install_sha256": "1ef8909adf11dfa73eb1a63aead9f9dbf9505a3bada2f7006393cd68815e3d0e",
+  "runtime_loaded": false,
+  "source_path": "<claude config>/CLAUDE.md"
+}

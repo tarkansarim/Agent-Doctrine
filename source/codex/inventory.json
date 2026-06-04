@@ -1,0 +1,209 @@
+[
+  {
+    "import_path": "source/codex/imports/agent-doctrine-agents.md",
+    "provider": "codex",
+    "repo": "Agent-Doctrine",
+    "source_bytes": 3172,
+    "source_lines": 60,
+    "source_path": "<workspace root>/Agent-Doctrine/AGENTS.md",
+    "source_sha256": "4e5b3c9dd09cd7e313f303baa9c8b992988961ed7765c8f79f738cbbaf206316"
+  },
+  {
+    "import_path": "source/codex/imports/agenticcontrolharness-agents.md",
+    "provider": "codex",
+    "repo": "AgenticControlHarness",
+    "source_bytes": 1022,
+    "source_lines": 24,
+    "source_path": "<workspace root>/AgenticControlHarness/AGENTS.md",
+    "source_sha256": "932a66d015caab948ee6347f94536f29fd36ceecc87ce5a40b5c739040b01659"
+  },
+  {
+    "import_path": "source/codex/imports/agents-senses-agents.md",
+    "provider": "codex",
+    "repo": "Agents-Senses",
+    "source_bytes": 1601,
+    "source_lines": 38,
+    "source_path": "<workspace root>/Agents-Senses/AGENTS.md",
+    "source_sha256": "ade6f3a7c82fdabbd221b7d4602cd3142259fcdf9bb283e80a802611ee3d5ac3"
+  },
+  {
+    "import_path": "source/codex/imports/architect-l1-agents.md",
+    "provider": "codex",
+    "repo": "Architect-L1",
+    "source_bytes": 81546,
+    "source_lines": 1333,
+    "source_path": "<workspace root>/Architect-L1/AGENTS.md",
+    "source_sha256": "b9e1b590721aff5db11839f82e6de7f8703fd5427f36ba5789fb39f001f02212"
+  },
+  {
+    "import_path": "source/codex/imports/ceilingresearch-agents.md",
+    "provider": "codex",
+    "repo": "CeilingResearch",
+    "source_bytes": 1266,
+    "source_lines": 28,
+    "source_path": "<workspace root>/CeilingResearch/AGENTS.md",
+    "source_sha256": "167afeaf8704c16b7576e7da4e2125ef8e2b7d38381c6ce01ce11fa7554ea486"
+  },
+  {
+    "import_path": "source/codex/imports/codemapprojectmemory-agents.md",
+    "provider": "codex",
+    "repo": "CodeMapProjectMemory",
+    "source_bytes": 1016,
+    "source_lines": 25,
+    "source_path": "<workspace root>/CodeMapProjectMemory/AGENTS.md",
+    "source_sha256": "cd756d8b9a2675f54b24b29bf9dba627005e0e482994427975331e5f719c4e4d"
+  },
+  {
+    "import_path": "source/codex/imports/comfynative-agents.md",
+    "provider": "codex",
+    "repo": "ComfyNative",
+    "source_bytes": 577,
+    "source_lines": 12,
+    "source_path": "<workspace root>/ComfyNative/AGENTS.md",
+    "source_sha256": "b2134658a2fc7448c96d837cab4affb9a9329a340ffb3f253e9482c2ed211d65"
+  },
+  {
+    "import_path": "source/codex/imports/cppstudio-agents.md",
+    "provider": "codex",
+    "repo": "CppStudio",
+    "source_bytes": 13480,
+    "source_lines": 181,
+    "source_path": "<workspace root>/CppStudio/AGENTS.md",
+    "source_sha256": "3d0bb32d779684cc5e814997fc70b044014a049606435411588f353072139ace"
+  },
+  {
+    "import_path": "source/codex/imports/cudagroomtool-agents.md",
+    "provider": "codex",
+    "repo": "CudaGroomTool",
+    "source_bytes": 5308,
+    "source_lines": 78,
+    "source_path": "<workspace root>/CudaGroomTool/AGENTS.md",
+    "source_sha256": "3c19a2f7cbae02694ef4b4e0cec8e34e634970a80177f60b5758c9395399086d"
+  },
+  {
+    "import_path": "source/codex/imports/cudagroomtool2-agents.md",
+    "provider": "codex",
+    "repo": "CudaGroomTool2",
+    "source_bytes": 9444,
+    "source_lines": 138,
+    "source_path": "<workspace root>/CudaGroomTool2/AGENTS.md",
+    "source_sha256": "a0a3b3d9c75847bb99e3c261b5f77f16cb99e0c38132aaace0ca165dc974042f"
+  },
+  {
+    "import_path": "source/codex/imports/cudanurbsmodeller-agents.md",
+    "provider": "codex",
+    "repo": "CudaNurbsModeller",
+    "source_bytes": 6817,
+    "source_lines": 146,
+    "source_path": "<workspace root>/CudaNurbsModeller/AGENTS.md",
+    "source_sha256": "27cb88ca383640c158ed06d799a5d9ca9ca7fec37bafff78e14d760b32cc20c4"
+  },
+  {
+    "import_path": "source/codex/imports/demiurge-agents.md",
+    "provider": "codex",
+    "repo": "Demiurge",
+    "source_bytes": 7978,
+    "source_lines": 95,
+    "source_path": "<workspace root>/Demiurge/AGENTS.md",
+    "source_sha256": "6031bdb104ac373c3b95d962d64d5228152519c9a35e55c7bebb410caf45bd3b"
+  },
+  {
+    "import_path": "source/codex/imports/donorlibrarysystem-agents.md",
+    "provider": "codex",
+    "repo": "DonorLibrarySystem",
+    "source_bytes": 945,
+    "source_lines": 23,
+    "source_path": "<workspace root>/DonorLibrarySystem/AGENTS.md",
+    "source_sha256": "8676c4775cde34148f723b425f0c561c59c43c38220ef2240bffddce72fa0543"
+  },
+  {
+    "import_path": "source/codex/imports/emergence-build-harness-agents.md",
+    "provider": "codex",
+    "repo": "Emergence-Build-Harness",
+    "source_bytes": 1168,
+    "source_lines": 23,
+    "source_path": "<workspace root>/Emergence-Build-Harness/AGENTS.md",
+    "source_sha256": "b23fdf9d54fe61e155281e17caaa1dd9b61df59c4e34dd545e6f80d0e09a454a"
+  },
+  {
+    "import_path": "source/codex/imports/guicontrolharnesscreator-agents.md",
+    "provider": "codex",
+    "repo": "GuiControlHarnessCreator",
+    "source_bytes": 22501,
+    "source_lines": 302,
+    "source_path": "<workspace root>/GuiControlHarnessCreator/AGENTS.md",
+    "source_sha256": "c63ca8a9e4c918404e2271ca6011fa45e88bfe5822c88738efb12dae0dd22b5d"
+  },
+  {
+    "import_path": "source/codex/imports/helmsman-trainer-agents.md",
+    "provider": "codex",
+    "repo": "Helmsman-Trainer",
+    "source_bytes": 79552,
+    "source_lines": 212,
+    "source_path": "<workspace root>/Helmsman-Trainer/AGENTS.md",
+    "source_sha256": "8be4b535c474c5d3c984a56b7f7e745c5859df3467204178b22d5c52dfce0816"
+  },
+  {
+    "import_path": "source/codex/imports/integrity-revenue-agents.md",
+    "provider": "codex",
+    "repo": "Integrity-Revenue",
+    "source_bytes": 1662,
+    "source_lines": 51,
+    "source_path": "<workspace root>/Integrity-Revenue/AGENTS.md",
+    "source_sha256": "d9bf71d2be5c38f9e31890f291481abf9d40a9d6405fab7f1637422aa5513644"
+  },
+  {
+    "import_path": "source/codex/imports/nativeguihud-agents.md",
+    "provider": "codex",
+    "repo": "NativeGuiHud",
+    "source_bytes": 1007,
+    "source_lines": 32,
+    "source_path": "<workspace root>/NativeGuiHud/AGENTS.md",
+    "source_sha256": "186e5992df173776e4b46a93dfca2175bea28ccd60122e888935f7f0d2d2f3c6"
+  },
+  {
+    "import_path": "source/codex/imports/self-improvement-agents.md",
+    "provider": "codex",
+    "repo": "Self-Improvement",
+    "source_bytes": 6524,
+    "source_lines": 42,
+    "source_path": "<workspace root>/Self-Improvement/AGENTS.md",
+    "source_sha256": "6f733ffe0712b006c49cb181f6e124696982ab616492d7c2f149c73682c83507"
+  },
+  {
+    "import_path": "source/codex/imports/vs-codecommander-agents.md",
+    "provider": "codex",
+    "repo": "VS-CodeCommander",
+    "source_bytes": 383,
+    "source_lines": 7,
+    "source_path": "<workspace root>/VS-CodeCommander/AGENTS.md",
+    "source_sha256": "daeae32483bf202cce8bb76d987c693f9c4338735180c9e290d062ae2fe6a46c"
+  },
+  {
+    "import_path": "source/codex/imports/human-domain-visualizer-agents.md",
+    "provider": "codex",
+    "repo": "human-domain-visualizer",
+    "source_bytes": 1451,
+    "source_lines": 49,
+    "source_path": "<workspace root>/human-domain-visualizer/AGENTS.md",
+    "source_sha256": "fa548242e5b59961a77e8d1abe0e37bcd78af896402948d6743ffbb86c7057a2"
+  },
+  {
+    "import_path": "source/codex/imports/sortie2-agents.md",
+    "provider": "codex",
+    "repo": "sortie2",
+    "source_bytes": 9209,
+    "source_lines": 132,
+    "source_path": "<workspace root>/sortie2/AGENTS.md",
+    "source_sha256": "cac55fd1a9179156bd98ede9ce6269bb3c9b3dc69592ac1121e283873198dd95"
+  },
+  {
+    "import_path": "source/codex/imports/wetbrush-lin-agents.md",
+    "provider": "codex",
+    "repo": "wetbrush_lin",
+    "source_bytes": 3590,
+    "source_lines": 119,
+    "source_path": "<workspace root>/wetbrush_lin/AGENTS.md",
+    "source_sha256": "ad242b96af9ca9fda9e30722a26f2695b7a7ae1dd78a157271c0e5e02409842e"
+  }
+]

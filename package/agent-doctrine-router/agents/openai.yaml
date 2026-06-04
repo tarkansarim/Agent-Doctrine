@@ -1,0 +1,4 @@
+interface:
+  display_name: "Agent Doctrine Router"
+  short_description: "Route durable agent doctrine changes to source."
+  default_prompt: "Use $agent-doctrine-router before changing AGENTS.md or CLAUDE.md doctrine."

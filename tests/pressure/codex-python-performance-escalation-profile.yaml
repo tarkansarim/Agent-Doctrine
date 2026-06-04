@@ -1,0 +1,47 @@
+profile_id: codex_python_performance_escalation
+feature:
+  id: codex_python_performance_escalation
+  name: Codex Python performance escalation doctrine
+  kind: doctrine
+workspace:
+  fixture_root: ../..
+invariants:
+  - id: codex_doctrine_escalates_repeated_slow_python_surfaces
+    description: >-
+      Codex doctrine must require agents to measure repeated slow Python
+      verifier, runner, helper, or tool paths and escalate at the requested
+      timing thresholds.
+  - id: codex_doctrine_selects_optimization_path_from_measured_bottleneck
+    description: >-
+      Codex doctrine must prefer parallel Python, algorithm/data-layout fixes,
+      Rust, or C++ based on measured bottleneck class instead of blind rewrites.
+forbidden_failure_modes:
+  - Codex generated doctrine omits the >60s, >5 min, or >20 min thresholds.
+  - The rule recommends native migration before measuring the bottleneck.
+  - The Rust versus C++ decision rule is absent from generated Codex doctrine.
+  - Claude doctrine changes for a Codex-only doctrine requirement.
+evidence_sources:
+  - scripts/validate_codex.py stdout
+  - targeted unittest output for provider-specific performance escalation
+lanes:
+  - id: codex_python_performance_escalation_validation
+    type: happy_path_closure
+    description: >-
+      Validate generated Codex doctrine and run the targeted performance
+      escalation regression test.
+    command:
+      argv:
+        - bash
+        - "-lc"
+        - "python scripts/validate_codex.py && python -m unittest tests.test_pipeline.PipelineTests.test_codex_python_performance_escalation_rule_is_provider_specific && echo CODEX_PY_PERF_ESCALATION: ok"
+      cwd: .
+      timeout_seconds: 60
+    expected:
+      returncode: 0
+      stdout_contains:
+        - "codex validation passed"
+        - "CODEX_PY_PERF_ESCALATION: ok"
+    classifications_on_failure:
+      - missing Python performance escalation doctrine
+      - stale generated Codex doctrine
+      - provider separation regression

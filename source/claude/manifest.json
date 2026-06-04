@@ -1,0 +1,20 @@
+{
+  "provider": "claude",
+  "title": "Claude User-Level Rules",
+  "output": "generated/claude/CLAUDE.md",
+  "managed_start": "<!-- agent-doctrine:claude:begin -->",
+  "managed_end": "<!-- agent-doctrine:claude:end -->",
+  "modules": [
+    "modules/010-configuration-boundary.md",
+    "modules/020-operating-discipline.md",
+    "modules/030-implementation-discipline.md",
+    "modules/035-pressure-lab-hardenability.md",
+    "modules/040-replay-and-learning.md",
+    "modules/050-doctrine-change-routing.md"
+  ],
+  "live_adoption": {
+    "snapshot": "adopted/live-user-level-CLAUDE.md",
+    "source_sha256": "fb0e594b523acc4b8e5f93d0608859c7b0bc448e3d5e37053899f5048d6f91ca",
+    "manifest": "adopted/adoption-manifest.json"
+  }
+}

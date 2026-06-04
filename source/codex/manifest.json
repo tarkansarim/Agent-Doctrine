@@ -1,0 +1,21 @@
+{
+  "provider": "codex",
+  "title": "Codex User-Level Rules",
+  "output": "generated/codex/AGENTS.md",
+  "managed_start": "<!-- agent-doctrine:codex:begin -->",
+  "managed_end": "<!-- agent-doctrine:codex:end -->",
+  "modules": [
+    "modules/010-configuration-boundary.md",
+    "modules/020-operating-discipline.md",
+    "modules/030-implementation-discipline.md",
+    "modules/035-local-plane-ticketing.md",
+    "modules/036-pressure-lab-hardenability.md",
+    "modules/040-rewind-and-learning.md",
+    "modules/050-doctrine-change-routing.md"
+  ],
+  "live_adoption": {
+    "snapshot": "adopted/live-user-level-AGENTS.md",
+    "source_sha256": "c6da8db68ef22adebc74f321093b26427947972b8b534f4a101008217c7d0163",
+    "manifest": "adopted/adoption-manifest.json"
+  }
+}

@@ -1,0 +1,53 @@
+profile_id: lean_doctrine_output_gate
+feature:
+  id: lean_doctrine_output_gate
+  name: Lean generated doctrine output gate
+  kind: validator
+workspace:
+  fixture_root: .
+invariants:
+  - id: generated_doctrine_stays_within_budget
+    description: >-
+      Generated Claude and Codex doctrine must stay within the configured line
+      and lexical-token budgets.
+  - id: generated_doctrine_does_not_inline_skill_detail
+    description: >-
+      Generated doctrine must not re-inline adopted snapshots or detailed
+      procedure already owned by relay-pattern skills.
+  - id: adopted_snapshot_remains_recoverable
+    description: >-
+      Live adoption manifests must point to immutable adopted snapshots while
+      keeping those snapshots outside generated always-loaded doctrine.
+forbidden_failure_modes:
+  - Generated doctrine exceeds the configured line or token budget.
+  - Generated doctrine contains reply-verbosity, Rewind, self-improvement,
+    thrash-reporting, or Pressure-Lab procedure blocks.
+  - The validator passes when adopted live doctrine is re-inlined.
+  - The regression tests require running provider installers.
+evidence_sources:
+  - scripts/validate.py stdout
+  - targeted unittest output for lean generated doctrine gates
+lanes:
+  - id: lean_doctrine_validation
+    type: happy_path_closure
+    description: >-
+      Validate the full Agent-Doctrine source/output state and run the
+      targeted non-installer regression tests for generated doctrine budgets
+      and duplicate inline procedure markers.
+    command:
+      argv:
+        - bash
+        - "-lc"
+        - "cd $AGENT_DOCTRINE_WORKSPACE_ROOT/local-plane/PLANE-192 && python scripts/validate.py && python -m unittest tests.test_pipeline.PipelineTests.test_generated_outputs_start_at_first_rule_section tests.test_pipeline.PipelineTests.test_generated_outputs_stay_lean_and_do_not_inline_skill_details tests.test_pipeline.PipelineTests.test_generated_budget_gate_reports_oversized_output tests.test_pipeline.PipelineTests.test_generated_duplicate_gate_reports_skill_detail_markers && echo LEAN_DOCTRINE_GATE: ok"
+      cwd: .
+      timeout_seconds: 60
+    expected:
+      returncode: 0
+      stdout_contains:
+        - "Agent-Doctrine validation passed"
+        - "LEAN_DOCTRINE_GATE: ok"
+    classifications_on_failure:
+      - stale generated doctrine
+      - oversized generated doctrine
+      - duplicated skill-owned procedure detail
+      - adopted snapshot emitted inline

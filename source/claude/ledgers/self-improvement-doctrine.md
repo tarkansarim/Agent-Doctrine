@@ -1,0 +1,13 @@
+# Accepted Self-Improvement Doctrine Ledger
+
+This ledger preserves accepted self-improvement doctrine entries that should
+not be emitted inline in the always-loaded provider doctrine file.
+
+- 2026-05-09T03:28:00Z [claude] Self-improvement lessons that should steer future Claude behavior must patch durable doctrine with agent-self-improve record --doctrine-target, not only write runtime queue records. (source: self-improvement:user_correction:e4a110a49e2f1aa6)
+- 2026-05-09T03:32:17Z [claude] Accepted Claude self-improvement lessons that should steer future behavior must patch durable doctrine with agent-self-improve record --doctrine-target, including the installed self-improving skill when the lesson changes the mechanism. (source: self-improvement:user_correction:6dea286d0afd4e1d)
+- 2026-05-09T03:42:57Z [claude] When extracting or replacing an agent self-improvement mechanism for Claude, verify and preserve active write surfaces such as CLAUDE.md and skill updates; do not claim parity from a passive queue or audit log alone. (source: self-improvement:user_correction:596c946fb295c760)
+- 2026-05-09T04:00:53Z [claude] For this user-level self-improvement mechanism, Claude runtime records are only queue/audit evidence; successful self-improvement means updating durable behavior files such as CLAUDE.md or self-improving skills when a lesson should change future Claude behavior. (source: self-improvement:user_correction:cd874432deb1d0b6)
+- 2026-05-09T04:31:21Z [claude] Claude doctrine mutation commands must validate the exact open item id, resolution, evidence refs, target files, and dry-run mode before writing CLAUDE.md or self-improving skill files; failed or dry-run records must not mutate durable doctrine. (source: self-improvement:user_correction:754118afac0cf2cc)
+- 2026-05-09T05:17:42Z [claude] When running code-review or adversarial-review subagents for this user, use a fresh-context reviewer: spawn a new agent without fork_context and do not reuse a previous reviewer thread or a reviewer that inherited the implementation conversation. (source: self-improvement:user_correction:241dfe89750ff7f3)
+- 2026-05-09T05:53:42Z [claude] Review packets must use agent-self-improve review-add --fresh-context-review; forked, reused, or inherited implementation-context reviewers are invalid review sources. (source: self-improvement:user_correction:a616009e40211466)
+- 2026-05-09T07:07:38Z [claude] Public self-improvement discovery, docs, rule headings, CLI help, and generated item IDs must use application-neutral terminology rather than source-project layer labels. (source: self-improvement:user_correction:ea2911196d18797d)
