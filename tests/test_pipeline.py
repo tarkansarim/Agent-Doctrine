@@ -83,6 +83,51 @@ class PipelineTests(unittest.TestCase):
         self.assertNotIn("any reply before all planned points", codex_generated)
         self.assertNotIn("planned points remain missing", codex_generated)
 
+    def test_codex_plane_ticketing_requires_worker_route_and_documents_origin_fallback(self) -> None:
+        codex_source = (
+            REPO_ROOT
+            / "source"
+            / "codex"
+            / "modules"
+            / "035-local-plane-ticketing.md"
+        ).read_text(encoding="utf-8")
+        codex_generated = (
+            REPO_ROOT / "generated" / "codex" / "AGENTS.md"
+        ).read_text(encoding="utf-8")
+        claude_generated = (
+            REPO_ROOT / "generated" / "claude" / "CLAUDE.md"
+        ).read_text(encoding="utf-8")
+        relay = (
+            REPO_ROOT
+            / "package"
+            / "agent-doctrine-router"
+            / "modules"
+            / "plane-ticketing.md"
+        ).read_text(encoding="utf-8")
+        normalized_relay = " ".join(relay.split())
+
+        lean_worker_rule = "tag `worker:codex` or `worker:claude` unless explicitly `--unrouted`"
+        detailed_fragments = (
+            "Before filing, decide whether the ticket is dispatchable worker work",
+            "Do not file a repo-scoped active ticket until that route is explicit.",
+            "~/.local/bin/plane-ticket create --project <RepoName> --tag project:<RepoName> --tag worker:codex|worker:claude",
+            "Pass every route tag as a `--tag` flag",
+            "do not rely on title/body prose, ad hoc `Tags:` lines, or later rejection",
+            "Active routed tickets must also include exactly one worker route tag",
+            "Use `--unrouted` only for intentionally non-dispatchable records.",
+            "For Codex-originated repo-scoped filings, default to `--tag worker:codex`",
+            "stop and report the missing routing fact instead of creating a vague or unpickable ticket",
+            "degraded origin metadata, not a failed ticket creation",
+            "created-ticket success from context-only origin metadata",
+        )
+        self.assertIn(lean_worker_rule, " ".join(codex_source.split()))
+        self.assertIn(lean_worker_rule, " ".join(codex_generated.split()))
+        self.assertNotIn(lean_worker_rule, " ".join(claude_generated.split()))
+        for fragment in detailed_fragments:
+            with self.subTest(fragment=fragment):
+                self.assertIn(fragment, normalized_relay)
+                self.assertNotIn(fragment, codex_generated)
+
     def test_codex_python_performance_escalation_rule_is_provider_specific(self) -> None:
         codex_source = (
             REPO_ROOT
