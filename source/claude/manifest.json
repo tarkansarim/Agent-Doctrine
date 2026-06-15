@@ -15,7 +15,7 @@
   ],
   "live_adoption": {
     "snapshot": "adopted/live-user-level-CLAUDE.md",
-    "source_sha256": "fb0e594b523acc4b8e5f93d0608859c7b0bc448e3d5e37053899f5048d6f91ca",
+    "source_sha256": "e7996bf61ebd5cfe70806d12580be66218b97d722bb7816197632b9b1dc6eda8",
     "manifest": "adopted/adoption-manifest.json"
   }
 }

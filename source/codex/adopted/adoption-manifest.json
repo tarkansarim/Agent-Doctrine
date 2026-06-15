@@ -1,7 +1,7 @@
 {
-  "adopted_install_sha256": "14dd5a9484a0aca4dd3078a985d2ead94d33e33daa7ece73fec966a934fc51b4",
+  "adopted_install_sha256": "52dfe2d1edcb9f2a0ecb3abfcb8fba37b2c8aff06abe655b0cd2f8d32d8377d4",
   "adopted_snapshot": "source/codex/adopted/live-user-level-AGENTS.md",
-  "adopted_source_sha256": "c6da8db68ef22adebc74f321093b26427947972b8b534f4a101008217c7d0163",
+  "adopted_source_sha256": "c7b6662282e8378e58412adc0e5f54de0e9cf0a1d3bcf533618547bd186aca72",
   "adoption_scope": "explicit live user-level doctrine import",
   "filename": "AGENTS.md",
   "note": "The exact adopted baseline remains recoverable from the snapshot path. This manifest is source-side audit metadata, not inline runtime doctrine.",

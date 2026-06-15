@@ -31,6 +31,8 @@ Review packets must use `agent-self-improve review-add --fresh-context-review`; 
 
 Before marking a ticket or reply as Done for reusable agent-behavior work that changes installed CLIs, installed skills, hooks, provider doctrine, or user-level behavior, run `agent-self-improve closeout-gate --provider <provider> --ticket <id> --agent-behavior-change --source-validation "<command/evidence>" --installed-verification "<command/evidence>"`. If rollout is not complete, use `--intended-state pending --remaining "<missing rollout item>"` and do not mark the ticket Done.
 
+When a closeout or status says self-improvement happened, name and verify the landing surface: runtime record id, repo doctrine target, provider-doctrine route, or code-only verifier/tool hardening. Do not call code hardening a self-improvement record unless `agent-self-improve` actually recorded it.
+
 <!-- agent-self-improvement-doctrine:begin -->
 ## Accepted Self-Improvement Doctrine
 
@@ -47,4 +49,5 @@ Before marking a ticket or reply as Done for reusable agent-behavior work that c
 - 2026-05-28T10:20:52Z [global] Self-improvement skill and installed steering must explicitly trigger for non-trivial work, corrections, repeated misses, verification gaps, tool failures, and reusable behavior friction. (source: self-improvement:user_correction:716a2d72e86f2ea6)
 - 2026-06-01T00:00:00Z [global] Provider-level self-improvement doctrine changes must route through Agent-Doctrine source generation, validation, and snapshot install; agent-self-improve must not directly patch deployed Codex AGENTS.md, Claude CLAUDE.md, autonomous steering, or installed skill snapshots. (source: PLANE-157)
 - 2026-06-01T00:51:32Z [global] Ticket closeout for reusable agent behavior must verify installed/rolled-out artifacts, not only source tests, before marking Done; if rollout is pending, the reply and ticket state must say exactly what remains. (source: self-improvement:user_correction:a77a868d116f7cb3)
+- 2026-06-12T08:24:52Z [global] Self-improvement closeouts must name and verify the landing surface before claiming self-improvement happened: runtime record id, repo doctrine target, provider-doctrine route, or code-only verifier/tool hardening; code hardening is not an agent-self-improve record unless the runtime mechanism recorded it. (source: self-improvement:user_correction:f37bdbd8f49ad358)
 <!-- agent-self-improvement-doctrine:end -->
