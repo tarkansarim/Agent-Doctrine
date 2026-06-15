@@ -165,10 +165,10 @@
     "import_path": "source/codex/imports/self-improvement-agents.md",
     "provider": "codex",
     "repo": "Self-Improvement",
-    "source_bytes": 6524,
-    "source_lines": 42,
+    "source_bytes": 8167,
+    "source_lines": 47,
     "source_path": "<workspace root>/Self-Improvement/AGENTS.md",
-    "source_sha256": "6f733ffe0712b006c49cb181f6e124696982ab616492d7c2f149c73682c83507"
+    "source_sha256": "3eca0cff5a4c0d96dab96efe89baeb3b1c2375ed13a772ba0a59cff74cae2ad3"
   },
   {
     "import_path": "source/codex/imports/vs-codecommander-agents.md",

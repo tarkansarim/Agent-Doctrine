@@ -200,6 +200,29 @@ class PipelineTests(unittest.TestCase):
         self.assertIn("top.rss?t=month", relay)
         self.assertIn(blocked_json, relay)
 
+    def test_self_improvement_repo_lessons_require_promotion_classification(self) -> None:
+        required = (
+            "classify the lesson as repo-only, promotion-candidate, or provider-general",
+            "Provider-general lessons must route through Agent-Doctrine source/generate/validate/install",
+            "ambiguous cross-repo lessons stay local and open a promotion candidate",
+        )
+        for provider, filename, module_name in (
+            ("codex", "AGENTS.md", "040-rewind-and-learning.md"),
+            ("claude", "CLAUDE.md", "040-replay-and-learning.md"),
+        ):
+            with self.subTest(provider=provider):
+                source = (
+                    REPO_ROOT / "source" / provider / "modules" / module_name
+                ).read_text(encoding="utf-8")
+                generated = (
+                    REPO_ROOT / "generated" / provider / filename
+                ).read_text(encoding="utf-8")
+                normalized_source = " ".join(source.split())
+                normalized_generated = " ".join(generated.split())
+                for fragment in required:
+                    self.assertIn(fragment, normalized_source)
+                    self.assertIn(fragment, normalized_generated)
+
     def test_generated_outputs_start_at_first_rule_section(self) -> None:
         for provider, filename, first_heading in (
             ("codex", "AGENTS.md", "# Codex Configuration Boundary"),

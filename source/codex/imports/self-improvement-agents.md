@@ -1,7 +1,7 @@
 # Imported Codex Doctrine Source
 
 - Source path: `<workspace root>/Self-Improvement/AGENTS.md`
-- Source SHA256: `6f733ffe0712b006c49cb181f6e124696982ab616492d7c2f149c73682c83507`
+- Source SHA256: `3eca0cff5a4c0d96dab96efe89baeb3b1c2375ed13a772ba0a59cff74cae2ad3`
 - Provider lane: `codex`
 
 ## Original Content
@@ -25,13 +25,13 @@ Do not reintroduce the previous multi-file passive memory skill as an active use
 
 When a self-improvement lesson should change future agent behavior, do not leave it only in runtime records. Use `agent-self-improve record --doctrine-target repo_agents --doctrine-target repo_skill --repo <repo path> ...` only for repo-owned doctrine. Provider-level Codex `AGENTS.md`, Claude `CLAUDE.md`, autonomous steering, and installed self-improving skill snapshots are Agent-Doctrine owned; record evidence locally, patch `<workspace root>/Agent-Doctrine` source modules, regenerate, validate, snapshot-install, then close with `--updated-artifact`. Failed, non-final, dry-run, or provider-target records must not mutate deployed provider doctrine directly.
 
+Before closing repo-local self-improvement doctrine, classify the lesson as repo-only, promotion-candidate, or provider-general. Provider-general lessons must route through Agent-Doctrine source/generate/validate/install; ambiguous cross-repo lessons stay local and open a cross-target promotion candidate with owner, target surface, evidence needed, exclusions, and review date.
+
 Manual doctrine-patch closure through `--updated-artifact` must reference an existing doctrine artifact that contains the exact item id or exact lesson text. If record commit fails after doctrine is written, the mechanism must roll back both doctrine and runtime commit artifacts instead of leaving false records.
 
 Review packets must use `agent-self-improve review-add --fresh-context-review`; forked, reused, or inherited implementation-context reviewers are invalid review sources.
 
 Before marking a ticket or reply as Done for reusable agent-behavior work that changes installed CLIs, installed skills, hooks, provider doctrine, or user-level behavior, run `agent-self-improve closeout-gate --provider <provider> --ticket <id> --agent-behavior-change --source-validation "<command/evidence>" --installed-verification "<command/evidence>"`. If rollout is not complete, use `--intended-state pending --remaining "<missing rollout item>"` and do not mark the ticket Done.
-
-When a closeout or status says self-improvement happened, name and verify the landing surface: runtime record id, repo doctrine target, provider-doctrine route, or code-only verifier/tool hardening. Do not call code hardening a self-improvement record unless `agent-self-improve` actually recorded it.
 
 <!-- agent-self-improvement-doctrine:begin -->
 ## Accepted Self-Improvement Doctrine
@@ -49,5 +49,7 @@ When a closeout or status says self-improvement happened, name and verify the la
 - 2026-05-28T10:20:52Z [global] Self-improvement skill and installed steering must explicitly trigger for non-trivial work, corrections, repeated misses, verification gaps, tool failures, and reusable behavior friction. (source: self-improvement:user_correction:716a2d72e86f2ea6)
 - 2026-06-01T00:00:00Z [global] Provider-level self-improvement doctrine changes must route through Agent-Doctrine source generation, validation, and snapshot install; agent-self-improve must not directly patch deployed Codex AGENTS.md, Claude CLAUDE.md, autonomous steering, or installed skill snapshots. (source: PLANE-157)
 - 2026-06-01T00:51:32Z [global] Ticket closeout for reusable agent behavior must verify installed/rolled-out artifacts, not only source tests, before marking Done; if rollout is pending, the reply and ticket state must say exactly what remains. (source: self-improvement:user_correction:a77a868d116f7cb3)
-- 2026-06-12T08:24:52Z [global] Self-improvement closeouts must name and verify the landing surface before claiming self-improvement happened: runtime record id, repo doctrine target, provider-doctrine route, or code-only verifier/tool hardening; code hardening is not an agent-self-improve record unless the runtime mechanism recorded it. (source: self-improvement:user_correction:f37bdbd8f49ad358)
+- 2026-06-06T01:20:34Z [global] For ceiling-research trend, hype, craze, popularity, or adoption questions, sample direct community/adoption evidence such as Reddit, Hacker News, forums, issue discussions, user benchmarks, conference talks, or practitioner writeups before assigning a ceiling label; vendor or official capability claims alone are not adoption proof. (source: self-improvement:user_correction:6a51706e0a21bf9e)
+- 2026-06-06T01:20:41Z [global] For CppStudio/SonicGroom renderer planning, treat existing donor-derived shader and material models as preserved assets when the user asks for renderer policy or mode changes; do not infer shader replacement, new donor ports, or model swaps from non-RT mode requests without explicit user approval and donor/current-source evidence. (source: self-improvement:user_correction:700d5c6bb196427b)
+- 2026-06-06T01:20:46Z [global] Before implementing nonstandard external integrations such as Telegram, email delivery, third-party APIs, webhooks, or provider-specific protocols, verify current primary-source documentation and local operational constraints before editing code; training memory or plausible endpoint names are not contract evidence. (source: self-improvement:user_correction:4de15f362fcb31a6)
 <!-- agent-self-improvement-doctrine:end -->
