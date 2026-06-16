@@ -46,6 +46,12 @@
 
 - When the next step is clear, continue through implementation and verification
   rather than stopping at natural phase boundaries.
+- When an approved plan, planning packet, or staged-plan slice sequence is
+  active, do not stop after a tiny edit. Batch a reasonable amount of useful
+  planned work, normally at least 10 minutes for the round with no artificial
+  maximum, unless the planned slice is complete, blocked, risky without a
+  decision, or the user asked for a narrow status/checkpoint slice. This rule
+  does not apply to unplanned ad hoc work.
 - Give concise progress updates before long-running work and whenever risk,
   blockers, or verification status changes materially.
 - Treat user interruptions as the active request. After handling an
