@@ -41,6 +41,9 @@
 - If Bash, MCP, wrapper CLIs, hooks, installers, build scripts, validation
   commands, or reusable agent infrastructure fail or behave unexpectedly, stop;
   for classification and recovery procedure, load `agent-doctrine-router`.
+- Success-looking stdout, partial receipts, or manual inspection do not override
+  a non-zero reusable tool exit unless an explicitly equivalent validation path
+  succeeds and the failed tool is still reported as unhealthy.
 
 ## Autonomous Progress
 
@@ -58,44 +61,13 @@
   interruption, state what prior work was in progress and ask whether to resume,
   defer, or discard it when priority is ambiguous.
 
-## Parity And Completion Closeouts
-
-- For parity, migration, replacement, feature-completion, or integration work,
-  final and status closeouts must explicitly separate implemented slices,
-  verified behavior, remaining unimplemented or weaker-than-source features,
-  live-proof gaps, accepted non-goals, and unfinished planned points; for
-  closeout procedure, load `agent-doctrine-router`.
-
 # Codex Implementation Discipline
 
-- Before editing, read relevant files, trace callers when a call chain exists,
-  and state a short pre-mortem; for the full checklist, load
+- Before editing, inspect relevant files, trace callers when applicable, and
+  state a short pre-mortem; for the full checklist, load
   `agent-doctrine-router`.
-- During implementation, ship complete scoped behavior with real error handling
-  and without stubs, placeholders, unrelated churn, or user-change reverts; for
-  edit procedure, load `agent-doctrine-router`.
-- Verify behavior before claiming success, and install or sync changed deployed
-  artifacts before reporting resolution; for verification procedure, load
-  `agent-doctrine-router`.
-- When Python verifiers, test runners, build helpers, or agent tools repeatedly
-  bottleneck, measure first and report timing: >60s repeated paths need an
-  optimization note, >5 min critical paths need an active migration or
-  parallelization recommendation, and >20 min repeated pipeline surfaces are
-  performance debt to route or ticket unless already planned.
-- Diagnose whether setup, file copying, subprocess dispatch, or core logic
-  dominates before rewriting. Prefer parallel Python for independent dispatch
-  bottlenecks, algorithm/data-layout fixes for avoidable repeated parsing or
-  broad scans, Rust for agent-facing CLI verifiers, artifact validators, and
-  JSON/text/file-heavy deterministic tooling, and C++ only when the hot path is
-  already native, GPU/realtime, ABI-bound, or existing C++ domain code.
-
-# Local Plane Ticketing
-
-- Local ticket requests use Plane via `~/.local/bin/plane-ticket`; repo-scoped
-  tickets must include `--project <RepoName>`, tag `project:<RepoName>`, and
-  tag `worker:codex` or `worker:claude` unless explicitly `--unrouted`.
-- Do not use Kanboard for new tickets unless explicitly requested; for Plane
-  filing and closeout procedure, load `agent-doctrine-router`.
+- Ship complete scoped behavior with real error handling; no stubs,
+  placeholders, unrelated churn, or user-change reverts.
 
 # Codex Pressure-Lab Hardenability (Build-Time Constraint)
 

@@ -28,6 +28,9 @@
 - If Bash, MCP, wrapper CLIs, hooks, installers, build scripts, validation
   commands, or reusable agent infrastructure fail or behave unexpectedly, stop;
   for classification and recovery procedure, load `agent-doctrine-router`.
+- Success-looking stdout, partial receipts, or manual inspection do not override
+  a non-zero reusable tool exit unless an explicitly equivalent validation path
+  succeeds and the failed tool is still reported as unhealthy.
 
 ## Autonomous Progress
 
@@ -44,11 +47,3 @@
 - Treat user interruptions as the active request. After handling an
   interruption, state what prior work was in progress and ask whether to resume,
   defer, or discard it when priority is ambiguous.
-
-## Parity And Completion Closeouts
-
-- For parity, migration, replacement, feature-completion, or integration work,
-  final and status closeouts must explicitly separate implemented slices,
-  verified behavior, remaining unimplemented or weaker-than-source features,
-  live-proof gaps, accepted non-goals, and unfinished planned points; for
-  closeout procedure, load `agent-doctrine-router`.

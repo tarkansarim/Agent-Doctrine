@@ -1,47 +1,47 @@
-profile_id: codex_python_performance_escalation
+profile_id: codex_implementation_discipline_diet
 feature:
-  id: codex_python_performance_escalation
-  name: Codex Python performance escalation doctrine
+  id: codex_implementation_discipline_diet
+  name: Codex implementation discipline doctrine diet
   kind: doctrine
 workspace:
   fixture_root: ../..
 invariants:
-  - id: codex_doctrine_escalates_repeated_slow_python_surfaces
+  - id: codex_doctrine_keeps_compressed_preedit_and_ship_rules
     description: >-
-      Codex doctrine must require agents to measure repeated slow Python
-      verifier, runner, helper, or tool paths and escalate at the requested
-      timing thresholds.
-  - id: codex_doctrine_selects_optimization_path_from_measured_bottleneck
+      Codex doctrine keeps the compressed pre-edit and complete scoped
+      implementation rules active.
+  - id: codex_doctrine_retires_performance_hotpath_rules
     description: >-
-      Codex doctrine must prefer parallel Python, algorithm/data-layout fixes,
-      Rust, or C++ based on measured bottleneck class instead of blind rewrites.
+      Codex active doctrine omits the retired performance escalation and
+      hot-path diagnosis details.
 forbidden_failure_modes:
-  - Codex generated doctrine omits the >60s, >5 min, or >20 min thresholds.
-  - The rule recommends native migration before measuring the bottleneck.
-  - The Rust versus C++ decision rule is absent from generated Codex doctrine.
+  - Codex generated doctrine omits the compressed implementation rules.
+  - Codex generated doctrine still includes the retired >60s, >5 min, or >20 min thresholds.
+  - Codex generated doctrine still includes the retired Rust versus C++ decision rule.
   - Claude doctrine changes for a Codex-only doctrine requirement.
 evidence_sources:
   - scripts/validate_codex.py stdout
-  - targeted unittest output for provider-specific performance escalation
+  - targeted unittest output for compressed implementation discipline
 lanes:
-  - id: codex_python_performance_escalation_validation
+  - id: codex_implementation_discipline_diet_validation
     type: happy_path_closure
     description: >-
-      Validate generated Codex doctrine and run the targeted performance
-      escalation regression test.
+      Validate generated Codex doctrine and run the targeted implementation
+      discipline doctrine-diet regression test.
     command:
       argv:
         - bash
         - "-lc"
-        - "python scripts/validate_codex.py && python -m unittest tests.test_pipeline.PipelineTests.test_codex_python_performance_escalation_rule_is_provider_specific && echo CODEX_PY_PERF_ESCALATION: ok"
+        - "python scripts/validate_codex.py && python -m unittest tests.test_pipeline.PipelineTests.test_codex_implementation_discipline_is_compressed_and_retired_perf_rules_are_dormant && echo CODEX_IMPL_DISCIPLINE_DIET: ok"
       cwd: .
       timeout_seconds: 60
     expected:
       returncode: 0
       stdout_contains:
         - "codex validation passed"
-        - "CODEX_PY_PERF_ESCALATION: ok"
+        - "CODEX_IMPL_DISCIPLINE_DIET: ok"
     classifications_on_failure:
-      - missing Python performance escalation doctrine
+      - missing compressed implementation doctrine
+      - retired performance doctrine still active
       - stale generated Codex doctrine
       - provider separation regression

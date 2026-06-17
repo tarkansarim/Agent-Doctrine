@@ -41,7 +41,7 @@ class PipelineTests(unittest.TestCase):
         result = run_script("scripts/validate_claude.py")
         self.assertIn("claude validation passed", result.stdout)
 
-    def test_codex_closeout_doctrine_relays_parity_completion_gaps(self) -> None:
+    def test_codex_parity_completion_closeout_rule_is_dormant_in_active_doctrine(self) -> None:
         codex_source = (
             REPO_ROOT
             / "source"
@@ -78,19 +78,17 @@ class PipelineTests(unittest.TestCase):
             with self.subTest(fragment=fragment):
                 self.assertIn(fragment, relay_module)
         self.assertNotIn("## Parity And Completion Closeouts", claude_generated)
-        self.assertIn("load `agent-doctrine-router`", codex_source)
-        self.assertIn("load `agent-doctrine-router`", codex_generated)
+        self.assertNotIn("## Parity And Completion Closeouts", codex_source)
+        self.assertNotIn("## Parity And Completion Closeouts", codex_generated)
         self.assertNotIn("any reply before all planned points", codex_generated)
         self.assertNotIn("planned points remain missing", codex_generated)
 
-    def test_codex_plane_ticketing_requires_worker_route_and_documents_origin_fallback(self) -> None:
-        codex_source = (
-            REPO_ROOT
-            / "source"
-            / "codex"
-            / "modules"
-            / "035-local-plane-ticketing.md"
-        ).read_text(encoding="utf-8")
+    def test_codex_local_plane_ticketing_cluster_is_dormant_in_active_doctrine(self) -> None:
+        codex_manifest = json.loads(
+            (REPO_ROOT / "source" / "codex" / "manifest.json").read_text(
+                encoding="utf-8"
+            )
+        )
         codex_generated = (
             REPO_ROOT / "generated" / "codex" / "AGENTS.md"
         ).read_text(encoding="utf-8")
@@ -105,8 +103,7 @@ class PipelineTests(unittest.TestCase):
             / "plane-ticketing.md"
         ).read_text(encoding="utf-8")
         normalized_relay = " ".join(relay.split())
-
-        lean_worker_rule = "tag `worker:codex` or `worker:claude` unless explicitly `--unrouted`"
+        module_path = "modules/035-local-plane-ticketing.md"
         detailed_fragments = (
             "Before filing, decide whether the ticket is dispatchable worker work",
             "Do not file a repo-scoped active ticket until that route is explicit.",
@@ -120,15 +117,16 @@ class PipelineTests(unittest.TestCase):
             "degraded origin metadata, not a failed ticket creation",
             "created-ticket success from context-only origin metadata",
         )
-        self.assertIn(lean_worker_rule, " ".join(codex_source.split()))
-        self.assertIn(lean_worker_rule, " ".join(codex_generated.split()))
-        self.assertNotIn(lean_worker_rule, " ".join(claude_generated.split()))
+        self.assertNotIn(module_path, codex_manifest["modules"])
+        self.assertNotIn("# Local Plane Ticketing", codex_generated)
+        self.assertNotIn("tag `worker:codex` or `worker:claude`", " ".join(codex_generated.split()))
+        self.assertNotIn("tag `worker:codex` or `worker:claude`", " ".join(claude_generated.split()))
         for fragment in detailed_fragments:
             with self.subTest(fragment=fragment):
                 self.assertIn(fragment, normalized_relay)
                 self.assertNotIn(fragment, codex_generated)
 
-    def test_codex_python_performance_escalation_rule_is_provider_specific(self) -> None:
+    def test_codex_implementation_discipline_is_compressed_and_retired_perf_rules_are_dormant(self) -> None:
         codex_source = (
             REPO_ROOT
             / "source"
@@ -145,7 +143,11 @@ class PipelineTests(unittest.TestCase):
         normalized_codex_source = " ".join(codex_source.split())
         normalized_codex_generated = " ".join(codex_generated.split())
         normalized_claude_generated = " ".join(claude_generated.split())
-        required_fragments = (
+        active_fragments = (
+            "Before editing, inspect relevant files, trace callers when applicable, and state a short pre-mortem; for the full checklist, load `agent-doctrine-router`.",
+            "Ship complete scoped behavior with real error handling; no stubs, placeholders, unrelated churn, or user-change reverts.",
+        )
+        retired_fragments = (
             "Python verifiers, test runners, build helpers, or agent tools",
             ">60s repeated paths",
             ">5 min critical paths",
@@ -157,7 +159,41 @@ class PipelineTests(unittest.TestCase):
             "Rust for agent-facing CLI verifiers",
             "C++ only when the hot path is already native",
         )
-        for fragment in required_fragments:
+        for fragment in active_fragments:
+            with self.subTest(fragment=fragment):
+                self.assertIn(fragment, normalized_codex_source)
+                self.assertIn(fragment, normalized_codex_generated)
+                self.assertNotIn(fragment, normalized_claude_generated)
+        for fragment in retired_fragments:
+            with self.subTest(fragment=fragment):
+                self.assertNotIn(fragment, normalized_codex_source)
+                self.assertNotIn(fragment, normalized_codex_generated)
+                self.assertNotIn(fragment, normalized_claude_generated)
+
+    def test_codex_tool_failure_rule_rejects_success_looking_nonzero_exits(self) -> None:
+        required = (
+            "Success-looking stdout, partial receipts, or manual inspection do not override",
+            "a non-zero reusable tool exit",
+            "explicitly equivalent validation path succeeds",
+            "failed tool is still reported as unhealthy",
+        )
+        codex_source = (
+            REPO_ROOT
+            / "source"
+            / "codex"
+            / "modules"
+            / "020-operating-discipline.md"
+        ).read_text(encoding="utf-8")
+        codex_generated = (
+            REPO_ROOT / "generated" / "codex" / "AGENTS.md"
+        ).read_text(encoding="utf-8")
+        claude_generated = (
+            REPO_ROOT / "generated" / "claude" / "CLAUDE.md"
+        ).read_text(encoding="utf-8")
+        normalized_codex_source = " ".join(codex_source.split())
+        normalized_codex_generated = " ".join(codex_generated.split())
+        normalized_claude_generated = " ".join(claude_generated.split())
+        for fragment in required:
             with self.subTest(fragment=fragment):
                 self.assertIn(fragment, normalized_codex_source)
                 self.assertIn(fragment, normalized_codex_generated)
