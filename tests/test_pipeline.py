@@ -464,7 +464,8 @@ class PipelineTests(unittest.TestCase):
                 ).read_text(encoding="utf-8")
                 self.assertNotIn("<!-- BEGIN: reply-verbosity", generated_text)
                 self.assertNotIn("## Verbosity Tiers", generated_text)
-                self.assertIn("Every assistant reply must end with an explicit `Next:` clause", generated_text)
+                self.assertIn("Every assistant reply must end with an explicit future-only `Next:` clause", generated_text)
+                self.assertIn("completed work and verification belong in the body, not in `Next:`", generated_text)
 
                 with tempfile.TemporaryDirectory() as tmp:
                     root = Path(tmp) / f"{provider}-home"

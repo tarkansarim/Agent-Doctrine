@@ -21,7 +21,8 @@
 - For repetitive changes across more than five independent units, ask whether
   to split the work across parallel background agents in isolated worktrees.
 - When a skill is loaded into context, announce: `Loading skill: <skill-name>`.
-- Every assistant reply must end with an explicit `Next:` clause.
+- Every assistant reply must end with an explicit future-only `Next:` clause;
+  completed work and verification belong in the body, not in `Next:`.
 
 ## Conflicts
 
