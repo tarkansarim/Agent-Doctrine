@@ -50,6 +50,12 @@
 
 - When the next step is clear, continue through implementation and verification
   rather than stopping at natural phase boundaries.
+- Treat explicit user phrases such as "stay awake until this is complete",
+  "don't stop until this is finished", or "keep going until the task is done"
+  as a bounded continuation contract. Keep working, or when supervising
+  background/multi-agent work use the approved heartbeat/watchdog route, until
+  the task is complete, blocked, risky without a decision, or intentionally
+  handed off.
 - When an approved plan, planning packet, or staged-plan slice sequence is
   active, do not stop after a tiny edit. Batch a reasonable amount of useful
   planned work, normally at least 10 minutes for the round with no artificial
@@ -123,5 +129,12 @@
 - For detailed routing procedure, load `agent-doctrine-router`.
 - Keep provider lanes separate. Codex source modules, generated output,
   validators, installers, tests, and deployment target are separate from Claude.
+
+<!-- cppstudio-user-agents-relay:begin -->
+## CppStudio Skill Relay
+
+For native C++ GPU, realtime rendering/visualization, C++ GPU code-map, Vulkan, CUDA, or mixed
+CUDA/Vulkan work, load `cpp-cuda-vulkan-studio`.
+<!-- cppstudio-user-agents-relay:end -->
 
 <!-- agent-doctrine:codex:end -->

@@ -236,6 +236,32 @@ class PipelineTests(unittest.TestCase):
         self.assertIn("top.rss?t=month", relay)
         self.assertIn(blocked_json, relay)
 
+    def test_continuation_contract_is_provider_general(self) -> None:
+        required = (
+            "stay awake until this is complete",
+            "don't stop until this is finished",
+            "bounded continuation contract",
+            "use the approved heartbeat/watchdog route",
+            "complete, blocked, risky without a decision, or intentionally handed off",
+        )
+        for provider, filename in (("codex", "AGENTS.md"), ("claude", "CLAUDE.md")):
+            with self.subTest(provider=provider):
+                source = (
+                    REPO_ROOT
+                    / "source"
+                    / provider
+                    / "modules"
+                    / "020-operating-discipline.md"
+                ).read_text(encoding="utf-8")
+                generated = (
+                    REPO_ROOT / "generated" / provider / filename
+                ).read_text(encoding="utf-8")
+                normalized_source = " ".join(source.split())
+                normalized_generated = " ".join(generated.split())
+                for fragment in required:
+                    self.assertIn(fragment, normalized_source)
+                    self.assertIn(fragment, normalized_generated)
+
     def test_self_improvement_repo_lessons_require_promotion_classification(self) -> None:
         required = (
             "classify the lesson as repo-only, promotion-candidate, or provider-general",

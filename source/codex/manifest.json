@@ -10,7 +10,8 @@
     "modules/030-implementation-discipline.md",
     "modules/036-pressure-lab-hardenability.md",
     "modules/040-rewind-and-learning.md",
-    "modules/050-doctrine-change-routing.md"
+    "modules/050-doctrine-change-routing.md",
+    "modules/060-cppstudio-relay.md"
   ],
   "live_adoption": {
     "snapshot": "adopted/live-user-level-AGENTS.md",
