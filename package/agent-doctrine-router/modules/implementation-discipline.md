@@ -40,6 +40,11 @@ implementation, editing, dependency, or verification procedure.
   or behavior check.
 - For visible or user-reported bugs, reproduce the exact reported behavior or
   an equivalent path before the fix, then compare the same path after the fix.
+- If the user reports that a claimed fix is still identical, unchanged, or
+  visibly wrong, treat the previous closeout as invalidated evidence. Re-run the
+  same user path, compare current artifacts against the reported symptom, find
+  the false-positive proof gap, and continue debugging or report the concrete
+  blocker.
 - After repository changes, report at least one explicit verification command;
   diff/status checks alone are not enough for completion.
 - When source changes affect installed artifacts, install, roll out, or sync

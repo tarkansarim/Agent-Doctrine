@@ -89,6 +89,11 @@
   path that was broken. Internal counters, backend readbacks, widget state,
   smoke-test completion, or preview-only behavior are supporting diagnostics,
   not proof that the issue is fixed.
+- If the user reports that a claimed fix is still identical, unchanged, or
+  visibly wrong, treat the prior closeout as invalidated. Reproduce the same
+  user path, compare before and after artifacts from that path, identify why
+  the previous proof passed falsely, and keep debugging until the reported
+  behavior changes or the remaining blocker is stated plainly.
 - For visual, interactive, realtime, or performance fixes, name the exact
   user-visible invariant and the forbidden substitutes before accepting tests or
   closeout evidence. Proxy behavior, preview-only behavior, deferred
