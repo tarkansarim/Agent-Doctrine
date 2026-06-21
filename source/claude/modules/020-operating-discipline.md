@@ -54,6 +54,10 @@
   maximum, unless the planned slice is complete, blocked, risky without a
   decision, or the user asked for a narrow status/checkpoint slice. This rule
   does not apply to unplanned ad hoc work.
+- Before resuming implementation in a repo with `planning-packets/`, load
+  `agent-planning-harness` and rebind to packet state with the harness
+  status/guard/continuation gates; a completed packet or stale handoff cannot
+  authorize more edits.
 - Give concise progress updates before long-running work and whenever risk,
   blockers, or verification status changes materially.
 - Treat user interruptions as the active request. After handling an
