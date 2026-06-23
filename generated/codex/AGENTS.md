@@ -119,11 +119,8 @@
   doctrine, and risky probes.
 - Do not treat a forward correction after a mistake as Rewind causal evidence.
   Same-branch-point claims require a checkpoint from before the decision.
-- Patch stacking is allowed only as a temporary exploratory or repair-diagnostic
-  phase after a verified rollback anchor exists. Use the prior hook-created
-  Rewind checkpoint when automatic coverage is active; otherwise create an
-  explicit commit/manual checkpoint. Once the real fix is known, record the
-  lesson, restore to the anchor, and apply the fix cleanly.
+- Before risky moves or new substantial work, confirm a clean rollback anchor: commit intentional worktree changes or create an explicit manual checkpoint; this covers ordinary repo coding, UI/runtime edits, destructive file operations, broad mechanical rewrites, and experimental probes.
+- Patch stacking is temporary repair-diagnostic work after a verified rollback anchor exists: use hook-created Rewind when automatic coverage is active, otherwise use an explicit commit/manual checkpoint; once the fix is known, record the lesson, restore to the anchor, and apply it cleanly.
 - For detailed replay, checkpoint, Rewind, hook-review, fork, and fabric-drift
   procedure, load `rewind-checkpoints`.
 - For tool failures, repeated misses, verification gaps, durable lessons, and

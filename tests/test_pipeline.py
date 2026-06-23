@@ -404,6 +404,35 @@ class PipelineTests(unittest.TestCase):
         for fragment in required:
             self.assertIn(fragment, normalized_router)
 
+    def test_risky_or_substantial_work_requires_rollback_anchor(self) -> None:
+        required = (
+            "Before risky moves or new substantial work, confirm a clean rollback anchor",
+            "commit intentional worktree changes",
+            "create an explicit manual checkpoint",
+            "ordinary repo coding",
+            "UI/runtime edits",
+            "destructive file operations",
+            "broad mechanical rewrites",
+            "experimental probes",
+            "restore to the anchor, and apply it cleanly",
+        )
+        for provider, filename, module_name in (
+            ("codex", "AGENTS.md", "040-rewind-and-learning.md"),
+            ("claude", "CLAUDE.md", "040-replay-and-learning.md"),
+        ):
+            with self.subTest(provider=provider):
+                source = (
+                    REPO_ROOT / "source" / provider / "modules" / module_name
+                ).read_text(encoding="utf-8")
+                generated = (
+                    REPO_ROOT / "generated" / provider / filename
+                ).read_text(encoding="utf-8")
+                normalized_source = " ".join(source.split())
+                normalized_generated = " ".join(generated.split())
+                for fragment in required:
+                    self.assertIn(fragment, normalized_source)
+                    self.assertIn(fragment, normalized_generated)
+
     def test_generated_outputs_start_at_first_rule_section(self) -> None:
         for provider, filename, first_heading in (
             ("codex", "AGENTS.md", "# Codex Configuration Boundary"),
