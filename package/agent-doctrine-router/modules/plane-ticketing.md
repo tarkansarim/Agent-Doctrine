@@ -19,9 +19,19 @@ Plane filing, evidence, rollout proof, or terminal closeout procedure.
 - For Codex-originated repo-scoped filings, default to `--tag worker:codex`
   unless the ticket is explicitly being routed to Claude or recorded as
   `--unrouted`.
+- Known owner repo and route means file or update Plane immediately. Do not use
+  `no-ticket follow-up` as a substitute for a routed ticket when `--project`,
+  `project:<RepoName>`, and `worker:codex|worker:claude` are known.
 - If the owning repo, `project:<RepoName>` tag, or worker route is uncertain,
   stop and report the missing routing fact instead of creating a vague or
   unpickable ticket.
+- Do not let route uncertainty erase the issue. If a discovered repo/tool/skill
+  issue is not filed immediately, the status or handoff must name the observed
+  issue, owner-route gap, no-ticket reason, and the durable follow-up surface
+  that preserves it, such as a routed ticket after owner resolution,
+  self-improvement item, planning control-log issue, or explicit user decision.
+- If the owner repo and route are known, file or update the routed ticket instead
+  of carrying the issue as private chat context or working around it locally.
 - If origin fork capture fails or times out, treat that as degraded origin
   metadata, not a failed ticket creation, when the CLI reports the ticket id or
   URL. Record the warning text in the ticket context/workpad so a later agent can

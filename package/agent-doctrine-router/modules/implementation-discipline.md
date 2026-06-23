@@ -45,6 +45,20 @@ implementation, editing, dependency, or verification procedure.
   same user path, compare current artifacts against the reported symptom, find
   the false-positive proof gap, and continue debugging or report the concrete
   blocker.
+- If an end-to-end visible proof fails, do not narrow the proof into a smaller
+  passing acceptance lane. Use narrower runs only to diagnose where the full
+  path failed, then return to the full user path for closeout.
+- For visible selection-to-result bugs, the primary proof artifact must show the
+  user-visible input/control state and the resulting output together, with a
+  negative assertion for the reported wrong result. Separate control state,
+  app-owned crops, readbacks, helper-driven proof modes, scripted control
+  setters, or metric artifacts are supporting evidence only. The primary
+  validator must be able to fail when the exact user-reported visible mismatch
+  is still present.
+- For visible state or mode transition bugs, the primary proof must show the
+  state/control transition and the immediate first user action result in the same
+  canonical path, plus a negative assertion for the reported ignored, stale, or
+  delayed first action.
 - After repository changes, report at least one explicit verification command;
   diff/status checks alone are not enough for completion.
 - When source changes affect installed artifacts, install, roll out, or sync

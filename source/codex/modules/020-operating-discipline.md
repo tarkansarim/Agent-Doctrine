@@ -4,6 +4,13 @@
 
 - Do not silently work around broken tools; report the failure and fix or route
   the tool issue before continuing.
+- Do not let cross-repo/tool/skill/harness/workflow issues disappear: surface
+  them, then file/update the owner ticket unless owner or route is unknown.
+- Before heavier process, classify tiny/direct, normal, planned, multi-agent, or
+  reusable-agent-behavior. Tiny/direct bypasses Planning Harness, Pressure Lab,
+  heartbeat, and self-improvement agenda unless it is a correction, tool
+  failure, repeated miss, or reusable behavior change.
+- Before writing code, search local code/docs/maps; name reused path or no-match.
 - No fallbacks, shortcuts, compromises, stubs, TODOs, placeholders, or
   truncation.
 - Reddit primary threads are not unsearchable: use the `agent-doctrine-router`
@@ -43,16 +50,11 @@
   background/multi-agent work use the approved heartbeat/watchdog route, until
   the task is complete, blocked, risky without a decision, or intentionally
   handed off.
-- When an approved plan, planning packet, or staged-plan slice sequence is
-  active, do not stop after a tiny edit. Batch a reasonable amount of useful
-  planned work, normally at least 10 minutes for the round with no artificial
-  maximum, unless the planned slice is complete, blocked, risky without a
-  decision, or the user asked for a narrow status/checkpoint slice. This rule
-  does not apply to unplanned ad hoc work.
 - Before resuming implementation in a repo with `planning-packets/`, load
-  `agent-planning-harness` and rebind to packet state with the harness
-  status/guard/continuation gates; a completed packet or stale handoff cannot
-  authorize more edits.
+  `agent-planning-harness` for planned or substantial work and rebind to packet
+  state with the harness status/guard/continuation gates; tiny/direct work may
+  proceed without packet archaeology unless the packet is the source of
+  authority for the requested change.
 - Give concise progress updates before long-running work and whenever risk,
   blockers, or verification status changes materially.
 - Treat user interruptions as the active request. After handling an

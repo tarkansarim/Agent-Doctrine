@@ -14,10 +14,13 @@
   procedure, load `rewind-checkpoints`.
 - For tool failures, repeated misses, verification gaps, durable lessons, and
   reliability claims, load `self-improving`.
-- When resolving repo-local self-improvement doctrine, classify the lesson as
-  repo-only, promotion-candidate, or provider-general. Provider-general lessons
-  must route through Agent-Doctrine source/generate/validate/install; ambiguous
-  cross-repo lessons stay local and open a promotion candidate.
+- When a correction, repeated miss, workflow failure, or reusable repo-specific
+  lesson should change future agent behavior, classify the landing surface before
+  closeout: no-action with reason, runtime record only, repo-local durable
+  doctrine, promotion-candidate, provider-general doctrine, or tooling/ticket.
+  Provider-general lessons must route through Agent-Doctrine
+  source/generate/validate/install; ambiguous cross-repo lessons stay local and
+  open a promotion candidate.
 - When a closeout or status says self-improvement happened, name and verify the
   landing surface: runtime record id, repo doctrine target, provider-doctrine
   route, or code-only verifier/tool hardening. Do not call code hardening a

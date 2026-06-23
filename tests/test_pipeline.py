@@ -113,7 +113,12 @@ class PipelineTests(unittest.TestCase):
             "Active routed tickets must also include exactly one worker route tag",
             "Use `--unrouted` only for intentionally non-dispatchable records.",
             "For Codex-originated repo-scoped filings, default to `--tag worker:codex`",
+            "Known owner repo and route means file or update Plane immediately.",
+            "Do not use `no-ticket follow-up` as a substitute for a routed ticket",
             "stop and report the missing routing fact instead of creating a vague or unpickable ticket",
+            "Do not let route uncertainty erase the issue.",
+            "no-ticket reason, and the durable follow-up surface",
+            "If the owner repo and route are known, file or update the routed ticket",
             "degraded origin metadata, not a failed ticket creation",
             "created-ticket success from context-only origin metadata",
         )
@@ -199,6 +204,92 @@ class PipelineTests(unittest.TestCase):
                 self.assertIn(fragment, normalized_codex_generated)
                 self.assertNotIn(fragment, normalized_claude_generated)
 
+    def test_cross_repo_issue_surfacing_is_active_for_both_providers(self) -> None:
+        required = (
+            "Do not let cross-repo/tool/skill/harness/workflow issues disappear",
+            "file/update the owner ticket unless owner or route is unknown",
+            "classify tiny/direct, normal, planned, multi-agent, or reusable-agent-behavior",
+            "Tiny/direct bypasses Planning Harness, Pressure Lab, heartbeat, and self-improvement agenda",
+            "search local code/docs/maps; name reused path or no-match",
+        )
+        for provider, filename in (("codex", "AGENTS.md"), ("claude", "CLAUDE.md")):
+            with self.subTest(provider=provider):
+                source = (
+                    REPO_ROOT
+                    / "source"
+                    / provider
+                    / "modules"
+                    / "020-operating-discipline.md"
+                ).read_text(encoding="utf-8")
+                generated = (REPO_ROOT / "generated" / provider / filename).read_text(encoding="utf-8")
+                normalized_source = " ".join(source.split())
+                normalized_generated = " ".join(generated.split())
+                for fragment in required:
+                    self.assertIn(fragment, normalized_source)
+                    self.assertIn(fragment, normalized_generated)
+
+    def test_global_batching_rule_is_not_always_on(self) -> None:
+        forbidden = (
+            "normally at least 10 minutes",
+            "do not stop after a tiny edit",
+        )
+        for provider, filename in (("codex", "AGENTS.md"), ("claude", "CLAUDE.md")):
+            with self.subTest(provider=provider):
+                source = (
+                    REPO_ROOT
+                    / "source"
+                    / provider
+                    / "modules"
+                    / "020-operating-discipline.md"
+                ).read_text(encoding="utf-8")
+                generated = (REPO_ROOT / "generated" / provider / filename).read_text(encoding="utf-8")
+                for fragment in forbidden:
+                    self.assertNotIn(fragment, source)
+                    self.assertNotIn(fragment, generated)
+
+    def test_tool_failure_router_preserves_cross_repo_issues(self) -> None:
+        router = (
+            REPO_ROOT
+            / "package"
+            / "agent-doctrine-router"
+            / "modules"
+            / "tool-failures.md"
+        ).read_text(encoding="utf-8")
+        normalized_router = " ".join(router.split())
+        required = (
+            "If another repo owns the failing tool, skill, hook, harness, daemon, or reusable workflow",
+            "file or update the routed issue when the owner route is known",
+            "preserve the issue in a durable follow-up surface",
+            "instead of treating a workaround as closure",
+        )
+        for fragment in required:
+            self.assertIn(fragment, normalized_router)
+
+    def test_visible_proof_cannot_narrow_failed_end_to_end_path(self) -> None:
+        required = (
+            "If an end-to-end visible proof fails, a smaller passing lane is diagnostic only",
+            "For visible selection-to-result bugs, one primary artifact must show the input/control and output together",
+            "helper-driven proof modes, scripted control setters, or metrics are supporting evidence only.",
+            "The primary validator must be able to fail when the exact user-reported visible mismatch is still present.",
+            "For visible state or mode transition bugs, the primary proof must show the state/control transition and the immediate first user action result",
+        )
+        for provider, filename in (("codex", "AGENTS.md"), ("claude", "CLAUDE.md")):
+            with self.subTest(provider=provider):
+                source = (
+                    REPO_ROOT
+                    / "source"
+                    / provider
+                    / "modules"
+                    / "030-implementation-discipline.md"
+                ).read_text(encoding="utf-8")
+                generated = (REPO_ROOT / "generated" / provider / filename).read_text(encoding="utf-8")
+                normalized_source = " ".join(source.split())
+                normalized_generated = " ".join(generated.split())
+                for fragment in required:
+                    normalized_fragment = " ".join(fragment.split())
+                    self.assertIn(normalized_fragment, normalized_source)
+                    self.assertIn(normalized_fragment, normalized_generated)
+
     def test_reddit_access_rule_relays_to_router_skill_details(self) -> None:
         lean_rule = "Reddit primary threads are not unsearchable"
         relay_pointer = "`agent-doctrine-router` reddit-access relay"
@@ -264,7 +355,13 @@ class PipelineTests(unittest.TestCase):
 
     def test_self_improvement_repo_lessons_require_promotion_classification(self) -> None:
         required = (
-            "classify the lesson as repo-only, promotion-candidate, or provider-general",
+            "classify the landing surface before closeout",
+            "no-action with reason",
+            "runtime record only",
+            "repo-local durable doctrine",
+            "promotion-candidate",
+            "provider-general doctrine",
+            "tooling/ticket",
             "Provider-general lessons must route through Agent-Doctrine source/generate/validate/install",
             "ambiguous cross-repo lessons stay local and open a promotion candidate",
         )
@@ -284,6 +381,28 @@ class PipelineTests(unittest.TestCase):
                 for fragment in required:
                     self.assertIn(fragment, normalized_source)
                     self.assertIn(fragment, normalized_generated)
+
+    def test_doctrine_router_names_self_improvement_landing_surfaces(self) -> None:
+        router = (
+            REPO_ROOT
+            / "package"
+            / "agent-doctrine-router"
+            / "modules"
+            / "doctrine-routing.md"
+        ).read_text(encoding="utf-8")
+        normalized_router = " ".join(router.split())
+        required = (
+            "make a landing-surface decision before closeout",
+            "`no-action with reason`",
+            "`runtime record only`",
+            "`repo-local durable doctrine`",
+            "`promotion-candidate`",
+            "`provider-general doctrine`",
+            "`tooling/ticket`",
+            "Closeout must name the selected surface and verification",
+        )
+        for fragment in required:
+            self.assertIn(fragment, normalized_router)
 
     def test_generated_outputs_start_at_first_rule_section(self) -> None:
         for provider, filename, first_heading in (

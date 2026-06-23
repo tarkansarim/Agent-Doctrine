@@ -17,6 +17,13 @@
 
 - Do not silently work around broken tools; report the failure and fix or route
   the tool issue before continuing.
+- Do not let cross-repo/tool/skill/harness/workflow issues disappear: surface
+  them, then file/update the owner ticket unless owner or route is unknown.
+- Before heavier process, classify tiny/direct, normal, planned, multi-agent, or
+  reusable-agent-behavior. Tiny/direct bypasses Planning Harness, Pressure Lab,
+  heartbeat, and self-improvement agenda unless it is a correction, tool
+  failure, repeated miss, or reusable behavior change.
+- Before writing code, search local code/docs/maps; name reused path or no-match.
 - No fallbacks, shortcuts, compromises, stubs, TODOs, placeholders, or
   truncation.
 - Reddit primary threads are not unsearchable: use the `agent-doctrine-router`
@@ -56,16 +63,11 @@
   background/multi-agent work use the approved heartbeat/watchdog route, until
   the task is complete, blocked, risky without a decision, or intentionally
   handed off.
-- When an approved plan, planning packet, or staged-plan slice sequence is
-  active, do not stop after a tiny edit. Batch a reasonable amount of useful
-  planned work, normally at least 10 minutes for the round with no artificial
-  maximum, unless the planned slice is complete, blocked, risky without a
-  decision, or the user asked for a narrow status/checkpoint slice. This rule
-  does not apply to unplanned ad hoc work.
 - Before resuming implementation in a repo with `planning-packets/`, load
-  `agent-planning-harness` and rebind to packet state with the harness
-  status/guard/continuation gates; a completed packet or stale handoff cannot
-  authorize more edits.
+  `agent-planning-harness` for planned or substantial work and rebind to packet
+  state with the harness status/guard/continuation gates; tiny/direct work may
+  proceed without packet archaeology unless the packet is the source of
+  authority for the requested change.
 - Give concise progress updates before long-running work and whenever risk,
   blockers, or verification status changes materially.
 - Treat user interruptions as the active request. After handling an
@@ -90,6 +92,7 @@
   user path, compare before and after artifacts from that path, identify why
   the previous proof passed falsely, and keep debugging until the reported
   behavior changes or the remaining blocker is stated plainly.
+- After a disputed visible or interactive fix, helper APIs, synthetic events, direct setters, and exercise-only harnesses are diagnostics only; prove canonical launch provenance and real-input or manual-equivalent evidence through the same controls and held path before reclaiming success.
 - For visual, interactive, realtime, or performance fixes, name the exact
   user-visible invariant and the forbidden substitutes before accepting tests or
   closeout evidence. Proxy behavior, preview-only behavior, deferred
@@ -97,11 +100,10 @@
   provenance, or state JSON cannot be primary proof unless they directly prove
   that invariant. A test that encodes the reported failure mode as success is a
   blocker, not validation.
-- Translate informal user wording into precise technical language before writing
-  durable rules, tickets, changelogs, skills, or doctrine. If the correct
-  established term is uncertain, verify it with primary/current sources or web
-  search before making it durable; otherwise use a descriptive phrase instead of
-  pseudo-jargon.
+- If an end-to-end visible proof fails, a smaller passing lane is diagnostic only; closeout must return to the full user path or state the blocker plainly.
+- For visible selection-to-result bugs, one primary artifact must show the input/control and output together, plus a negative assertion for the reported wrong result; separate state, crops, readbacks, helper-driven proof modes, scripted control setters, or metrics are supporting evidence only. The primary validator must be able to fail when the exact user-reported visible mismatch is still present.
+- For visible state or mode transition bugs, the primary proof must show the state/control transition and the immediate first user action result in the same canonical path, plus a negative assertion for the reported ignored, stale, or delayed first action.
+- Translate informal user wording into precise technical language before durable rules, tickets, changelogs, skills, or doctrine; if the established term is uncertain, verify it with primary/current sources or use a descriptive phrase instead of pseudo-jargon.
 - Ship complete scoped behavior with real error handling; no stubs,
   placeholders, unrelated churn, or user-change reverts.
 
@@ -126,10 +128,13 @@
   procedure, load `rewind-checkpoints`.
 - For tool failures, repeated misses, verification gaps, durable lessons, and
   reliability claims, load `self-improving`.
-- When resolving repo-local self-improvement doctrine, classify the lesson as
-  repo-only, promotion-candidate, or provider-general. Provider-general lessons
-  must route through Agent-Doctrine source/generate/validate/install; ambiguous
-  cross-repo lessons stay local and open a promotion candidate.
+- When a correction, repeated miss, workflow failure, or reusable repo-specific
+  lesson should change future agent behavior, classify the landing surface before
+  closeout: no-action with reason, runtime record only, repo-local durable
+  doctrine, promotion-candidate, provider-general doctrine, or tooling/ticket.
+  Provider-general lessons must route through Agent-Doctrine
+  source/generate/validate/install; ambiguous cross-repo lessons stay local and
+  open a promotion candidate.
 - When a closeout or status says self-improvement happened, name and verify the
   landing surface: runtime record id, repo doctrine target, provider-doctrine
   route, or code-only verifier/tool hardening. Do not call code hardening a
