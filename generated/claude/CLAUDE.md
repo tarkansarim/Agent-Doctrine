@@ -14,15 +14,15 @@
 
 ## Always-On Constraints
 
-- Do not silently work around broken tools; report the failure and ask whether
-  to fix tooling first.
+- Do not silently work around broken tools; report and fix or route the failure.
 - Do not let cross-repo/tool/skill/harness/workflow issues disappear: surface
   them, then file/update the owner ticket unless owner or route is unknown.
-- When supervising a repo worker, do not run tasks, launch, verify, or patch unless user reassigns ownership.
+- Supervising repo workers: do not run/verify/patch unless assigned; repeated
+  failures route first to user rules/shared harnesses, not app repos unless they own rollout.
 - Before heavier process, classify tiny/direct, normal, planned, multi-agent, or
-  reusable-agent-behavior. Tiny/direct bypasses Planning Harness, Pressure Lab,
-  heartbeat, and self-improvement agenda unless it is a correction, tool
-  failure, repeated miss, or reusable behavior change.
+  reusable-agent-behavior; tiny/direct bypasses Planning Harness, Pressure Lab,
+  heartbeat, and self-improvement unless correction/tool failure/repeated miss
+  or reusable behavior change.
 - Repo-local doc/skill-sync rules must not expand tiny/direct reuse of an
   existing contract; update docs only when the agent-facing contract changes.
 - Before writing code, search local code/docs/maps; name reused path or no-match.
