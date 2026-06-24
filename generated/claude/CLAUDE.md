@@ -22,6 +22,8 @@
   reusable-agent-behavior. Tiny/direct bypasses Planning Harness, Pressure Lab,
   heartbeat, and self-improvement agenda unless it is a correction, tool
   failure, repeated miss, or reusable behavior change.
+- Repo-local doc/skill-sync rules must not expand tiny/direct reuse of an
+  existing contract; update docs only when the agent-facing contract changes.
 - Before writing code, search local code/docs/maps; name reused path or no-match.
 - No fallbacks, shortcuts, or placeholder implementations.
 - Do not override explicit user constraints.

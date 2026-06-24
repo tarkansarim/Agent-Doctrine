@@ -10,9 +10,13 @@
 
 ## ⛔ RULE 0 — KEEP THE AGENT-FACING DOCS IN SYNC (READ FIRST, NON-NEGOTIABLE)
 
-**This is the rule that keeps getting broken. It is a hard, blocking definition-of-done — not advice.**
+**This is a hard definition-of-done for public agent-driveable surface changes — not advice. Do not expand tiny reuse-only fixes into doctrine churn.**
 
-Any change to a tool-visible surface — a Mission Control control, REST/WebSocket endpoint, Qt GUI bridge control, embedded command, event, recipe/recipe-kind, classifier/bucketing behavior, export/training contract, or any capability an agent drives — is **NOT complete and MUST NOT be committed or called "done"** until it is reflected, **in the same change**, in **all four** places:
+A change to a tool-visible surface — adding, renaming, removing, or changing the public semantics of a Mission Control control, REST/WebSocket endpoint, Qt GUI bridge control, embedded command, event, recipe/recipe-kind, classifier/bucketing behavior, export/training contract, or other agent-driven capability — is **NOT complete and MUST NOT be committed or called "done"** until it is reflected, **in the same change**, in the required owning surfaces below.
+
+Tiny/direct fixes that only reuse an already documented endpoint/control/skill contract are exempt from AGENTS/CLAUDE/skill edits. Examples: duplicating an existing menu action while sending one different already-supported flag, fixing a typo, preserving a seed through an existing regenerate path, or changing a label without changing the agent contract. For those, keep the patch to code and exact user-visible verification; do not touch `AGENTS.md`, `CLAUDE.md`, or skills unless the reusable agent-facing contract changed.
+
+For non-exempt public surface changes, update:
 
 1. **The tool surface** — server endpoint + Qt bridge control + embedded command + event (so automation can still drive it).
 2. **The owning `skills/<skill>/SKILL.md`** — the operating source of truth an agent loads. A capability not in its skill is undiscoverable, therefore broken.
@@ -20,7 +24,8 @@ Any change to a tool-visible surface — a Mission Control control, REST/WebSock
 4. **`AGENTS.md`** (this file).
 
 Hard requirements:
-- Do the docs **as part of the same change**, not "after I verify" / "later" / "once it works." Building + testing a feature and leaving the docs trailing is a violation, even if the code is correct.
+- First classify whether the request is tiny/direct reuse or a public contract change. If it is tiny/direct reuse, state the exemption and keep the scope narrow.
+- For public contract changes, do the docs **as part of the same change**, not "after I verify" / "later" / "once it works." Building + testing a feature and leaving the docs trailing is a violation, even if the code is correct.
 - Before claiming a tool-visible change is done, **grep the skill + CLAUDE.md + AGENTS.md for the new control/endpoint/command/event/function name** and confirm it appears. If it doesn't, you are not done.
 - Add a **new** skill only when the change is a new *category* of work; otherwise extend the existing one.
 - Skill ownership map: `training-observability` (training watch/lineage/clear/export/parameters), `diffusion-pipe-training` (launch/config/cadence/sampling), `vision-bucketing` (VLM/generic/control-lane bucketing), `regularization-generation`, `bucket-gap-generation`; the installed `caption-mission-control` skill owns MC launch/startup.
@@ -161,7 +166,7 @@ Add or extend `unittest` coverage for any pure-logic change, especially classifi
 Mission Control user-visible behavior must be verified through the Mission Control GUI path before claiming it works. Unit tests and direct REST calls are supporting evidence only; they are not sufficient for controls the user presses. Prefer the app-owned Qt GUI bridge over workspace switching or focus-dependent X11 clicks: standalone Mission Control writes `.mission-control-ui-bridge.json`, and `POST /controls/<control_id>/click` on that bridge must invoke the real `QPushButton.click()` path for controls such as `scan_folders`, `reset_buckets`, and `review_regularization_pairs`; scene-owned review actions are exposed as `bucket_review:<bucket_id>` controls and must open the same large-thumbnail bucket review view a user opens from the bucket card. Capture before/after visible state when practical, then corroborate with `/status`, `/operation`, and `/images`. For `Scan Folders` and detail-pass reset-baseline checks, press the GUI `Reset Buckets` control first, verify the clean pool state, then trigger the target GUI control. If verification creates temporary visible state such as a proof image placed in a bucket, clean it up through the GUI before closeout unless the user explicitly asks to keep it, then verify zero residual bucket assignments, bucket lanes, and sub-bucket tags. After `Scan Folders`, verify `uncategorized == imageCount`, zero `bucketId` assignments, zero bucket visual lanes, and no running VLM/classification operation unless the user explicitly requested one.
 
 ## MCP, Skills & Agent Documentation
-See **⛔ RULE 0** at the top of this file: any tool-visible change must update the tool surface + the owning `skills/<skill>/SKILL.md` + `CLAUDE.md` + `AGENTS.md` in the same change, or it is not done. That rule is mandatory and blocking; this section only adds the repo-local-scope constraint below.
+See **⛔ RULE 0** at the top of this file: public agent-driveable surface changes must update the tool surface + owning `skills/<skill>/SKILL.md` + `CLAUDE.md` + `AGENTS.md` in the same change. Tiny/direct reuse of an existing documented contract is exempt and must stay narrow. This section only adds the repo-local-scope constraint below.
 
 Log friction and update rules/skills PROACTIVELY, as you hit it — do not wait to be asked. This is the global self-improving rule applied here: every non-obvious gotcha, bug, manual workaround, wrong default, or silent failure in the Helmsman/diffusion-pipe/ComfyUI/MC flow must be (a) appended to `docs/RUN_FRICTION_LOG.md` and (b) written as the actionable fix into the relevant `skills/<skill>/SKILL.md` + `CLAUDE.md`/`AGENTS.md` in the SAME session — and fixed in code when it is a real bug, not just documented. The next agent should sail smoothly without rediscovering it.
 
