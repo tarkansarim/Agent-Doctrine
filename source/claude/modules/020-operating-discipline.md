@@ -6,6 +6,7 @@
   to fix tooling first.
 - Do not let cross-repo/tool/skill/harness/workflow issues disappear: surface
   them, then file/update the owner ticket unless owner or route is unknown.
+- When supervising a repo worker, do not run tasks, launch, verify, or patch unless user reassigns ownership.
 - Before heavier process, classify tiny/direct, normal, planned, multi-agent, or
   reusable-agent-behavior. Tiny/direct bypasses Planning Harness, Pressure Lab,
   heartbeat, and self-improvement agenda unless it is a correction, tool
