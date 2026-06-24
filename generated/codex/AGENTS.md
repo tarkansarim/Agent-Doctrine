@@ -103,7 +103,7 @@
   provenance, or state JSON cannot be primary proof unless they directly prove
   that invariant. A test that encodes the reported failure mode as success is a
   blocker, not validation.
-- If an end-to-end visible proof fails, a smaller passing lane is diagnostic only; closeout must return to the full user path or state the blocker plainly.
+- If an end-to-end visible proof fails, a smaller passing lane is diagnostic only; closeout must return to the full user path or state the blocker plainly. Workarounds that change semantics, provenance, pairing, persistence, runtime surface, or acceptance criteria need explicit approval.
 - For visible selection-to-result bugs, one primary artifact must show the input/control and output together, plus a negative assertion for the reported wrong result; separate state, crops, readbacks, helper-driven proof modes, scripted control setters, or metrics are supporting evidence only. The primary validator must be able to fail when the exact user-reported visible mismatch is still present.
 - For visible state or mode transition bugs, the primary proof must show the state/control transition and the immediate first user action result in the same canonical path, plus a negative assertion for the reported ignored, stale, or delayed first action.
 - Translate informal user wording into precise technical language before durable rules, tickets, changelogs, skills, or doctrine; if the established term is uncertain, verify it with primary/current sources or use a descriptive phrase instead of pseudo-jargon.
