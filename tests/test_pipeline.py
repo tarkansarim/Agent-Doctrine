@@ -107,12 +107,15 @@ class PipelineTests(unittest.TestCase):
         detailed_fragments = (
             "Before filing, decide whether the ticket is dispatchable worker work",
             "Do not file a repo-scoped active ticket until that route is explicit.",
-            "~/.local/bin/plane-ticket create --project <RepoName> --tag project:<RepoName> --tag worker:codex|worker:claude",
-            "Pass every route tag as a `--tag` flag",
-            "do not rely on title/body prose, ad hoc `Tags:` lines, or later rejection",
-            "Active routed tickets must also include exactly one worker route tag",
+            "~/.local/bin/plane-ticket create --project <RepoName> --worker codex|claude --tag project:<RepoName>",
+            "pass the worker route with `--worker`, not as body text",
+            "Active routed tickets must include exactly one worker route via `--worker codex` or `--worker claude`",
             "Use `--unrouted` only for intentionally non-dispatchable records.",
-            "For Codex-originated repo-scoped filings, default to `--tag worker:codex`",
+            "For Codex-originated repo-scoped filings, default to `--worker codex`",
+            "A ticket is not filed until the create command returns a concrete identifier",
+            "Capture those fields from stdout, verify them before closeout, and report both.",
+            "If the create command exits non-zero, returns no identifier/URL, or returns output the agent cannot parse",
+            "do not claim the ticket exists",
             "Known owner repo and route means file or update Plane immediately.",
             "Do not use `no-ticket follow-up` as a substitute for a routed ticket",
             "stop and report the missing routing fact instead of creating a vague or unpickable ticket",
@@ -150,7 +153,7 @@ class PipelineTests(unittest.TestCase):
         normalized_claude_generated = " ".join(claude_generated.split())
         active_fragments = (
             "Before editing, inspect relevant files, trace callers when applicable, and state a short pre-mortem; for the full checklist, load `agent-doctrine-router`.",
-            "Ship complete scoped behavior with real error handling; no stubs, placeholders, unrelated churn, or user-change reverts.",
+            "Ship the full requested behavior for the agreed scope, with real error handling. Do not leave stubs, placeholders, unrelated edits, or reversions of user changes.",
         )
         retired_fragments = (
             "Python verifiers, test runners, build helpers, or agent tools",
@@ -177,10 +180,10 @@ class PipelineTests(unittest.TestCase):
 
     def test_codex_tool_failure_rule_rejects_success_looking_nonzero_exits(self) -> None:
         required = (
-            "Success-looking stdout, partial receipts, or manual inspection do not override",
-            "a non-zero reusable tool exit",
-            "explicitly equivalent validation path succeeds",
-            "failed tool is still reported as unhealthy",
+            "If a reusable tool exits non-zero, treat it as failed.",
+            "Do not override that with positive-looking stdout, partial receipts, or manual inspection",
+            "rerun a command that checks the same contract successfully and report the original tool failure",
+            "stop and fix/route the tool",
         )
         codex_source = (
             REPO_ROOT
@@ -202,15 +205,42 @@ class PipelineTests(unittest.TestCase):
             with self.subTest(fragment=fragment):
                 self.assertIn(fragment, normalized_codex_source)
                 self.assertIn(fragment, normalized_codex_generated)
-                self.assertNotIn(fragment, normalized_claude_generated)
+                self.assertIn(fragment, normalized_claude_generated)
 
     def test_cross_repo_issue_surfacing_is_active_for_both_providers(self) -> None:
         required = (
             "Do not let cross-repo/tool/skill/harness/workflow issues disappear",
             "file/update the owner ticket unless owner or route is unknown",
-            "classify tiny/direct, normal, planned, multi-agent, or reusable-agent-behavior",
-            "Tiny/direct bypasses Planning Harness, Pressure Lab, heartbeat, and self-improvement agenda",
-            "search local code/docs/maps; name reused path or no-match",
+            "Before heavyweight process, classify the task",
+            "`tiny/direct` means one obvious action reusing an existing command, file, endpoint, or documented contract, with no reusable behavior change",
+            "`tiny/direct` may skip Planning Harness, Pressure Lab, heartbeat, and self-improvement agenda",
+            "Before writing code, search local code, docs, and code maps",
+            "If a batch tool or workflow exists for the change, use it instead of repeating manual steps; otherwise say no matching route exists",
+        )
+        for provider, filename in (("codex", "AGENTS.md"), ("claude", "CLAUDE.md")):
+            with self.subTest(provider=provider):
+                source = (
+                    REPO_ROOT
+                    / "source"
+                    / provider
+                    / "modules"
+                    / "020-operating-discipline.md"
+                ).read_text(encoding="utf-8")
+                generated = (REPO_ROOT / "generated" / provider / filename).read_text(encoding="utf-8")
+                normalized_source = " ".join(source.split())
+                normalized_generated = " ".join(generated.split())
+                for fragment in required:
+                    self.assertIn(fragment, normalized_source)
+                    self.assertIn(fragment, normalized_generated)
+
+    def test_core_router_skills_are_discoverable_in_user_doctrine(self) -> None:
+        required = (
+            "For tmux workers, repo-agent supervision, or worker contact, load `agent-tmux-control`.",
+            "For multi-agent edits that may overlap files or need integration packets, load `agent-work-leases`.",
+            "For repo maps, project memory, or local past lessons, load `code-map-project-memory` or `routed-recall`.",
+            "For GUI, visual, offscreen, fullscreen, or screenshot proof, load `offscreen-test-manager` or `sonar-design`.",
+            "For creating, editing, installing, or auditing skills, load `skill-packaging-discipline`.",
+            "For app control surfaces, launch/control/readback APIs, or native app automation, load `agentic-control-harness`.",
         )
         for provider, filename in (("codex", "AGENTS.md"), ("claude", "CLAUDE.md")):
             with self.subTest(provider=provider):
@@ -268,10 +298,7 @@ class PipelineTests(unittest.TestCase):
     def test_visible_proof_cannot_narrow_failed_end_to_end_path(self) -> None:
         required = (
             "If an end-to-end visible proof fails, a smaller passing lane is diagnostic only",
-            "For visible selection-to-result bugs, one primary artifact must show the input/control and output together",
-            "helper-driven proof modes, scripted control setters, or metrics are supporting evidence only.",
-            "The primary validator must be able to fail when the exact user-reported visible mismatch is still present.",
-            "For visible state or mode transition bugs, the primary proof must show the state/control transition and the immediate first user action result",
+            "For detailed visible-proof procedure, load `agent-doctrine-router`.",
         )
         for provider, filename in (("codex", "AGENTS.md"), ("claude", "CLAUDE.md")):
             with self.subTest(provider=provider):
@@ -289,6 +316,22 @@ class PipelineTests(unittest.TestCase):
                     normalized_fragment = " ".join(fragment.split())
                     self.assertIn(normalized_fragment, normalized_source)
                     self.assertIn(normalized_fragment, normalized_generated)
+        router = (
+            REPO_ROOT
+            / "package"
+            / "agent-doctrine-router"
+            / "modules"
+            / "implementation-discipline.md"
+        ).read_text(encoding="utf-8")
+        normalized_router = " ".join(router.split())
+        detailed_required = (
+            "For visible selection-to-result bugs, the primary proof artifact must show the user-visible input/control state and the resulting output together",
+            "helper-driven proof modes, scripted control setters, or metric artifacts are supporting evidence only.",
+            "The primary validator must be able to fail when the exact user-reported visible mismatch is still present.",
+            "For visible state or mode transition bugs, the primary proof must show the state/control transition and the immediate first user action result",
+        )
+        for fragment in detailed_required:
+            self.assertIn(" ".join(fragment.split()), normalized_router)
 
     def test_reddit_access_rule_relays_to_router_skill_details(self) -> None:
         lean_rule = "Reddit primary threads are not unsearchable"
@@ -355,15 +398,13 @@ class PipelineTests(unittest.TestCase):
 
     def test_self_improvement_repo_lessons_require_promotion_classification(self) -> None:
         required = (
-            "classify the landing surface before closeout",
-            "no-action with reason",
-            "runtime record only",
-            "repo-local durable doctrine",
-            "promotion-candidate",
-            "provider-general doctrine",
-            "tooling/ticket",
-            "Provider-general lessons must route through Agent-Doctrine source/generate/validate/install",
-            "ambiguous cross-repo lessons stay local and open a promotion candidate",
+            "Before closing a correction, repeated miss, workflow failure, or reusable lesson, choose and name its durable surface",
+            "runtime record",
+            "repo doctrine",
+            "promotion candidate",
+            "provider doctrine",
+            "tool/ticket",
+            "Provider doctrine routes through Agent-Doctrine source/generate/validate/install",
         )
         for provider, filename, module_name in (
             ("codex", "AGENTS.md", "040-rewind-and-learning.md"),
@@ -453,6 +494,46 @@ class PipelineTests(unittest.TestCase):
                 )
                 for fragment in forbidden:
                     self.assertNotIn(fragment, text)
+
+    def test_userlevel_backup_artifacts_are_forbidden_for_both_providers(self) -> None:
+        required = (
+            "Do not create, keep, or install backup artifacts inside user-level provider",
+            "`.bak`, `.old`, timestamped, or",
+            "outside those roots",
+        )
+        for provider, filename in (("codex", "AGENTS.md"), ("claude", "CLAUDE.md")):
+            with self.subTest(provider=provider):
+                source = (
+                    REPO_ROOT
+                    / "source"
+                    / provider
+                    / "modules"
+                    / "010-configuration-boundary.md"
+                ).read_text(encoding="utf-8")
+                generated = (REPO_ROOT / "generated" / provider / filename).read_text(encoding="utf-8")
+                normalized_source = " ".join(source.split())
+                normalized_generated = " ".join(generated.split())
+                for fragment in required:
+                    normalized_fragment = " ".join(fragment.split())
+                    self.assertIn(normalized_fragment, normalized_source)
+                    self.assertIn(normalized_fragment, normalized_generated)
+
+    def test_installer_blocks_userlevel_backup_artifacts_by_default(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp) / "codex-home"
+            root.mkdir(parents=True)
+            (root / "AGENTS.md.20260625.bak").write_text("old backup\n", encoding="utf-8")
+            result = subprocess.run(
+                [sys.executable, "scripts/install_codex.py", "--target-root", str(root)],
+                cwd=REPO_ROOT,
+                text=True,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+                check=False,
+            )
+            self.assertNotEqual(result.returncode, 0)
+            self.assertIn("backup artifacts inside user-level provider root", result.stderr)
+            self.assertIn("AGENTS.md.20260625.bak", result.stderr)
 
     def test_codex_installer_blocks_unmanaged_doctrine_by_default(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:

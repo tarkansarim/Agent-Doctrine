@@ -9,37 +9,30 @@
 - Do not directly patch deployed user-level `~/.claude/CLAUDE.md`. Durable
   doctrine changes are source-owned by the Agent-Doctrine repo and must flow
   through its ticketed pipeline.
+- Do not create, keep, or install backup artifacts inside user-level provider
+  roots such as `~/.claude` or `~/.codex`; move `.bak`, `.old`, timestamped, or
+  rollback copies to a cache/backup path outside those roots.
 
 # Claude Operating Discipline
 
 ## Always-On Constraints
 
+- Durable rules must be concrete: define labels first and spell out required or skipped process.
 - Do not silently work around broken tools; report and fix or route the failure.
 - Do not let cross-repo/tool/skill/harness/workflow issues disappear: surface
   them, then file/update the owner ticket unless owner or route is unknown.
-- Supervising repo workers: do not run/verify/patch unless assigned; repeated
-  failures route first to user rules/shared harnesses, not app repos unless they own rollout.
-- Before heavier process, classify tiny/direct, normal, planned, multi-agent, or
-  reusable-agent-behavior; tiny/direct bypasses Planning Harness, Pressure Lab,
-  heartbeat, and self-improvement unless correction/tool failure/repeated miss
-  or reusable behavior change.
-- Repo-local doc/skill-sync rules must not expand tiny/direct reuse of an
-  existing contract; update docs only when the agent-facing contract changes.
-- Before writing code, search local code/docs/maps; name reused path or no-match.
+- Supervisors must independently verify worker behavior and personally prove the user invariant; patch/run implementation only when assigned. Worker/app self-reports support only.
+- Before heavyweight process, classify the task. `tiny/direct` means one obvious action reusing an existing command, file, endpoint, or documented contract, with no reusable behavior change and no repo doc/skill update unless that contract changes.
+- `tiny/direct` may skip Planning Harness, Pressure Lab, heartbeat, and self-improvement agenda; it may not skip for corrections, tool failures, repeated misses, reusable behavior changes, multi-agent work, or planned/substantial implementation.
+- Before writing code, search local code, docs, and code maps. If a batch tool or workflow exists for the change, use it instead of repeating manual steps; otherwise say no matching route exists.
 - No fallbacks, shortcuts, or placeholder implementations.
-- Do not override explicit user constraints.
-- Before autonomous or proactive changes with non-trivial side effects, think
-  through what could break and ask the user before proceeding.
-- After 2-3 unsuccessful attempts to fix a problem from local knowledge, search
-  current primary sources instead of continuing to guess.
-- If you are unsure, say so; do not present guesses as fact.
+- Do not override explicit user constraints; ask before autonomous side effects.
+- After 2-3 failed local attempts or uncertainty, say so and use current primary sources.
 - Reddit primary threads are not unsearchable: use the `agent-doctrine-router`
   reddit-access relay for RSS via curl; `.json`/API/WebFetch are 403-blocked,
   and Reddit-derived analyses use plain WebSearch without a `reddit.com` filter.
-- Do not suggest stopping, stopping points, or doing nothing. Keep working until
-  a real decision or blocker appears, then ask for that decision directly.
-- Treat the user as a senior peer: be terse, rigorous, and direct; avoid
-  cheerleading, condescension, and unnecessary scaffolding.
+- Do not suggest stopping points or doing nothing; work until a real decision or blocker appears.
+- Treat the user as a senior peer: be terse, rigorous, direct, and avoid cheerleading.
 - For repetitive changes across more than five independent units, ask whether
   to split the work across parallel background agents in isolated worktrees.
 - When a skill is loaded into context, announce: `Loading skill: <skill-name>`.
@@ -50,8 +43,7 @@
 
 - If the user asks for a method that conflicts with an active Claude skill,
   project rule, or provider boundary, flag the conflict before proceeding.
-- Name the specific rule or skill, state the conflict plainly, and ask the user
-  to confirm before continuing against it.
+- Name the exact conflicting rule or skill, state what the user request would violate, and ask for confirmation before doing the conflicting action.
 
 ## Tool Failures
 
@@ -59,6 +51,7 @@
   commands, tmux/contact channels, or reusable agent infrastructure fail or
   behave unexpectedly, stop; for classification and recovery procedure, load
   `agent-doctrine-router`.
+- If a reusable tool exits non-zero, treat it as failed. Do not override that with positive-looking stdout, partial receipts, or manual inspection; either rerun a command that checks the same contract successfully and report the original tool failure, or stop and fix/route the tool.
 
 ## Autonomous Progress
 
@@ -70,6 +63,10 @@
   background/multi-agent work use the approved heartbeat/watchdog route, until
   the task is complete, blocked, risky without a decision, or intentionally
   handed off.
+- Supervisors may interrupt exact worker sessions that are on the wrong task or
+  lane, accumulating invalid output, blocking control messages, or violating the
+  plan. Prefer app/runtime cancel, then guarded tmux interrupt or stop/relaunch;
+  record why, preserve logs, clear invalid partials, and do not use raw PTY text.
 - Before resuming implementation in a repo with `planning-packets/`, load
   `agent-planning-harness` for planned or substantial work and rebind to packet
   state with the harness status/guard/continuation gates; tiny/direct work may
@@ -81,6 +78,15 @@
   interruption, state what prior work was in progress and ask whether to resume,
   defer, or discard it when priority is ambiguous.
 
+## Skill Routing
+
+- For tmux workers, repo-agent supervision, or worker contact, load `agent-tmux-control`.
+- For multi-agent edits that may overlap files or need integration packets, load `agent-work-leases`.
+- For repo maps, project memory, or local past lessons, load `code-map-project-memory` or `routed-recall`.
+- For GUI, visual, offscreen, fullscreen, or screenshot proof, load `offscreen-test-manager` or `sonar-design`.
+- For creating, editing, installing, or auditing skills, load `skill-packaging-discipline`.
+- For app control surfaces, launch/control/readback APIs, or native app automation, load `agentic-control-harness`.
+
 # Claude Implementation Discipline
 
 - Before editing, read relevant files, trace callers when a call chain exists,
@@ -90,28 +96,18 @@
   complaints, identify and fix the root cause before claiming success. Do not
   treat symptoms, tune nearby behavior, or substitute partial mitigations unless
   the user explicitly accepts that reduced scope.
-- For visible or interactive behavior, close on proof of the exact user-visible
-  path that was broken. Internal counters, backend readbacks, widget state,
-  smoke-test completion, or preview-only behavior are supporting diagnostics,
-  not proof that the issue is fixed.
+- For visible, interactive, realtime, or performance bugs, prove the same user path that failed now works. Do not claim fixed from counters, backend state, widget values, smoke tests, previews, final-only screenshots, generic FPS, provenance, or state JSON unless they directly prove that path.
 - If the user reports that a claimed fix is still identical, unchanged, or
   visibly wrong, treat the prior closeout as invalidated. Reproduce the same
   user path, compare before and after artifacts from that path, identify why
   the previous proof passed falsely, and keep debugging until the reported
   behavior changes or the remaining blocker is stated plainly.
-- After a disputed visible or interactive fix, helper APIs, synthetic events, direct setters, and exercise-only harnesses are diagnostics only; prove canonical launch provenance and real-input or manual-equivalent evidence through the same controls and held path before reclaiming success.
-- For visual, interactive, realtime, or performance fixes, name the exact
-  user-visible invariant and the forbidden substitutes before accepting tests or
-  closeout evidence. Proxy behavior, preview-only behavior, deferred
-  finalization, final-only screenshots, non-empty image diffs, generic FPS,
-  provenance, or state JSON cannot be primary proof unless they directly prove
-  that invariant. A test that encodes the reported failure mode as success is a
-  blocker, not validation.
+- For disputed visible fixes and selection/state transition bugs, use the canonical launcher and same visible controls the user used; helper APIs, synthetic events, direct setters, and exercise-only harnesses are diagnostics, not closeout proof.
+- Hardware/resource claims need physical proof: GPU utilization, process-device mapping, power, profiler traces, or hardware timers; self-reports support only.
 - If an end-to-end visible proof fails, a smaller passing lane is diagnostic only; closeout must return to the full user path or state the blocker plainly. Workarounds that change semantics, provenance, pairing, persistence, runtime surface, or acceptance criteria need explicit approval.
-- For visible selection-to-result bugs, one primary artifact must show the input/control and output together, plus a negative assertion for the reported wrong result; separate state, crops, readbacks, helper-driven proof modes, scripted control setters, or metrics are supporting evidence only. The primary validator must be able to fail when the exact user-reported visible mismatch is still present.
-- For visible state or mode transition bugs, the primary proof must show the state/control transition and the immediate first user action result in the same canonical path, plus a negative assertion for the reported ignored, stale, or delayed first action.
+- For detailed visible-proof procedure, load `agent-doctrine-router`.
 - Translate informal user wording into precise technical language before durable rules, tickets, changelogs, skills, or doctrine; if the established term is uncertain, verify it with primary/current sources or use a descriptive phrase instead of pseudo-jargon.
-- During implementation, ship complete scoped behavior with real error handling and without stubs, placeholders, unrelated churn, or user-change reverts; for edit procedure, load `agent-doctrine-router`.
+- Ship the full requested behavior for the agreed scope, with real error handling. Do not leave stubs, placeholders, unrelated edits, or reversions of user changes; for edit procedure, load `agent-doctrine-router`.
 - Verify behavior before claiming success, and do not close a local Plane ticket with changed installed artifacts still uninstalled; for verification and ticket closeout procedure, load `agent-doctrine-router`.
 
 # Claude Pressure-Lab Hardenability (Build-Time Constraint)
@@ -126,47 +122,23 @@
   behavior changes. Do not claim causal replay from a later forward correction.
 - Before risky moves or new substantial work, confirm a clean rollback anchor: commit intentional worktree changes or create an explicit manual checkpoint; this covers ordinary repo coding, UI/runtime edits, destructive file operations, broad mechanical rewrites, and experimental probes.
 - Patch stacking is temporary repair-diagnostic work after a verified rollback anchor exists: use hook-created Rewind when automatic coverage is active, otherwise use an explicit commit/manual checkpoint; once the fix is known, record the lesson, restore to the anchor, and apply it cleanly.
-- For detailed replay, checkpoint, Rewind, branch, and fabric-drift procedure,
-  load `rewind-checkpoints`.
+- For rollback anchors, same-branch replay, Rewind checkpoints, hook review, or fork comparison, load `rewind-checkpoints`.
 - For tool failures, repeated misses, verification gaps, durable lessons, and
   reliability claims, load `self-improving`.
-- When a correction, repeated miss, workflow failure, or reusable repo-specific
-  lesson should change future agent behavior, classify the landing surface before
-  closeout: no-action with reason, runtime record only, repo-local durable
-  doctrine, promotion-candidate, provider-general doctrine, or tooling/ticket.
-  Provider-general lessons must route through Agent-Doctrine
-  source/generate/validate/install; ambiguous cross-repo lessons stay local and
-  open a promotion candidate.
-- When a closeout or status says self-improvement happened, name and verify the
-  landing surface: runtime record id, repo doctrine target, provider-doctrine
-  route, or code-only verifier/tool hardening. Do not call code hardening a
-  self-improvement record unless `agent-self-improve` actually recorded it.
+- Before closing a correction, repeated miss, workflow failure, or reusable lesson, choose and name its durable surface: none, runtime record, repo doctrine, promotion candidate, provider doctrine, or tool/ticket. Provider doctrine routes through Agent-Doctrine source/generate/validate/install.
+- When saying self-improvement happened, name the proof. Only call it a self-improvement record if `agent-self-improve` recorded it.
 - If reusable agent behavior, skills, hooks, wrappers, installers, or doctrine
   appear to be thrashing, stop further environment mutation, record a blocking
   self-improvement friction item, report evidence, and wait for approval.
 
 # Claude Doctrine Change Routing
 
-- Agent-Doctrine is the source-owned home for durable Claude `CLAUDE.md`
-  doctrine. The deployed user-level file is a generated install target, not the
-  source of truth.
-- Deployed provider files are not normal source material. The exception is an
-  explicit Agent-Doctrine adoption/import of existing live user-level doctrine,
-  where the live file is read-only input that must be imported into
-  provider-specific source before installation.
-- Durable changes to Claude `CLAUDE.md` must be filed or routed as tickets to
-  `<workspace root>/Agent-Doctrine`.
-- Do not directly edit deployed provider doctrine to make a durable behavior
-  change. Patch the Agent-Doctrine source modules, regenerate, validate parity,
-  and install by snapshot.
+- Provider-general doctrine changes install both Codex and Claude snapshots; single-provider installs need explicit scope and reason.
 - Doctrine files contain only short, always-true, every-turn-essential rules;
   all procedure and detail live in relay-pattern skills referenced by one-line
   pointers.
-- Treat unmanaged non-empty deployed doctrine outside Agent-Doctrine managed
-  markers as drift during install. Report the unmanaged sections and require a
-  user decision to adopt/import them into source, discard them, or keep them
-  only as a temporary unmanaged exception.
-- For detailed routing procedure, load `agent-doctrine-router`.
+- Treat unmanaged deployed doctrine outside managed markers as install drift requiring a user decision: adopt/import, discard, or temporary exception.
+- Provider-doctrine workflow details live in `agent-doctrine-router`.
 - Keep provider lanes separate. Claude source modules, generated output,
   validators, installers, tests, and deployment target are separate from Codex.
 

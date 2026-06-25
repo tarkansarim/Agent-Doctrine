@@ -10,18 +10,25 @@ Plane filing, evidence, rollout proof, or terminal closeout procedure.
   intentionally non-dispatchable record. Do not file a repo-scoped active ticket
   until that route is explicit.
 - Repo-scoped routed tickets must use this local operator CLI shape:
-  `~/.local/bin/plane-ticket create --project <RepoName> --tag project:<RepoName> --tag worker:codex|worker:claude ...`.
-  Pass every route tag as a `--tag` flag; do not rely on title/body prose,
-  ad hoc `Tags:` lines, or later rejection to discover the required route.
-- Active routed tickets must also include exactly one worker route tag:
-  `worker:codex` or `worker:claude`. Use `--unrouted` only for intentionally
+  `~/.local/bin/plane-ticket create --project <RepoName> --worker codex|claude --tag project:<RepoName> --title "..." --body "..."`.
+  Pass project and classification tags as `--tag` flags; pass the worker route
+  with `--worker`, not as body text or an ad hoc `Tags:` line.
+- Active routed tickets must include exactly one worker route via `--worker
+  codex` or `--worker claude`. Use `--unrouted` only for intentionally
   non-dispatchable records.
-- For Codex-originated repo-scoped filings, default to `--tag worker:codex`
-  unless the ticket is explicitly being routed to Claude or recorded as
-  `--unrouted`.
+- For Codex-originated repo-scoped filings, default to `--worker codex` unless
+  the ticket is explicitly being routed to Claude or recorded as `--unrouted`.
+- A ticket is not filed until the create command returns a concrete identifier
+  such as `PLANE-123` and a URL. Capture those fields from stdout, verify them
+  before closeout, and report both. Do not invent, omit, or hand-wave the id.
+- If the create command exits non-zero, returns no identifier/URL, or returns
+  output the agent cannot parse, treat ticket filing as failed: do not claim the
+  ticket exists; rerun `~/.local/bin/plane-ticket create --help` or
+  `~/.local/bin/plane-ticket show <identifier>` only if an identifier exists,
+  then fix/route the CLI/tool issue.
 - Known owner repo and route means file or update Plane immediately. Do not use
   `no-ticket follow-up` as a substitute for a routed ticket when `--project`,
-  `project:<RepoName>`, and `worker:codex|worker:claude` are known.
+  `project:<RepoName>`, and `--worker codex|claude` are known.
 - If the owning repo, `project:<RepoName>` tag, or worker route is uncertain,
   stop and report the missing routing fact instead of creating a vague or
   unpickable ticket.

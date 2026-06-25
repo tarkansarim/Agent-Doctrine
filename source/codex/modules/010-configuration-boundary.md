@@ -9,3 +9,6 @@
 - Do not directly patch deployed user-level `~/.codex/AGENTS.md`. Durable
   doctrine changes are source-owned by the Agent-Doctrine repo and must flow
   through its source generation and install pipeline.
+- Do not create, keep, or install backup artifacts inside user-level provider
+  roots such as `~/.codex` or `~/.claude`; move `.bak`, `.old`, timestamped, or
+  rollback copies to a cache/backup path outside those roots.

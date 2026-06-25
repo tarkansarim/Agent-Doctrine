@@ -8,3 +8,6 @@
 - Do not directly patch deployed user-level `~/.claude/CLAUDE.md`. Durable
   doctrine changes are source-owned by the Agent-Doctrine repo and must flow
   through its ticketed pipeline.
+- Do not create, keep, or install backup artifacts inside user-level provider
+  roots such as `~/.claude` or `~/.codex`; move `.bak`, `.old`, timestamped, or
+  rollback copies to a cache/backup path outside those roots.

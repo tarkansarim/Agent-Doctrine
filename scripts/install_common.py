@@ -4,6 +4,7 @@ import argparse
 import hashlib
 import json
 import os
+import re
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -14,6 +15,25 @@ from doctrine_common import REPO_ROOT, PROVIDER_SPECS, DoctrineError, load_manif
 class UnmanagedSection:
     label: str
     content: str
+
+
+USERLEVEL_BACKUP_PATTERNS = (
+    re.compile(r".*\.bak$"),
+    re.compile(r".*\.old$"),
+    re.compile(r".*~$"),
+    re.compile(r".*\.orig$"),
+    re.compile(r".*\.[0-9]{8}.*"),
+)
+
+
+def userlevel_backup_artifacts(root: Path) -> list[Path]:
+    if not root.exists():
+        return []
+    return sorted(
+        path
+        for path in root.iterdir()
+        if any(pattern.match(path.name) for pattern in USERLEVEL_BACKUP_PATTERNS)
+    )
 
 
 def managed_block(provider: str) -> tuple[str, str, str]:
@@ -165,6 +185,14 @@ def install_provider(
     target.parent.mkdir(parents=True, exist_ok=True)
     if target.parent.is_symlink():
         raise DoctrineError(f"refusing to install into symlink directory: {target.parent}")
+    backup_artifacts = userlevel_backup_artifacts(root)
+    if backup_artifacts:
+        formatted = "\n".join(f"  - {path}" for path in backup_artifacts)
+        raise DoctrineError(
+            f"refusing to install with backup artifacts inside user-level provider root {root}:\n"
+            f"{formatted}\n"
+            "Move them to a cache/backup path outside the provider root first."
+        )
     start, end, block = managed_block(provider)
     existing = target.read_text(encoding="utf-8") if target.exists() else ""
     sections = unmanaged_sections(existing, start, end)

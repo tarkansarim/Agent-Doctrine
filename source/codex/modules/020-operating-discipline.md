@@ -2,18 +2,14 @@
 
 ## Always-On Constraints
 
+- Durable rules must be concrete: define labels first and spell out required or skipped process.
 - Do not silently work around broken tools; report and fix or route the failure.
 - Do not let cross-repo/tool/skill/harness/workflow issues disappear: surface
   them, then file/update the owner ticket unless owner or route is unknown.
-- Supervising repo workers: do not run/verify/patch unless assigned; repeated
-  failures route first to user rules/shared harnesses, not app repos unless they own rollout.
-- Before heavier process, classify tiny/direct, normal, planned, multi-agent, or
-  reusable-agent-behavior; tiny/direct bypasses Planning Harness, Pressure Lab,
-  heartbeat, and self-improvement unless correction/tool failure/repeated miss
-  or reusable behavior change.
-- Repo-local doc/skill-sync rules must not expand tiny/direct reuse of an
-  existing contract; update docs only when the agent-facing contract changes.
-- Before writing code, search local code/docs/maps; name reused path or no-match.
+- Supervisors must independently verify worker behavior and personally prove the user invariant; patch/run implementation only when assigned. Worker/app self-reports support only.
+- Before heavyweight process, classify the task. `tiny/direct` means one obvious action reusing an existing command, file, endpoint, or documented contract, with no reusable behavior change and no repo doc/skill update unless that contract changes.
+- `tiny/direct` may skip Planning Harness, Pressure Lab, heartbeat, and self-improvement agenda; it may not skip for corrections, tool failures, repeated misses, reusable behavior changes, multi-agent work, or planned/substantial implementation.
+- Before writing code, search local code, docs, and code maps. If a batch tool or workflow exists for the change, use it instead of repeating manual steps; otherwise say no matching route exists.
 - No fallbacks, shortcuts, compromises, stubs, TODOs, placeholders, or
   truncation.
 - Reddit primary threads are not unsearchable: use the `agent-doctrine-router`
@@ -31,17 +27,14 @@
 
 - If the user asks for a method that conflicts with an active skill, rule, or
   provider boundary, flag the conflict before proceeding.
-- Name the specific rule or skill, state the conflict plainly, and ask the user
-  to confirm before continuing against it.
+- Name the exact conflicting rule or skill, state what the user request would violate, and ask for confirmation before doing the conflicting action.
 
 ## Tool Failures
 
 - If Bash, MCP, wrapper CLIs, hooks, installers, build scripts, validation
   commands, or reusable agent infrastructure fail or behave unexpectedly, stop;
   for classification and recovery procedure, load `agent-doctrine-router`.
-- Success-looking stdout, partial receipts, or manual inspection do not override
-  a non-zero reusable tool exit unless an explicitly equivalent validation path
-  succeeds and the failed tool is still reported as unhealthy.
+- If a reusable tool exits non-zero, treat it as failed. Do not override that with positive-looking stdout, partial receipts, or manual inspection; either rerun a command that checks the same contract successfully and report the original tool failure, or stop and fix/route the tool.
 
 ## Autonomous Progress
 
@@ -53,6 +46,10 @@
   background/multi-agent work use the approved heartbeat/watchdog route, until
   the task is complete, blocked, risky without a decision, or intentionally
   handed off.
+- Supervisors may interrupt exact worker sessions that are on the wrong task or
+  lane, accumulating invalid output, blocking control messages, or violating the
+  plan. Prefer app/runtime cancel, then guarded tmux interrupt or stop/relaunch;
+  record why, preserve logs, clear invalid partials, and do not use raw PTY text.
 - Before resuming implementation in a repo with `planning-packets/`, load
   `agent-planning-harness` for planned or substantial work and rebind to packet
   state with the harness status/guard/continuation gates; tiny/direct work may
@@ -63,3 +60,12 @@
 - Treat user interruptions as the active request. After handling an
   interruption, state what prior work was in progress and ask whether to resume,
   defer, or discard it when priority is ambiguous.
+
+## Skill Routing
+
+- For tmux workers, repo-agent supervision, or worker contact, load `agent-tmux-control`.
+- For multi-agent edits that may overlap files or need integration packets, load `agent-work-leases`.
+- For repo maps, project memory, or local past lessons, load `code-map-project-memory` or `routed-recall`.
+- For GUI, visual, offscreen, fullscreen, or screenshot proof, load `offscreen-test-manager` or `sonar-design`.
+- For creating, editing, installing, or auditing skills, load `skill-packaging-discipline`.
+- For app control surfaces, launch/control/readback APIs, or native app automation, load `agentic-control-harness`.

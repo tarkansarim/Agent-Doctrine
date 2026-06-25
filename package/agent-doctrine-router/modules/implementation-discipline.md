@@ -40,11 +40,21 @@ implementation, editing, dependency, or verification procedure.
   or behavior check.
 - For visible or user-reported bugs, reproduce the exact reported behavior or
   an equivalent path before the fix, then compare the same path after the fix.
+- Before accepting tests for visual, interactive, realtime, or performance fixes,
+  write the exact user-visible requirement and name the evidence that would be
+  invalid for that requirement. Proxy behavior, previews, deferred
+  finalization, final-only screenshots, non-empty diffs, generic FPS,
+  provenance, or state JSON are not primary proof unless they directly prove the
+  requirement.
 - If the user reports that a claimed fix is still identical, unchanged, or
   visibly wrong, treat the previous closeout as invalidated evidence. Re-run the
   same user path, compare current artifacts against the reported symptom, find
   the false-positive proof gap, and continue debugging or report the concrete
   blocker.
+- After a disputed visible or interactive fix, retest through the canonical
+  launcher and the same visible controls the user used. Helper APIs, synthetic
+  events, direct setters, and exercise-only harnesses are diagnostics, not
+  closeout proof.
 - If an end-to-end visible proof fails, do not narrow the proof into a smaller
   passing acceptance lane. Use narrower runs only to diagnose where the full
   path failed, then return to the full user path for closeout.
