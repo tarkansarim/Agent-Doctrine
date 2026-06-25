@@ -28,9 +28,9 @@
 - Before writing code, search local code, docs, and code maps. If a batch tool or workflow exists for the change, use it instead of repeating manual steps; otherwise say no matching route exists.
 - No fallbacks, shortcuts, compromises, stubs, TODOs, placeholders, or
   truncation.
-- Reddit primary threads are not unsearchable: use the `agent-doctrine-router`
-  reddit-access relay for RSS via curl; `.json`/API/WebFetch are 403-blocked,
-  and Reddit-derived analyses use plain WebSearch without a `reddit.com` filter.
+- For Reddit primary-thread access during current/community research, load
+  `ceiling-research`; the detailed access route belongs there, not in provider
+  doctrine.
 - Do not override explicit user constraints. If the requested path is unsafe or
   technically self-defeating, pause and explain the concrete risk.
 - For repetitive changes across more than five independent units, ask whether

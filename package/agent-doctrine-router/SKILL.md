@@ -1,6 +1,6 @@
 ---
 name: agent-doctrine-router
-description: "Route durable AGENTS.md/CLAUDE.md doctrine, provider-boundary changes, implementation discipline, tool-failure recovery, Plane ticketing, and parity closeouts."
+description: "Route durable AGENTS.md/CLAUDE.md doctrine, provider-boundary changes, source generation, validation, install, adoption/import, and drift handling."
 ---
 
 # Agent Doctrine Router
@@ -47,7 +47,6 @@ Claude `CLAUDE.md`.
 | Plane ticket filing, status evidence, rollout proof, or terminal closeout | `modules/plane-ticketing.md` |
 | Parity, migration, replacement, feature-completion, or integration closeout | `modules/parity-closeouts.md` |
 | Durable doctrine source routing, provider separation, or install drift | `modules/doctrine-routing.md` |
-| Reddit primary-thread access when normal reddit.com fetch/search paths fail | `modules/reddit-access.md` |
 
 ## Stop Conditions
 

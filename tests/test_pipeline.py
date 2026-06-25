@@ -333,9 +333,9 @@ class PipelineTests(unittest.TestCase):
         for fragment in detailed_required:
             self.assertIn(" ".join(fragment.split()), normalized_router)
 
-    def test_reddit_access_rule_relays_to_router_skill_details(self) -> None:
-        lean_rule = "Reddit primary threads are not unsearchable"
-        relay_pointer = "`agent-doctrine-router` reddit-access relay"
+    def test_reddit_access_rule_relays_to_ceiling_research(self) -> None:
+        lean_rule = "For Reddit primary-thread access during current/community research"
+        relay_pointer = "`ceiling-research`"
         detailed_command = "curl -L -s -H 'User-Agent: Mozilla/5.0"
         blocked_json = "top.json"
         for provider, filename in (("codex", "AGENTS.md"), ("claude", "CLAUDE.md")):
@@ -358,17 +358,8 @@ class PipelineTests(unittest.TestCase):
                 self.assertNotIn(blocked_json, generated)
 
         skill = (REPO_ROOT / "package" / "agent-doctrine-router" / "SKILL.md").read_text(encoding="utf-8")
-        relay = (
-            REPO_ROOT
-            / "package"
-            / "agent-doctrine-router"
-            / "modules"
-            / "reddit-access.md"
-        ).read_text(encoding="utf-8")
-        self.assertIn("modules/reddit-access.md", skill)
-        self.assertIn(detailed_command, relay)
-        self.assertIn("top.rss?t=month", relay)
-        self.assertIn(blocked_json, relay)
+        self.assertNotIn("modules/reddit-access.md", skill)
+        self.assertFalse((REPO_ROOT / "package" / "agent-doctrine-router" / "modules" / "reddit-access.md").exists())
 
     def test_continuation_contract_is_provider_general(self) -> None:
         required = (

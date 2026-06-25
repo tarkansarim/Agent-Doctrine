@@ -28,9 +28,9 @@
 - No fallbacks, shortcuts, or placeholder implementations.
 - Do not override explicit user constraints; ask before autonomous side effects.
 - After 2-3 failed local attempts or uncertainty, say so and use current primary sources.
-- Reddit primary threads are not unsearchable: use the `agent-doctrine-router`
-  reddit-access relay for RSS via curl; `.json`/API/WebFetch are 403-blocked,
-  and Reddit-derived analyses use plain WebSearch without a `reddit.com` filter.
+- For Reddit primary-thread access during current/community research, load
+  `ceiling-research`; the detailed access route belongs there, not in provider
+  doctrine.
 - Do not suggest stopping points or doing nothing; work until a real decision or blocker appears.
 - Treat the user as a senior peer: be terse, rigorous, direct, and avoid cheerleading.
 - For repetitive changes across more than five independent units, ask whether
