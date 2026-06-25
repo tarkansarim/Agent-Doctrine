@@ -41,7 +41,15 @@ class PipelineTests(unittest.TestCase):
         result = run_script("scripts/validate_claude.py")
         self.assertIn("claude validation passed", result.stdout)
 
-    def test_codex_parity_completion_closeout_rule_is_dormant_in_active_doctrine(self) -> None:
+    def test_doctrine_router_has_no_procedure_modules(self) -> None:
+        package = REPO_ROOT / "package" / "agent-doctrine-router"
+        skill = (package / "SKILL.md").read_text(encoding="utf-8")
+        modules = package / "modules"
+        self.assertFalse(modules.exists())
+        self.assertNotIn("modules/", skill)
+        self.assertIn("Landing Surface Classification", skill)
+
+    def test_codex_parity_completion_closeout_rule_is_not_router_owned(self) -> None:
         codex_source = (
             REPO_ROOT
             / "source"
@@ -55,17 +63,9 @@ class PipelineTests(unittest.TestCase):
         claude_generated = (
             REPO_ROOT / "generated" / "claude" / "CLAUDE.md"
         ).read_text(encoding="utf-8")
-        relay_module = (
-            REPO_ROOT
-            / "package"
-            / "agent-doctrine-router"
-            / "modules"
-            / "parity-closeouts.md"
-        ).read_text(encoding="utf-8")
-        required_fragments = (
+        forbidden_fragments = (
             "## Parity And Completion Closeouts",
             "implemented slices",
-            "verified behavior",
             "remaining unimplemented or weaker-than-source features",
             "live-proof gaps",
             "accepted non-goals",
@@ -74,14 +74,11 @@ class PipelineTests(unittest.TestCase):
             "Do not summarize work as done, complete, migrated, replaced, integrated, or",
             "explicitly accepted as a non-goal",
         )
-        for fragment in required_fragments:
+        for fragment in forbidden_fragments:
             with self.subTest(fragment=fragment):
-                self.assertIn(fragment, relay_module)
-        self.assertNotIn("## Parity And Completion Closeouts", claude_generated)
-        self.assertNotIn("## Parity And Completion Closeouts", codex_source)
-        self.assertNotIn("## Parity And Completion Closeouts", codex_generated)
-        self.assertNotIn("any reply before all planned points", codex_generated)
-        self.assertNotIn("planned points remain missing", codex_generated)
+                self.assertNotIn(fragment, claude_generated)
+                self.assertNotIn(fragment, codex_source)
+                self.assertNotIn(fragment, codex_generated)
 
     def test_codex_local_plane_ticketing_cluster_is_dormant_in_active_doctrine(self) -> None:
         codex_manifest = json.loads(
@@ -95,14 +92,6 @@ class PipelineTests(unittest.TestCase):
         claude_generated = (
             REPO_ROOT / "generated" / "claude" / "CLAUDE.md"
         ).read_text(encoding="utf-8")
-        relay = (
-            REPO_ROOT
-            / "package"
-            / "agent-doctrine-router"
-            / "modules"
-            / "plane-ticketing.md"
-        ).read_text(encoding="utf-8")
-        normalized_relay = " ".join(relay.split())
         module_path = "modules/035-local-plane-ticketing.md"
         detailed_fragments = (
             "Before filing, decide whether the ticket is dispatchable worker work",
@@ -131,7 +120,6 @@ class PipelineTests(unittest.TestCase):
         self.assertNotIn("tag `worker:codex` or `worker:claude`", " ".join(claude_generated.split()))
         for fragment in detailed_fragments:
             with self.subTest(fragment=fragment):
-                self.assertIn(fragment, normalized_relay)
                 self.assertNotIn(fragment, codex_generated)
 
     def test_codex_implementation_discipline_is_compressed_and_retired_perf_rules_are_dormant(self) -> None:
@@ -152,7 +140,7 @@ class PipelineTests(unittest.TestCase):
         normalized_codex_generated = " ".join(codex_generated.split())
         normalized_claude_generated = " ".join(claude_generated.split())
         active_fragments = (
-            "Before editing, inspect relevant files, trace callers when applicable, and state a short pre-mortem; for the full checklist, load `agent-doctrine-router`.",
+            "Before editing, inspect relevant files, trace callers when applicable, and state a short pre-mortem.",
             "Ship the full requested behavior for the agreed scope, with real error handling. Do not leave stubs, placeholders, unrelated edits, or reversions of user changes.",
         )
         retired_fragments = (
@@ -171,7 +159,6 @@ class PipelineTests(unittest.TestCase):
             with self.subTest(fragment=fragment):
                 self.assertIn(fragment, normalized_codex_source)
                 self.assertIn(fragment, normalized_codex_generated)
-                self.assertNotIn(fragment, normalized_claude_generated)
         for fragment in retired_fragments:
             with self.subTest(fragment=fragment):
                 self.assertNotIn(fragment, normalized_codex_source)
@@ -239,7 +226,7 @@ class PipelineTests(unittest.TestCase):
             "For multi-agent edits that may overlap files or need integration packets, load `agent-work-leases`.",
             "For repo maps, project memory, or local past lessons, load `code-map-project-memory` or `routed-recall`.",
             "For GUI, visual, offscreen, fullscreen, or screenshot proof, load `offscreen-test-manager` or `sonar-design`.",
-            "For creating, editing, installing, or auditing skills, load `skill-packaging-discipline`.",
+            "For creating, editing, installing, or auditing skills, load `skill-packaging-discipline-router`.",
             "For app control surfaces, launch/control/readback APIs, or native app automation, load `agentic-control-harness`.",
         )
         for provider, filename in (("codex", "AGENTS.md"), ("claude", "CLAUDE.md")):
@@ -277,28 +264,23 @@ class PipelineTests(unittest.TestCase):
                     self.assertNotIn(fragment, source)
                     self.assertNotIn(fragment, generated)
 
-    def test_tool_failure_router_preserves_cross_repo_issues(self) -> None:
-        router = (
-            REPO_ROOT
-            / "package"
-            / "agent-doctrine-router"
-            / "modules"
-            / "tool-failures.md"
-        ).read_text(encoding="utf-8")
-        normalized_router = " ".join(router.split())
+    def test_tool_failure_rule_is_inline_not_router_owned(self) -> None:
         required = (
-            "If another repo owns the failing tool, skill, hook, harness, daemon, or reusable workflow",
-            "file or update the routed issue when the owner route is known",
-            "preserve the issue in a durable follow-up surface",
-            "instead of treating a workaround as closure",
+            "report the failing command and behavior",
+            "fix or route the owning tool",
         )
-        for fragment in required:
-            self.assertIn(fragment, normalized_router)
+        forbidden = "load `agent-doctrine-router`"
+        for provider, filename in (("codex", "AGENTS.md"), ("claude", "CLAUDE.md")):
+            with self.subTest(provider=provider):
+                generated = (REPO_ROOT / "generated" / provider / filename).read_text(encoding="utf-8")
+                normalized_generated = " ".join(generated.split())
+                for fragment in required:
+                    self.assertIn(fragment, normalized_generated)
+                self.assertNotIn("for classification and recovery procedure, load `agent-doctrine-router`", normalized_generated)
 
     def test_visible_proof_cannot_narrow_failed_end_to_end_path(self) -> None:
         required = (
             "If an end-to-end visible proof fails, a smaller passing lane is diagnostic only",
-            "For detailed visible-proof procedure, load `agent-doctrine-router`.",
         )
         for provider, filename in (("codex", "AGENTS.md"), ("claude", "CLAUDE.md")):
             with self.subTest(provider=provider):
@@ -316,22 +298,7 @@ class PipelineTests(unittest.TestCase):
                     normalized_fragment = " ".join(fragment.split())
                     self.assertIn(normalized_fragment, normalized_source)
                     self.assertIn(normalized_fragment, normalized_generated)
-        router = (
-            REPO_ROOT
-            / "package"
-            / "agent-doctrine-router"
-            / "modules"
-            / "implementation-discipline.md"
-        ).read_text(encoding="utf-8")
-        normalized_router = " ".join(router.split())
-        detailed_required = (
-            "For visible selection-to-result bugs, the primary proof artifact must show the user-visible input/control state and the resulting output together",
-            "helper-driven proof modes, scripted control setters, or metric artifacts are supporting evidence only.",
-            "The primary validator must be able to fail when the exact user-reported visible mismatch is still present.",
-            "For visible state or mode transition bugs, the primary proof must show the state/control transition and the immediate first user action result",
-        )
-        for fragment in detailed_required:
-            self.assertIn(" ".join(fragment.split()), normalized_router)
+                self.assertNotIn("For detailed visible-proof procedure, load `agent-doctrine-router`.", normalized_generated)
 
     def test_reddit_access_rule_relays_to_ceiling_research(self) -> None:
         lean_rule = "For Reddit primary-thread access during current/community research"
@@ -357,9 +324,10 @@ class PipelineTests(unittest.TestCase):
                 self.assertNotIn(detailed_command, generated)
                 self.assertNotIn(blocked_json, generated)
 
-        skill = (REPO_ROOT / "package" / "agent-doctrine-router" / "SKILL.md").read_text(encoding="utf-8")
+        package = REPO_ROOT / "package" / "agent-doctrine-router"
+        skill = (package / "SKILL.md").read_text(encoding="utf-8")
         self.assertNotIn("modules/reddit-access.md", skill)
-        self.assertFalse((REPO_ROOT / "package" / "agent-doctrine-router" / "modules" / "reddit-access.md").exists())
+        self.assertFalse((package / "modules").exists())
 
     def test_continuation_contract_is_provider_general(self) -> None:
         required = (
@@ -415,16 +383,10 @@ class PipelineTests(unittest.TestCase):
                     self.assertIn(fragment, normalized_generated)
 
     def test_doctrine_router_names_self_improvement_landing_surfaces(self) -> None:
-        router = (
-            REPO_ROOT
-            / "package"
-            / "agent-doctrine-router"
-            / "modules"
-            / "doctrine-routing.md"
-        ).read_text(encoding="utf-8")
+        router = (REPO_ROOT / "package" / "agent-doctrine-router" / "SKILL.md").read_text(encoding="utf-8")
         normalized_router = " ".join(router.split())
         required = (
-            "make a landing-surface decision before closeout",
+            "choose the landing surface before closeout",
             "`no-action with reason`",
             "`runtime record only`",
             "`repo-local durable doctrine`",

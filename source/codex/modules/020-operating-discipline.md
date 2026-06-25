@@ -32,8 +32,8 @@
 ## Tool Failures
 
 - If Bash, MCP, wrapper CLIs, hooks, installers, build scripts, validation
-  commands, or reusable agent infrastructure fail or behave unexpectedly, stop;
-  for classification and recovery procedure, load `agent-doctrine-router`.
+  commands, or reusable agent infrastructure fail or behave unexpectedly, stop,
+  report the failing command and behavior, then fix or route the owning tool.
 - If a reusable tool exits non-zero, treat it as failed. Do not override that with positive-looking stdout, partial receipts, or manual inspection; either rerun a command that checks the same contract successfully and report the original tool failure, or stop and fix/route the tool.
 
 ## Autonomous Progress
@@ -67,5 +67,5 @@
 - For multi-agent edits that may overlap files or need integration packets, load `agent-work-leases`.
 - For repo maps, project memory, or local past lessons, load `code-map-project-memory` or `routed-recall`.
 - For GUI, visual, offscreen, fullscreen, or screenshot proof, load `offscreen-test-manager` or `sonar-design`.
-- For creating, editing, installing, or auditing skills, load `skill-packaging-discipline`.
+- For creating, editing, installing, or auditing skills, load `skill-packaging-discipline-router`.
 - For app control surfaces, launch/control/readback APIs, or native app automation, load `agentic-control-harness`.

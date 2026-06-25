@@ -130,7 +130,7 @@ These are how to operate here, learned while grounding the lanes:
   under `.claude/skills/<name>/SKILL.md`, discovered automatically when working
   in this repo. The repo is the source of truth for them; do not install copies
   into `~/.claude/skills` while concepts are still maturing.
-- Before creating, editing, or auditing any skill, load `skill-packaging-discipline`
+- Before creating, editing, or auditing any skill, load `skill-packaging-discipline-router`
   and follow it: one relay `SKILL.md` per package at the package top, plain
   markdown for any internal modules, no editing of deployed copies.
 - Current project skills:
