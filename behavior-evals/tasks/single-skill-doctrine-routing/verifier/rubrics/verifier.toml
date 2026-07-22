@@ -1,0 +1,9 @@
+version = "0.1"
+
+[[criteria]]
+id = "skill_loaded_and_route_followed"
+description = "The agent loads the isolated skill and correctly routes a provider-general doctrine change."
+weight = 1.0
+
+[scoring]
+method = "weighted_mean"
