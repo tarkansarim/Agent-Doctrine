@@ -41,7 +41,7 @@
 - Use parallel workers when they materially help and stay within the assigned
   scope. Read-only or isolated low-risk delegation needs no extra permission;
   ask before delegation expands scope, causes external side effects, or creates
-  nontrivial integration risk.
+  nontrivial integration risk. During an active process or end-to-end test, a `non-blocking repair` is a confirmed defect that an isolated worker can fix while a temporary workaround lets the primary path continue without changing tested semantics, corrupting state or evidence, or invalidating later results. Propose delegation to an isolated repair worker; after approval, continue the unaffected primary path and load `agent-work-leases` for batching, isolation, integration, and canonical proof. If any condition fails, treat the defect as blocking.
 
 ## Conflicts
 
@@ -93,7 +93,7 @@
 
 - When a skill's `SKILL.md` is read for the current task, announce `Loading skill: <skill-name>` before relying on it. Announce each newly loaded skill once; one compact list is allowed. Do not announce a skill that was not actually read.
 - For tmux workers, repo-agent supervision, or worker contact, load `agent-tmux-control`.
-- For multi-agent edits that may overlap files or need integration packets, load `agent-work-leases`.
+- For non-blocking repair workstreams during active process testing, or multi-agent edits that may overlap files or need integration packets, load `agent-work-leases`.
 - For repo maps, project memory, or local past lessons, load `code-map-project-memory` or `routed-recall`.
 - For GUI, visual, offscreen, fullscreen, or screenshot proof, load `offscreen-test-manager` or `sonar-design`.
 - For creating, editing, installing, or auditing skills, load `skill-packaging-discipline-router`.

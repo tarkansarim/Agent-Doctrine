@@ -60,6 +60,11 @@
       "reference": "AgentTerminalContact commit 00807d5",
       "certainty": "Known owner implementation and guarded CLI contract."
     },
+    "parallel-repair-workstream-contract": {
+      "kind": "promoted-owner-contract",
+      "reference": "Agent-Work-Leases/skills/agent-work-leases/SKILL.md and direct user direction on 2026-07-22",
+      "certainty": "The user established the active-process trigger and delegated the detailed isolated repair workflow to the Agent-Work-Leases owner."
+    },
     "visible-root-cause-correction": {
       "kind": "direct-user-correction",
       "reference": "self-improvement:user_correction:664ae6a6080c073f",
@@ -117,7 +122,7 @@
     "operating.inspect-owner-path": {"title": "Inspect owner and caller path", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "user-doctrine-cleanup-2026-07-20", "override_status": "Tiny direct work does not require broad archaeology."},
     "operating.scope-and-fallback": {"title": "Exact scope authority and honest phased delivery", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "planning-scope-authority-correction", "override_status": "Contract-preserving tested fallbacks and explicitly labeled internal proofs remain allowed."},
     "operating.explicit-user-constraints": {"title": "Honor explicit user constraints", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "legacy-adoption", "override_status": "Provider wording may differ for unsafe or autonomous side effects."},
-    "operating.parallel-workers": {"title": "Scoped parallel delegation", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "user-doctrine-cleanup-2026-07-20", "override_status": "Permission is required only when delegation expands risk or scope."},
+    "operating.parallel-workers": {"title": "Scoped parallel delegation and non-blocking repair", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "parallel-repair-workstream-contract", "override_status": "The existing low-risk delegation boundary remains; temporary workarounds may continue only when they preserve tested semantics and later evidence, and blockers stay on the primary path."},
     "operating.conflicts": {"title": "Plain conflict handling", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "user-doctrine-cleanup-2026-07-20", "override_status": "Confirmation is limited to real authority, scope, provider, or safety boundaries."},
     "operating.exploratory-miss": {"title": "Exploratory miss classification", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "user-doctrine-cleanup-2026-07-20", "override_status": "none"},
     "operating.required-tool-failure": {"title": "Required reusable tool failure", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "legacy-adoption", "override_status": "Optional supporting tools do not block unrelated work."},
@@ -228,6 +233,22 @@
         "Do not fall back to raw `agent-tmux send` unless the current operator explicitly authorizes that exact bypass."
       ],
       "forbidden_fragments": []
+    },
+    {
+      "id": "parallel-repair-workstream",
+      "repo": "Agent-Work-Leases",
+      "path": "skills/agent-work-leases/SKILL.md",
+      "rule_ids": ["operating.parallel-workers", "routing.work-leases"],
+      "required_fragments": [
+        "## Parallel Repair During Active Testing",
+        "A temporary workaround is permission to",
+        "Before launching the first repair worker in an active workflow",
+        "Use both source isolation and runtime isolation",
+        "Re-run the original failed path in the canonical environment"
+      ],
+      "forbidden_fragments": [
+        "A passing isolated worker test closes the defect"
+      ]
     },
     {
       "id": "pressure-lab-routing-boundary",

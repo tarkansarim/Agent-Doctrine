@@ -236,6 +236,11 @@ class PipelineTests(unittest.TestCase):
             "Phased implementation and internal proofs of concept are allowed, but are not final completion",
             "Read-only or isolated low-risk delegation needs no extra permission",
             "ask before delegation expands scope, causes external side effects, or creates nontrivial integration risk",
+            "During an active process or end-to-end test, a `non-blocking repair` is a confirmed defect",
+            "a temporary workaround lets the primary path continue without changing tested semantics",
+            "Propose delegation to an isolated repair worker",
+            "after approval, continue the unaffected primary path and load `agent-work-leases`",
+            "If any condition fails, treat the defect as blocking",
         )
         for provider, filename in (("codex", "AGENTS.md"), ("claude", "CLAUDE.md")):
             with self.subTest(provider=provider):
@@ -256,7 +261,7 @@ class PipelineTests(unittest.TestCase):
     def test_core_router_skills_are_discoverable_in_user_doctrine(self) -> None:
         required = (
             "For tmux workers, repo-agent supervision, or worker contact, load `agent-tmux-control`.",
-            "For multi-agent edits that may overlap files or need integration packets, load `agent-work-leases`.",
+            "For non-blocking repair workstreams during active process testing, or multi-agent edits that may overlap files or need integration packets, load `agent-work-leases`.",
             "For repo maps, project memory, or local past lessons, load `code-map-project-memory` or `routed-recall`.",
             "For GUI, visual, offscreen, fullscreen, or screenshot proof, load `offscreen-test-manager` or `sonar-design`.",
             "For creating, editing, installing, or auditing skills, load `skill-packaging-discipline-router`.",
