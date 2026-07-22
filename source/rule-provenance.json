@@ -38,7 +38,7 @@
     "supervisor-ownership-reconciliation": {
       "kind": "user-correction-reconciliation",
       "reference": "Agent-Doctrine commit 1f51a9e and direct user corrections on 2026-07-20 and 2026-07-22",
-      "certainty": "The rule preserves independent proof for implementation and live behavior while preventing delegated read-only research from being repeated in full."
+      "certainty": "A task-level probe showed that generic spot-check wording still caused full-source rereads; the rule now limits cited handoff verification to cited passages and necessary adjacent qualifiers unless evidence fails."
     },
     "supervision-procedure-correction": {
       "kind": "direct-user-correction",
@@ -113,7 +113,7 @@
     "operating.next-reporting": {"title": "Future-only Next reporting", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "reply-verbosity-contract", "override_status": "Provider doctrine narrows the always-on requirement to status and final replies and standardizes the completed form."},
     "operating.no-silent-tool-workaround": {"title": "No silent tool workaround", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "legacy-adoption", "override_status": "none"},
     "operating.owner-defect-routing": {"title": "Reusable defect owner routing", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "cross-repo-defect-correction", "override_status": "Exploratory misses are excluded."},
-    "operating.supervisor-verification": {"title": "Risk-matched supervisor verification and implementation ownership", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "supervisor-ownership-reconciliation", "override_status": "Independent proof is mandatory for implementation and live behavior; bounded read-only delegation requires decisive-source spot checks without repeating the full investigation."},
+    "operating.supervisor-verification": {"title": "Risk-matched supervisor verification and implementation ownership", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "supervisor-ownership-reconciliation", "override_status": "Independent proof is mandatory for implementation and live behavior; exact-citation read-only handoffs permit only cited-passage checks plus necessary adjacent qualifiers unless evidence fails."},
     "operating.supervision-procedure-durability": {"title": "Durable supervised procedures", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "supervision-procedure-correction", "override_status": "none"},
     "operating.classify-tiny-direct": {"title": "Tiny direct classification", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "planning-classification-reconciliation", "override_status": "Agent-Doctrine owns the compact label; Planning Harness owns elaboration."},
     "operating.classify-guarded-direct": {"title": "Guarded direct classification", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "planning-classification-reconciliation", "override_status": "Agent-Doctrine owns the compact label; Planning Harness owns elaboration."},

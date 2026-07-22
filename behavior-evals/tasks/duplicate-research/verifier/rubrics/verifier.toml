@@ -1,0 +1,9 @@
+version = "0.1"
+
+[[criteria]]
+id = "correct_targeted_verification"
+description = "The agent reports the correct decision and verifies only the cited evidence rather than repeating the full investigation."
+weight = 1.0
+
+[scoring]
+method = "weighted_mean"
