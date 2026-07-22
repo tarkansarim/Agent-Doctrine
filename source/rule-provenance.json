@@ -1,0 +1,257 @@
+{
+  "schema_version": 1,
+  "doctrine_owner": {
+    "repo": "Agent-Doctrine",
+    "path": "source"
+  },
+  "origins": {
+    "legacy-adoption": {
+      "kind": "legacy-distillation",
+      "reference": "source/codex/adopted/adoption-manifest.json and source/claude/adopted/adoption-manifest.json",
+      "certainty": "Exact pre-promotion origin was not recorded by the bootstrap pipeline. This uncertainty is preserved instead of guessed."
+    },
+    "agent-doctrine-bootstrap": {
+      "kind": "agent-doctrine-source",
+      "reference": "Agent-Doctrine commit 6fa9880",
+      "certainty": "Known Agent-Doctrine introduction point."
+    },
+    "user-doctrine-cleanup-2026-07-20": {
+      "kind": "direct-user-direction",
+      "reference": "Agent-Doctrine cleanup session on 2026-07-20",
+      "certainty": "Direct user correction in the owning repo."
+    },
+    "skill-load-observability-restoration": {
+      "kind": "direct-user-direction",
+      "reference": "Agent-Doctrine user correction on 2026-07-20",
+      "certainty": "The user explicitly restored skill-load announcements as a routing observability signal."
+    },
+    "reply-verbosity-contract": {
+      "kind": "promoted-owner-contract",
+      "reference": "Reply-Verbosity commit 68c9735 and adopted provider snapshots",
+      "certainty": "Owner source and adoption history both identify this contract."
+    },
+    "cross-repo-defect-correction": {
+      "kind": "direct-user-correction",
+      "reference": "self-improvement:user_correction:c949a377e05f2b07",
+      "certainty": "Recorded user correction."
+    },
+    "supervisor-ownership-reconciliation": {
+      "kind": "user-correction-reconciliation",
+      "reference": "Agent-Doctrine commit 1f51a9e and 2026-07-20 user correction",
+      "certainty": "The earlier commit overgeneralized implementation ownership into a verification prohibition; the current rule preserves independent verification."
+    },
+    "supervision-procedure-correction": {
+      "kind": "direct-user-correction",
+      "reference": "self-improvement:user_correction:da1a6bc99649f27f",
+      "certainty": "Recorded user correction."
+    },
+    "planning-classification-reconciliation": {
+      "kind": "shared-contract-reconciliation",
+      "reference": "Agent-Doctrine source and Agent-Planning-Harness/skills/agent-planning-harness/SKILL.md",
+      "certainty": "Historical copy direction was not recorded. Ownership is now explicit: Agent-Doctrine owns compact provider labels; Planning Harness owns procedure."
+    },
+    "planning-scope-authority-correction": {
+      "kind": "direct-user-correction",
+      "reference": "Agent-Doctrine user correction on 2026-07-21 after Helmsman campaign continuation scope expansion",
+      "certainty": "The user identified generic continuation being treated as approval of review-added scope and proof-of-concept sequencing being incorrectly blocked."
+    },
+    "worker-interruption-contract": {
+      "kind": "promoted-owner-contract",
+      "reference": "AgentTerminalContact commit 00807d5",
+      "certainty": "Known owner implementation and guarded CLI contract."
+    },
+    "visible-root-cause-correction": {
+      "kind": "direct-user-correction",
+      "reference": "self-improvement:user_correction:664ae6a6080c073f",
+      "certainty": "Recorded user correction."
+    },
+    "visible-invariant-correction": {
+      "kind": "direct-user-correction",
+      "reference": "self-improvement:user_correction:a1cc1db8c769f752 and self-improvement:user_correction:fedb10a056b11cf7",
+      "certainty": "Recorded user corrections."
+    },
+    "durable-surface-correction": {
+      "kind": "direct-user-correction",
+      "reference": "self-improvement:user_correction:8114bb2db1d663f5",
+      "certainty": "Recorded user correction."
+    },
+    "pressure-lab-contract": {
+      "kind": "owner-contract-reconciliation",
+      "reference": "Agent-Doctrine commit 6fa9880 and Pressure-Lab/skills/pressure-lab/SKILL.md",
+      "certainty": "The initial always-on route was narrowed to the current owner trigger contract."
+    },
+    "rewind-contract": {
+      "kind": "promoted-owner-contract",
+      "reference": "Rewind/skills/rewind-checkpoints/SKILL.md and direct user patch-stacking corrections",
+      "certainty": "Owner procedure plus direct user policy."
+    },
+    "self-improvement-suspension": {
+      "kind": "direct-user-direction",
+      "reference": "User suspension confirmed in Agent-Doctrine cleanup session on 2026-07-20",
+      "certainty": "Direct current policy; overrides historical automatic triggers while active."
+    },
+    "dual-provider-rollout": {
+      "kind": "direct-user-direction",
+      "reference": "Agent-Doctrine commit 9bbc8b7 and subsequent user confirmation",
+      "certainty": "Known user-requested rollout policy."
+    }
+  },
+  "rules": {
+    "config.provider-root": {"title": "Provider configuration root", "providers": ["codex", "claude"], "promotion": "provider-specific", "origin": "legacy-adoption", "override_status": "none"},
+    "config.provider-separation": {"title": "Cross-provider read and write boundary", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "legacy-adoption", "override_status": "Cross-provider diagnosis is allowed read-only while writes remain source-owned."},
+    "config.deployment-isolation": {"title": "Separate provider deployment surfaces", "providers": ["claude"], "promotion": "provider-specific", "origin": "legacy-adoption", "override_status": "none"},
+    "config.source-owned-doctrine": {"title": "Source-owned provider doctrine", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "agent-doctrine-bootstrap", "override_status": "none"},
+    "config.no-provider-root-backups": {"title": "No backups under provider roots", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "user-doctrine-cleanup-2026-07-20", "override_status": "none"},
+
+    "operating.concrete-rules": {"title": "Concrete durable rules", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "legacy-adoption", "override_status": "none"},
+    "operating.reply-clarity": {"title": "Plain and scannable replies", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "user-doctrine-cleanup-2026-07-20", "override_status": "Detailed verbosity procedure remains Reply-Verbosity-owned."},
+    "operating.next-reporting": {"title": "Future-only Next reporting", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "reply-verbosity-contract", "override_status": "Provider doctrine narrows the always-on requirement to status and final replies and standardizes the completed form."},
+    "operating.no-silent-tool-workaround": {"title": "No silent tool workaround", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "legacy-adoption", "override_status": "none"},
+    "operating.owner-defect-routing": {"title": "Reusable defect owner routing", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "cross-repo-defect-correction", "override_status": "Exploratory misses are excluded."},
+    "operating.supervisor-verification": {"title": "Supervisor verification and implementation ownership", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "supervisor-ownership-reconciliation", "override_status": "Independent verification is mandatory; supervision-only does not transfer app implementation ownership."},
+    "operating.supervision-procedure-durability": {"title": "Durable supervised procedures", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "supervision-procedure-correction", "override_status": "none"},
+    "operating.classify-tiny-direct": {"title": "Tiny direct classification", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "planning-classification-reconciliation", "override_status": "Agent-Doctrine owns the compact label; Planning Harness owns elaboration."},
+    "operating.classify-guarded-direct": {"title": "Guarded direct classification", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "planning-classification-reconciliation", "override_status": "Agent-Doctrine owns the compact label; Planning Harness owns elaboration."},
+    "operating.classify-planned": {"title": "Planned substantial classification", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "planning-classification-reconciliation", "override_status": "Agent-Doctrine owns the compact label; Planning Harness owns elaboration."},
+    "operating.process-ceiling": {"title": "No process stacking", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "planning-classification-reconciliation", "override_status": "none"},
+    "operating.inspect-owner-path": {"title": "Inspect owner and caller path", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "user-doctrine-cleanup-2026-07-20", "override_status": "Tiny direct work does not require broad archaeology."},
+    "operating.scope-and-fallback": {"title": "Exact scope authority and honest phased delivery", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "planning-scope-authority-correction", "override_status": "Contract-preserving tested fallbacks and explicitly labeled internal proofs remain allowed."},
+    "operating.explicit-user-constraints": {"title": "Honor explicit user constraints", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "legacy-adoption", "override_status": "Provider wording may differ for unsafe or autonomous side effects."},
+    "operating.parallel-workers": {"title": "Scoped parallel delegation", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "user-doctrine-cleanup-2026-07-20", "override_status": "Permission is required only when delegation expands risk or scope."},
+    "operating.conflicts": {"title": "Plain conflict handling", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "user-doctrine-cleanup-2026-07-20", "override_status": "Confirmation is limited to real authority, scope, provider, or safety boundaries."},
+    "operating.exploratory-miss": {"title": "Exploratory miss classification", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "user-doctrine-cleanup-2026-07-20", "override_status": "none"},
+    "operating.required-tool-failure": {"title": "Required reusable tool failure", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "legacy-adoption", "override_status": "Optional supporting tools do not block unrelated work."},
+    "operating.nonzero-exit": {"title": "Nonzero reusable tool exits fail", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "legacy-adoption", "override_status": "Equivalent validation must check the same contract."},
+    "operating.autonomous-progress": {"title": "Continue through clear next steps", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "legacy-adoption", "override_status": "none"},
+    "operating.bounded-continuation": {"title": "Bounded stay-awake contract", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "legacy-adoption", "override_status": "none"},
+    "operating.worker-interruption": {"title": "Guarded supervisor interruption", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "worker-interruption-contract", "override_status": "Raw PTY or direct tmux input requires explicit authorization for the exact bypass."},
+    "operating.packet-rebind": {"title": "Planning packet rebind boundary", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "planning-classification-reconciliation", "override_status": "Packet presence alone does not govern unrelated work."},
+    "operating.user-interruption": {"title": "User interruption priority", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "legacy-adoption", "override_status": "none"},
+    "operating.skill-load-announcement": {"title": "Observable skill loading", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "skill-load-observability-restoration", "override_status": "Announce only after reading SKILL.md and only once when newly loaded."},
+
+    "routing.tmux": {"title": "Tmux and worker contact router", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "worker-interruption-contract", "override_status": "none"},
+    "routing.work-leases": {"title": "Multi-agent work lease router", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "user-doctrine-cleanup-2026-07-20", "override_status": "none"},
+    "routing.memory": {"title": "Project memory router", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "user-doctrine-cleanup-2026-07-20", "override_status": "none"},
+    "routing.gui-proof": {"title": "GUI proof router", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "visible-invariant-correction", "override_status": "none"},
+    "routing.skill-packaging": {"title": "Skill packaging router", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "user-doctrine-cleanup-2026-07-20", "override_status": "none"},
+    "routing.control-harness": {"title": "Application control harness router", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "user-doctrine-cleanup-2026-07-20", "override_status": "none"},
+
+    "implementation.premortem": {"title": "Risk-scaled pre-mortem", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "planning-classification-reconciliation", "override_status": "Tiny direct changes are exempt."},
+    "implementation.root-cause": {"title": "Root-cause bug fixing", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "visible-root-cause-correction", "override_status": "none"},
+    "implementation.exact-visible-path": {"title": "Exact visible path proof", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "visible-invariant-correction", "override_status": "none"},
+    "implementation.disputed-claim": {"title": "Invalidated disputed fix claim", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "visible-invariant-correction", "override_status": "none"},
+    "implementation.canonical-visible-controls": {"title": "Canonical visible controls", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "visible-invariant-correction", "override_status": "Synthetic helpers are diagnostics only."},
+    "implementation.hardware-proof": {"title": "Physical hardware proof", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "visible-invariant-correction", "override_status": "none"},
+    "implementation.end-to-end-proof": {"title": "End-to-end proof cannot be narrowed", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "visible-invariant-correction", "override_status": "none"},
+    "implementation.terminology": {"title": "Established technical terminology", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "user-doctrine-cleanup-2026-07-20", "override_status": "Use descriptive language when no established term is confirmed."},
+    "implementation.complete-scope": {"title": "Complete scoped implementation", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "legacy-adoption", "override_status": "none"},
+    "implementation.claude-ticket-rollout": {"title": "Claude installed-artifact ticket closeout", "providers": ["claude"], "promotion": "provider-specific", "origin": "legacy-adoption", "override_status": "none"},
+
+    "routing.pressure-lab": {"title": "Targeted Pressure Lab routing", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "pressure-lab-contract", "override_status": "Narrow wording, metadata, and trigger edits use focused source tests."},
+    "rewind.opt-in": {"title": "Opt-in replay and rollback", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "rewind-contract", "override_status": "Provider implementation details remain separate."},
+    "rewind.causal-evidence": {"title": "Same-branch causal evidence", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "rewind-contract", "override_status": "none"},
+    "rewind.rollback-anchor": {"title": "Risk-scaled rollback anchor", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "rewind-contract", "override_status": "Current HEAD plus full status is enough for ordinary scoped Git edits."},
+    "rewind.patch-stacking": {"title": "Temporary patch stacking", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "rewind-contract", "override_status": "Restore the anchor and apply the known fix cleanly."},
+    "rewind.router": {"title": "Rewind procedure router", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "rewind-contract", "override_status": "none"},
+    "learning.self-improvement-suspended": {"title": "Self-improvement suspension", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "self-improvement-suspension", "override_status": "Overrides historical automatic trigger text until the user explicitly re-enables the mechanism."},
+    "learning.durable-surface": {"title": "Durable lesson landing surface", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "durable-surface-correction", "override_status": "Runtime records require explicit user activation while self-improvement is suspended."},
+    "learning.no-false-self-improvement": {"title": "No false self-improvement claim", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "self-improvement-suspension", "override_status": "Name the actual changed source surface."},
+    "learning.thrashing-stop": {"title": "Stop suspect environment mutation", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "user-doctrine-cleanup-2026-07-20", "override_status": "Unaffected work may continue."},
+
+    "doctrine.dual-provider-rollout": {"title": "Provider-general dual rollout", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "dual-provider-rollout", "override_status": "Single-provider rollout requires explicit scope and reason."},
+    "doctrine.lean-runtime": {"title": "Lean runtime doctrine", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "agent-doctrine-bootstrap", "override_status": "Procedure remains skill-owned."},
+    "doctrine.install-drift": {"title": "Unmanaged install drift", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "agent-doctrine-bootstrap", "override_status": "none"},
+    "doctrine.router": {"title": "Doctrine workflow router", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "agent-doctrine-bootstrap", "override_status": "none"},
+    "doctrine.provider-lane-separation": {"title": "Provider lane separation", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "agent-doctrine-bootstrap", "override_status": "none"}
+  },
+  "owner_contracts": [
+    {
+      "id": "self-improvement-suspension",
+      "repo": "Self-Improvement",
+      "path": "skills/self-improving/SKILL.md",
+      "rule_ids": ["learning.self-improvement-suspended", "learning.no-false-self-improvement"],
+      "required_fragments": [
+        "Load this skill only when the user explicitly asks to use self-improvement.",
+        "Corrections, tool failures, repeated misses, verification gaps, and reusable agent-behavior friction do not activate it while provider doctrine suspends the mechanism.",
+        "While explicitly activated"
+      ],
+      "forbidden_fragments": [
+        "Load and use this skill without waiting for the user to name it"
+      ]
+    },
+    {
+      "id": "reply-next-reporting",
+      "repo": "Reply-Verbosity",
+      "path": "package/reply-verbosity/SKILL.md",
+      "rule_ids": ["operating.reply-clarity", "operating.next-reporting"],
+      "required_fragments": [
+        "End every status or final reply with exactly one future-only `Next:` line.",
+        "`Next: None; task complete.`",
+        "Never put completed work in `Next:`."
+      ],
+      "forbidden_fragments": [
+        "Every reply ends with an explicit `Next:` clause",
+        "`Next: done \u2014 nothing pending.`"
+      ]
+    },
+    {
+      "id": "planning-classification-ownership",
+      "repo": "Agent-Planning-Harness",
+      "path": "skills/agent-planning-harness/SKILL.md",
+      "rule_ids": ["operating.classify-tiny-direct", "operating.classify-guarded-direct", "operating.classify-planned", "operating.process-ceiling", "operating.packet-rebind", "implementation.premortem"],
+      "required_fragments": [
+        "Agent-Doctrine owns the provider-general classification labels and boundary.",
+        "This skill owns the detailed Planning Harness procedure.",
+        "Do not patch deployed provider doctrine from this repo."
+      ],
+      "forbidden_fragments": []
+    },
+    {
+      "id": "planning-review-scope-authority",
+      "repo": "Agent-Planning-Harness",
+      "path": "skills/agent-planning-harness/SKILL.md",
+      "rule_ids": ["operating.scope-and-fallback"],
+      "required_fragments": [
+        "Generic responses such as `continue`, `yes`, `proceed`, or `go ahead` can stop another review iteration, but cannot approve added architecture, requirements, validation classes, or runtime surfaces.",
+        "make the first binding work item the smallest real end-to-end functional proof",
+        "A proof of concept is valid internal implementation order; it is not permission to claim final completion."
+      ],
+      "forbidden_fragments": []
+    },
+    {
+      "id": "guarded-worker-interruption",
+      "repo": "AgentTerminalContact",
+      "path": "skills/agent-tmux-control/SKILL.md",
+      "rule_ids": ["operating.worker-interruption", "routing.tmux"],
+      "required_fragments": [
+        "agent-contact send --session <exact-worker> --interrupt-working",
+        "Do not fall back to raw `agent-tmux send` unless the current operator explicitly authorizes that exact bypass."
+      ],
+      "forbidden_fragments": []
+    },
+    {
+      "id": "pressure-lab-routing-boundary",
+      "repo": "Pressure-Lab",
+      "path": "scripts/install_pressure_lab.sh",
+      "rule_ids": ["routing.pressure-lab"],
+      "required_fragments": [
+        "description: Use when ${agent_name} needs pressure lanes, suites, occlusion, survivor routes, or robustness checks for a substantive agent-facing behavior change; editing a skill or workflow does not by itself require a Pressure Lab run.",
+        "Loading this skill does not require running its CLI.",
+        "never recurse into hardening Pressure Lab merely because this rule was edited."
+      ],
+      "forbidden_fragments": []
+    },
+    {
+      "id": "rewind-routing-boundary",
+      "repo": "Rewind",
+      "path": "skills/rewind-checkpoints/SKILL.md",
+      "rule_ids": ["rewind.opt-in", "rewind.causal-evidence", "rewind.rollback-anchor", "rewind.patch-stacking", "rewind.router"],
+      "required_fragments": [
+        "Do not load, initialize, or checkpoint Rewind solely because a task is substantive, visible, or a correction.",
+        "Patch stacking is allowed only as a temporary exploratory or repair-diagnostic phase after a verified rollback anchor exists",
+        "Once the cause and real fix are known, record the lesson, restore to the rollback anchor, and apply the clean fix without carrying diagnostic patch layers forward."
+      ],
+      "forbidden_fragments": []
+    }
+  ]
+}

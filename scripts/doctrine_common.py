@@ -1,10 +1,14 @@
 from __future__ import annotations
 
 import json
+import re
 from pathlib import Path
 
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
+RULE_MARKER_RE = re.compile(
+    r"^<!-- agent-doctrine-rule:([a-z0-9][a-z0-9.-]*) -->$"
+)
 
 PROVIDER_SPECS = {
     "codex": {
@@ -76,7 +80,11 @@ def render(provider: str) -> str:
     end = manifest["managed_end"]
     parts = [start]
     for path in module_paths(provider):
-        parts.append(path.read_text(encoding="utf-8").rstrip())
+        module_text = path.read_text(encoding="utf-8")
+        rendered_lines = [
+            line for line in module_text.splitlines() if not RULE_MARKER_RE.fullmatch(line)
+        ]
+        parts.append("\n".join(rendered_lines).rstrip())
         parts.append("")
     parts.append(end)
     return "\n".join(parts).rstrip() + "\n"

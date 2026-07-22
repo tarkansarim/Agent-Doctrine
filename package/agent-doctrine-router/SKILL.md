@@ -25,14 +25,30 @@ Claude `CLAUDE.md`.
 
 ## Workflow
 
-1. File or update an Agent-Doctrine ticket describing the requested doctrine
-   change, provider lane, evidence, and target behavior. For adoption/import,
-   the ticket must explicitly authorize reading the live provider file.
-2. Patch the provider-specific source modules in Agent-Doctrine.
-3. Regenerate only that provider output unless both providers are explicitly in
-   scope.
-4. Run the provider validator and the full parity validator.
-5. Install by snapshot only through the Agent-Doctrine installer. Unmanaged
+1. Decide whether separate tracking is needed. File or update an Agent-Doctrine
+   ticket when the work is deferred, crosses to another owner, or needs rollout
+   tracking beyond the current session. When the user explicitly assigns the
+   Agent-Doctrine source change and it will be implemented and verified now, the
+   source diff plus validation/install receipt is the durable record; do not
+   create a ticket solely to satisfy process. Adoption/import still requires
+   explicit authorization before reading a live provider file.
+2. Before adding or changing a top-level doctrine rule, identify its origin,
+   current owner, provider scope, promotion class, and override status. Add or
+   preserve its adjacent `agent-doctrine-rule` marker and update
+   `source/rule-provenance.json`. Unknown historical origin must be recorded as
+   unknown; do not guess.
+3. When doctrine promotes or narrows another repo's contract, reconcile the
+   owner source first and add an owner-contract check covering every promoted
+   rule ID. Validation rejects owner-derived origins without that check. Do not
+   copy repo-local behavior into provider doctrine without an explicit promotion
+   decision.
+4. Patch the provider-specific source modules in Agent-Doctrine. Provider-general
+   rules change both provider lanes; a single-provider change requires explicit
+   scope and reason.
+5. Regenerate the affected outputs, run the provider validators, and run the full
+   parity validator. Provenance markers are source-only and must not appear in
+   generated doctrine.
+6. Install by snapshot only through the Agent-Doctrine installer. Unmanaged
    non-empty deployed doctrine outside managed markers is drift, not normal
    preservation; the installer must report it and require a user decision to
    adopt/import it into source, discard it, or keep it only as a temporary
@@ -69,3 +85,6 @@ lands, closeout must say why the lesson was intentionally not made durable.
 - Stop if a proposed shared deployed doctrine file or shared installed runtime
   folder would mix Codex and Claude.
 - Stop if the source repo for the durable doctrine change is not identifiable.
+- Stop if a top-level source rule lacks a registered origin or promotion
+  decision, if an owner-derived rule lacks an owner-contract check, or if a
+  promoted owner contract disagrees with its owner source.

@@ -1,4 +1,7 @@
-# Codex Pressure-Lab Hardenability (Build-Time Constraint)
+# Codex Pressure-Lab Routing
 
-- For agent-facing skills, hooks, CLIs, validators, artifact grammars,
-  behavior contracts, and workflows, load `pressure-lab`.
+<!-- agent-doctrine-rule:routing.pressure-lab -->
+- Load `pressure-lab` only for substantive agent-facing behavior that needs
+  robustness or variation testing, repeated failures under realistic variation,
+  or an explicit hardening request. Narrow wording, metadata, and trigger changes
+  use source validation and focused tests without Pressure Lab.

@@ -31,7 +31,11 @@ Codex `AGENTS.md` and Claude `CLAUDE.md`.
   `~/.claude/CLAUDE.md` as read-only source input. Claude install support should
   still be implemented as source-owned scripts and docs, not by ad hoc edits.
 
-## Required First Pass
+## Bootstrap Checklist
+
+Run this checklist only when creating, adopting, or restructuring the doctrine
+pipeline. Ordinary rule edits use the existing source, generation, validation,
+and install path without repeating the inventory or redesign.
 
 1. Inventory repo-level `AGENTS.md` and `CLAUDE.md` examples from workspace.
 2. Separate provider-specific rules from general concepts.
@@ -53,6 +57,17 @@ Codex `AGENTS.md` and Claude `CLAUDE.md`.
 - Add tests for marker preservation, source/output parity, and provider
   separation.
 
+## Rule Provenance
+
+- Every active top-level source rule must have an adjacent stable
+  `agent-doctrine-rule` marker and an entry in
+  `source/rule-provenance.json`.
+- Record the original evidence honestly. If the bootstrap history did not retain
+  an exact per-rule origin, mark it unknown instead of inventing one.
+- Provider-general promotions from another repo must name that owner and carry a
+  validator-backed owner-contract check. Generated provider doctrine must not
+  contain the source-only provenance markers.
+
 <!-- agent-self-improvement-doctrine:begin -->
 ## Accepted Self-Improvement Doctrine
 
@@ -63,4 +78,5 @@ Codex `AGENTS.md` and Claude `CLAUDE.md`.
 - 2026-06-23T16:20:17Z [global] When a correction, repeated miss, workflow failure, or reusable repo-specific lesson should change future behavior, classify the landing surface before closeout as no-action with reason, runtime record only, repo-local durable doctrine, promotion-candidate, provider-general doctrine, or tooling/ticket; implement or route the selected durable surface and name verification. (source: self-improvement:user_correction:8114bb2db1d663f5)
 - 2026-06-23T23:02:13Z [global] Agents must not let discovered cross-repo/tool/skill/harness/workflow issues disappear because the current task can continue; they must surface the issue and either file/update the owner ticket or name the no-ticket follow-up surface. (source: self-improvement:user_correction:c949a377e05f2b07)
 - 2026-06-24T23:59:00Z [global] For self-improvement:user_correction:bc0009d1c8de2616, generic supervised-agent failures now route first to user rules/shared harnesses; the Helmsman source-paired regularization default is routed to PLANE-277 because Helmsman owns the domain behavior but this supervisor did not verify a user-level rollout surface. (source: self-improvement:user_correction:bc0009d1c8de2616)
+- 2026-06-26T08:35:52Z [global] When supervision creates or validates a reusable procedure, record the procedure in the owning source skill, repo doctrine, or routed owner ticket before relaunch or closeout; do not leave it only in chat or worker memory. (source: self-improvement:user_correction:da1a6bc99649f27f)
 <!-- agent-self-improvement-doctrine:end -->

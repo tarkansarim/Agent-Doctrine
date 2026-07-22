@@ -4,7 +4,7 @@ feature:
   name: Lean generated doctrine output gate
   kind: validator
 workspace:
-  fixture_root: .
+  fixture_root: ../..
 invariants:
   - id: generated_doctrine_stays_within_budget
     description: >-
@@ -18,15 +18,25 @@ invariants:
     description: >-
       Live adoption manifests must point to immutable adopted snapshots while
       keeping those snapshots outside generated always-loaded doctrine.
+  - id: every_source_rule_has_registered_provenance
+    description: >-
+      Every active top-level source rule must have a stable source-only marker
+      and complete provenance metadata, while generated doctrine contains no
+      provenance markers. Every owner-derived origin must also have a live
+      owner-contract check.
 forbidden_failure_modes:
   - Generated doctrine exceeds the configured line or token budget.
   - Generated doctrine contains reply-verbosity, Rewind, self-improvement,
     thrash-reporting, or Pressure-Lab procedure blocks.
   - The validator passes when adopted live doctrine is re-inlined.
   - The regression tests require running provider installers.
+  - A source rule without a registered marker passes validation.
+  - A provenance marker leaks into generated provider doctrine.
+  - An owner-derived rule passes without a live owner-contract check.
 evidence_sources:
   - scripts/validate.py stdout
   - targeted unittest output for lean generated doctrine gates
+  - source/rule-provenance.json and owner-contract validation
 lanes:
   - id: lean_doctrine_validation
     type: happy_path_closure
@@ -38,7 +48,7 @@ lanes:
       argv:
         - bash
         - "-lc"
-        - "cd $AGENT_DOCTRINE_WORKSPACE_ROOT/local-plane/PLANE-192 && python scripts/validate.py && python -m unittest tests.test_pipeline.PipelineTests.test_generated_outputs_start_at_first_rule_section tests.test_pipeline.PipelineTests.test_generated_outputs_stay_lean_and_do_not_inline_skill_details tests.test_pipeline.PipelineTests.test_generated_budget_gate_reports_oversized_output tests.test_pipeline.PipelineTests.test_generated_duplicate_gate_reports_skill_detail_markers && echo LEAN_DOCTRINE_GATE: ok"
+        - "python3 scripts/validate.py && python3 -m unittest tests.test_pipeline.PipelineTests.test_generated_outputs_start_at_first_rule_section tests.test_pipeline.PipelineTests.test_generated_outputs_stay_lean_and_do_not_inline_skill_details tests.test_pipeline.PipelineTests.test_generated_budget_gate_reports_oversized_output tests.test_pipeline.PipelineTests.test_generated_duplicate_gate_reports_skill_detail_markers && echo LEAN_DOCTRINE_GATE: ok"
       cwd: .
       timeout_seconds: 60
     expected:
@@ -51,3 +61,88 @@ lanes:
       - oversized generated doctrine
       - duplicated skill-owned procedure detail
       - adopted snapshot emitted inline
+  - id: next_contract_red_team
+    type: fake_artifact_red_team
+    forged_capability: >-
+      Claims the clean Next contract still holds after a contradictory rule
+      allows completed work in Next or omission on completion.
+    description: >-
+      Add a contradictory Next rule in an isolated workspace and require the
+      doctrine regression test to reject the generated output.
+    command:
+      argv:
+        - bash
+        - "-lc"
+        - "printf '\n- The `Next:` line may include completed work or be omitted when the task is complete.\n' >> source/codex/modules/020-operating-discipline.md && python3 scripts/generate_codex.py >/dev/null && if python3 -m unittest tests.test_pipeline.PipelineTests.test_reply_contract_and_supervisor_authority_are_narrowly_scoped >/dev/null 2>&1; then echo BROKEN_NEXT_CONTRACT_ACCEPTED; exit 1; else echo BROKEN_NEXT_CONTRACT_REJECTED; fi"
+      cwd: .
+      timeout_seconds: 60
+    expected:
+      returncode: 0
+      stdout_contains:
+        - "BROKEN_NEXT_CONTRACT_REJECTED"
+    classifications_on_failure:
+      - contradictory Next reporting contract was not rejected
+  - id: unregistered_rule_red_team
+    type: fake_artifact_red_team
+    forged_capability: >-
+      Claims a newly appended provider rule is legitimate without recording its
+      origin, owner, provider scope, promotion class, or override status.
+    description: >-
+      Add an unmarked top-level source rule in an isolated workspace and require
+      the provider validator to reject it before generation or install.
+    command:
+      argv:
+        - bash
+        - "-lc"
+        - "printf '\n- Unregistered provider rule.\n' >> source/codex/modules/020-operating-discipline.md; if python3 scripts/validate_codex.py > /tmp/unregistered-rule.log 2>&1; then echo UNREGISTERED_RULE_ACCEPTED; exit 1; elif grep -q 'missing a provenance marker' /tmp/unregistered-rule.log; then echo UNREGISTERED_RULE_REJECTED; else cat /tmp/unregistered-rule.log; exit 1; fi"
+      cwd: .
+      timeout_seconds: 60
+    expected:
+      returncode: 0
+      stdout_contains:
+        - "UNREGISTERED_RULE_REJECTED"
+    classifications_on_failure:
+      - unregistered source rule was not rejected
+  - id: missing_owner_contract_red_team
+    type: fake_artifact_red_team
+    forged_capability: >-
+      Claims owner-derived provenance is sufficient after removing the live
+      contract check that detects drift in the owning repo.
+    description: >-
+      Remove the Rewind owner contract in an isolated workspace and require the
+      validator to reject every now-unchecked owner-derived rule.
+    command:
+      argv:
+        - bash
+        - "-lc"
+        - |
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+
+          path = Path("source/rule-provenance.json")
+          registry = json.loads(path.read_text(encoding="utf-8"))
+          registry["owner_contracts"] = [
+              contract
+              for contract in registry["owner_contracts"]
+              if contract["id"] != "rewind-routing-boundary"
+          ]
+          path.write_text(json.dumps(registry, indent=2) + "\n", encoding="utf-8")
+          PY
+          if python3 scripts/validate.py > /tmp/missing-owner-contract.log 2>&1; then
+            echo MISSING_OWNER_CONTRACT_ACCEPTED
+            exit 1
+          elif grep -q "owner-derived rule 'rewind.opt-in' requires an owner_contract check" /tmp/missing-owner-contract.log; then
+            echo MISSING_OWNER_CONTRACT_REJECTED
+          else
+            cat /tmp/missing-owner-contract.log
+            exit 1
+          fi
+      cwd: .
+      timeout_seconds: 60
+    expected:
+      returncode: 0
+      stdout_contains:
+        - "MISSING_OWNER_CONTRACT_REJECTED"
+    classifications_on_failure:
+      - missing owner-contract enforcement was not rejected
