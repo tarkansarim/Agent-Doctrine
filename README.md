@@ -56,6 +56,14 @@ python scripts/adopt_live_doctrine.py --provider codex
 python scripts/adopt_live_doctrine.py --provider claude
 ```
 
+## Behavior Evaluations
+
+Fresh-agent BenchFlow tasks for whole user-level doctrine and isolated skill
+packs are owned by
+`/home/tarkan/Dropbox/work/MyTools/Agent-Behavior-Evals`. This repository
+supplies generated doctrine and router skill sources as inputs under test; it
+does not own the evaluation harness or task definitions.
+
 ## Install
 
 Installers write snapshot content into provider-specific targets. By default
