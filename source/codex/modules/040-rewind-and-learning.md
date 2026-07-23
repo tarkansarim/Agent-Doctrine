@@ -24,11 +24,11 @@
   the user explicitly asks to use them. Do not automatically run `agenda`,
   `status`, `record`, `enqueue`, `reliability-gate`, or `review-add`.
 <!-- agent-doctrine-rule:learning.durable-surface -->
-- Before closing a correction, repeated miss, workflow failure, or reusable
+- Before closing a repeated miss, workflow failure, or reusable agent/tool/harness/workflow/doctrine
   lesson, choose and name its durable surface: none, runtime record only when
   explicitly requested, repo doctrine, promotion candidate, provider doctrine,
   or tool/ticket. Provider doctrine routes through Agent-Doctrine
-  source/generate/validate/install.
+  source/generate/validate/install. An ordinary repository code fix needs no durable-surface label unless it exposes such a reusable lesson.
 <!-- agent-doctrine-rule:learning.no-false-self-improvement -->
 - While the mechanism is suspended, do not call ordinary source-rule, skill,
   repo-document, tool, or ticket changes self-improvement. Name the actual

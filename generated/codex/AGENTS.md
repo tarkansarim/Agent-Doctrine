@@ -27,7 +27,7 @@
 - Supervisors must independently verify implementation and live-behavior claims against the user invariant. For bounded read-only lookup, comparison, or reporting, delegate only when parallel work materially helps. If a worker supplies exact source citations, read only those passages and directly adjacent qualifiers; do not reread every source, rerun the search, or reproduce the analysis unless a spot-check fails or the evidence is incomplete or conflicting. When assigned supervision only, keep app implementation with the worker; supervisors may directly fix shared rules/tools they own and small blocking defects within the authorized scope. Worker/app self-reports are supporting evidence only.
 - When supervision creates or validates a reusable procedure, record the procedure in the owning source skill, repo doctrine, or routed owner ticket before relaunch or closeout; do not leave it only in chat or worker memory.
 - Before heavyweight process, classify both implementation size and consequence. `tiny/direct` means one obvious, local, reversible, low-consequence action with exact verification and no material uncertainty or reusable behavior change.
-- `guarded-direct` means a small, understood change to important or high-consequence behavior: durable defaults/contracts, security/privacy, paid/destructive actions, data/training/history integrity, or another crucial workflow. It skips a full Planning Harness packet and adversarial-review loop by default, but requires a short pre-mortem, caller/contract tracing, focused tests, exact-path proof, and rollback evidence scaled to restore risk. For ordinary scoped Git edits, current `HEAD` plus full status is the rollback anchor; use a commit or checkpoint only when overlapping dirty state, destructive work, or causal replay requires it.
+- `guarded-direct` means a small, understood change whose failure could directly create material risk to durable defaults/contracts, security/privacy, paid/destructive actions, or data/training/history integrity. Classify the change by its actual effects and failure consequences, not its domain, filename, module, or proximity to high-consequence code. It skips a full Planning Harness packet and adversarial-review loop by default, but requires a short pre-mortem, caller/contract tracing, focused tests, exact-path proof, and rollback evidence scaled to restore risk. For ordinary scoped Git edits, current `HEAD` plus full status is the rollback anchor; use a commit or checkpoint only when overlapping dirty state, destructive work, or causal replay requires it.
 - Use planned/substantial process for ambiguity, broad or cross-module blast radius, multiple work items, architecture, repeated misses with an unclear cause, reusable-agent behavior, coordinated multi-agent edits with nontrivial ownership/integration risk, or explicit planning requests. Bounded read-only delegation or disjoint low-risk worker tasks do not force planning by themselves. A correction alone does not force escalation, and a one-line diff does not justify `tiny/direct` when consequences are important.
 - Task classification is a process ceiling, not permission to stack every matching harness. Do not accumulate Planning Harness, staged planning, Rewind, Pressure Lab, adversarial review, tickets, and friction logging merely because several descriptions match. Add a gate only for a distinct uncovered risk, and use the smallest set that proves the agreed scope safely.
 - Before writing code, inspect the exact owning file and caller path. Search
@@ -108,7 +108,7 @@
   complaints, identify and fix the root cause before claiming success. Do not
   treat symptoms, tune nearby behavior, or substitute partial mitigations unless
   the user explicitly accepts that reduced scope.
-- For visible, interactive, realtime, or performance bugs, prove the same user path that failed now works. Do not claim fixed from counters, backend state, widget values, smoke tests, previews, final-only screenshots, generic FPS, provenance, or state JSON unless they directly prove that path.
+- For visible, interactive, realtime, or performance bugs, prove the same user path that failed now works. Do not claim fixed from counters, backend state, widget values, smoke tests, previews, final-only screenshots, generic FPS, provenance, or state JSON unless they directly prove that path. If exact replay would itself mutate real user data, spend money, trigger an external/destructive action, or alter history, do not manufacture live proof: use a focused regression plus persisted-state readback after a full restart of the canonical runtime, report the exact interaction as awaiting user confirmation, and do not claim that interaction verified until confirmed.
 - If the user reports that a claimed fix is still identical, unchanged, or
   visibly wrong, treat the prior closeout as invalidated. Reproduce the same
   user path, compare before and after artifacts from that path, identify why
@@ -116,7 +116,7 @@
   behavior changes or the remaining blocker is stated plainly.
 - For disputed visible fixes and selection/state transition bugs, use the canonical launcher and same visible controls the user used; helper APIs, synthetic events, direct setters, and exercise-only harnesses are diagnostics, not closeout proof.
 - Hardware/resource claims need physical proof: GPU utilization, process-device mapping, power, profiler traces, or hardware timers; self-reports support only.
-- If an end-to-end visible proof fails, a smaller passing lane is diagnostic only; closeout must return to the full user path or state the blocker plainly. Workarounds that change semantics, provenance, pairing, persistence, runtime surface, or acceptance criteria need explicit approval.
+- If an end-to-end visible proof fails, a smaller passing lane is diagnostic only; closeout must return to the full user path or state the blocker plainly. When exact replay is intentionally deferred because it would cause a protected side effect, use the non-destructive proof rule above and leave the interaction unverified pending user confirmation. Workarounds that change semantics, provenance, pairing, persistence, runtime surface, or acceptance criteria need explicit approval.
 - Translate informal user wording into precise technical language before durable rules, tickets, changelogs, skills, or doctrine; if the established term is uncertain, verify it with primary/current sources or use a descriptive phrase instead of pseudo-jargon.
 - Ship the full requested behavior for the agreed scope, with real error handling. Do not leave stubs, placeholders, unrelated edits, or reversions of user changes.
 
@@ -146,11 +146,11 @@
 - The `self-improving` skill and `agent-self-improve` CLI are suspended unless
   the user explicitly asks to use them. Do not automatically run `agenda`,
   `status`, `record`, `enqueue`, `reliability-gate`, or `review-add`.
-- Before closing a correction, repeated miss, workflow failure, or reusable
+- Before closing a repeated miss, workflow failure, or reusable agent/tool/harness/workflow/doctrine
   lesson, choose and name its durable surface: none, runtime record only when
   explicitly requested, repo doctrine, promotion candidate, provider doctrine,
   or tool/ticket. Provider doctrine routes through Agent-Doctrine
-  source/generate/validate/install.
+  source/generate/validate/install. An ordinary repository code fix needs no durable-surface label unless it exposes such a reusable lesson.
 - While the mechanism is suspended, do not call ordinary source-rule, skill,
   repo-document, tool, or ticket changes self-improvement. Name the actual
   durable surface that changed.

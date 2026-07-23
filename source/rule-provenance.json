@@ -47,8 +47,8 @@
     },
     "planning-classification-reconciliation": {
       "kind": "shared-contract-reconciliation",
-      "reference": "Agent-Doctrine source and Agent-Planning-Harness/skills/agent-planning-harness/SKILL.md",
-      "certainty": "Historical copy direction was not recorded. Ownership is now explicit: Agent-Doctrine owns compact provider labels; Planning Harness owns procedure."
+      "reference": "Agent-Doctrine source, Agent-Planning-Harness/skills/agent-planning-harness/SKILL.md, direct user correction on 2026-07-23, and owner ticket PLANE-357",
+      "certainty": "Historical copy direction was not recorded. Agent-Doctrine owns compact provider labels; Planning Harness owns procedure. The guarded-direct boundary now uses actual failure consequence rather than nearby domain, with owner alignment routed through PLANE-357."
     },
     "planning-scope-authority-correction": {
       "kind": "direct-user-correction",
@@ -72,13 +72,13 @@
     },
     "visible-invariant-correction": {
       "kind": "direct-user-correction",
-      "reference": "self-improvement:user_correction:a1cc1db8c769f752 and self-improvement:user_correction:fedb10a056b11cf7",
-      "certainty": "Recorded user corrections."
+      "reference": "self-improvement:user_correction:a1cc1db8c769f752, self-improvement:user_correction:fedb10a056b11cf7, and direct user correction on 2026-07-23",
+      "certainty": "Exact-path proof remains mandatory when safe; when replay itself would alter protected live state, restarted canonical-runtime evidence is allowed while the interaction remains explicitly unverified pending user confirmation."
     },
     "durable-surface-correction": {
       "kind": "direct-user-correction",
-      "reference": "self-improvement:user_correction:8114bb2db1d663f5",
-      "certainty": "Recorded user correction."
+      "reference": "self-improvement:user_correction:8114bb2db1d663f5 and direct user correction on 2026-07-23",
+      "certainty": "Durable-surface classification applies to reusable behavior lessons, not ordinary repository code fixes."
     },
     "pressure-lab-contract": {
       "kind": "owner-contract-reconciliation",
@@ -116,7 +116,7 @@
     "operating.supervisor-verification": {"title": "Risk-matched supervisor verification and implementation ownership", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "supervisor-ownership-reconciliation", "override_status": "Independent proof is mandatory for implementation and live behavior; exact-citation read-only handoffs permit only cited-passage checks plus necessary adjacent qualifiers unless evidence fails."},
     "operating.supervision-procedure-durability": {"title": "Durable supervised procedures", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "supervision-procedure-correction", "override_status": "none"},
     "operating.classify-tiny-direct": {"title": "Tiny direct classification", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "planning-classification-reconciliation", "override_status": "Agent-Doctrine owns the compact label; Planning Harness owns elaboration."},
-    "operating.classify-guarded-direct": {"title": "Guarded direct classification", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "planning-classification-reconciliation", "override_status": "Agent-Doctrine owns the compact label; Planning Harness owns elaboration."},
+    "operating.classify-guarded-direct": {"title": "Guarded direct classification", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "planning-classification-reconciliation", "override_status": "Agent-Doctrine owns the compact actual-consequence boundary; Planning Harness owns elaboration and is aligning through PLANE-357."},
     "operating.classify-planned": {"title": "Planned substantial classification", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "planning-classification-reconciliation", "override_status": "Agent-Doctrine owns the compact label; Planning Harness owns elaboration."},
     "operating.process-ceiling": {"title": "No process stacking", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "planning-classification-reconciliation", "override_status": "none"},
     "operating.inspect-owner-path": {"title": "Inspect owner and caller path", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "user-doctrine-cleanup-2026-07-20", "override_status": "Tiny direct work does not require broad archaeology."},
@@ -143,11 +143,11 @@
 
     "implementation.premortem": {"title": "Risk-scaled pre-mortem", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "planning-classification-reconciliation", "override_status": "Tiny direct changes are exempt."},
     "implementation.root-cause": {"title": "Root-cause bug fixing", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "visible-root-cause-correction", "override_status": "none"},
-    "implementation.exact-visible-path": {"title": "Exact visible path proof", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "visible-invariant-correction", "override_status": "none"},
+    "implementation.exact-visible-path": {"title": "Exact visible path proof", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "visible-invariant-correction", "override_status": "Protected live side effects use restarted canonical-runtime evidence and remain unverified pending user confirmation."},
     "implementation.disputed-claim": {"title": "Invalidated disputed fix claim", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "visible-invariant-correction", "override_status": "none"},
     "implementation.canonical-visible-controls": {"title": "Canonical visible controls", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "visible-invariant-correction", "override_status": "Synthetic helpers are diagnostics only."},
     "implementation.hardware-proof": {"title": "Physical hardware proof", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "visible-invariant-correction", "override_status": "none"},
-    "implementation.end-to-end-proof": {"title": "End-to-end proof cannot be narrowed", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "visible-invariant-correction", "override_status": "none"},
+    "implementation.end-to-end-proof": {"title": "End-to-end proof cannot be narrowed", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "visible-invariant-correction", "override_status": "The protected-side-effect exception defers the exact interaction rather than falsely claiming it verified."},
     "implementation.terminology": {"title": "Established technical terminology", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "user-doctrine-cleanup-2026-07-20", "override_status": "Use descriptive language when no established term is confirmed."},
     "implementation.complete-scope": {"title": "Complete scoped implementation", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "legacy-adoption", "override_status": "none"},
     "implementation.claude-ticket-rollout": {"title": "Claude installed-artifact ticket closeout", "providers": ["claude"], "promotion": "provider-specific", "origin": "legacy-adoption", "override_status": "none"},
@@ -159,7 +159,7 @@
     "rewind.patch-stacking": {"title": "Temporary patch stacking", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "rewind-contract", "override_status": "Restore the anchor and apply the known fix cleanly."},
     "rewind.router": {"title": "Rewind procedure router", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "rewind-contract", "override_status": "none"},
     "learning.self-improvement-suspended": {"title": "Self-improvement suspension", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "self-improvement-suspension", "override_status": "Overrides historical automatic trigger text until the user explicitly re-enables the mechanism."},
-    "learning.durable-surface": {"title": "Durable lesson landing surface", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "durable-surface-correction", "override_status": "Runtime records require explicit user activation while self-improvement is suspended."},
+    "learning.durable-surface": {"title": "Durable lesson landing surface", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "durable-surface-correction", "override_status": "Runtime records require explicit user activation while self-improvement is suspended; ordinary code fixes with no reusable lesson need no label."},
     "learning.no-false-self-improvement": {"title": "No false self-improvement claim", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "self-improvement-suspension", "override_status": "Name the actual changed source surface."},
     "learning.thrashing-stop": {"title": "Stop suspect environment mutation", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "user-doctrine-cleanup-2026-07-20", "override_status": "Unaffected work may continue."},
 

@@ -67,3 +67,21 @@ The verifier reads the provider-native session transcript and rejects a result
 that did not open the installed `SKILL.md`, even when the final report happens
 to contain similar wording. Omit `--skills-dir` and use `--skill-mode no-skill`
 to run the same task as a baseline.
+
+## Risk-matched process
+
+The `risk-matched-process` task checks three user-doctrine boundaries in one
+fresh Codex run: classification by actual effect rather than nearby domain,
+non-destructive proof when exact replay would mutate live state, and no
+durable-surface ceremony for an ordinary code fix with no reusable lesson.
+
+```bash
+bench eval run \
+  --tasks-dir behavior-evals/tasks \
+  --include risk-matched-process \
+  --agent codex-acp \
+  --model gpt-5.4 \
+  --sandbox docker \
+  --context-root "$PWD" \
+  --jobs-dir /tmp/agent-doctrine-benchflow/risk-matched-codex
+```

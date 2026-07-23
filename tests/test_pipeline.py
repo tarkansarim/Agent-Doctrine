@@ -213,7 +213,8 @@ class PipelineTests(unittest.TestCase):
             "do not leave it only in chat or worker memory",
             "Before heavyweight process, classify both implementation size and consequence",
             "`tiny/direct` means one obvious, local, reversible, low-consequence action with exact verification",
-            "`guarded-direct` means a small, understood change to important or high-consequence behavior",
+            "`guarded-direct` means a small, understood change whose failure could directly create material risk",
+            "Classify the change by its actual effects and failure consequences, not its domain, filename, module, or proximity to high-consequence code",
             "It skips a full Planning Harness packet and adversarial-review loop by default",
             "rollback evidence scaled to restore risk",
             "current `HEAD` plus full status is the rollback anchor",
@@ -414,6 +415,10 @@ class PipelineTests(unittest.TestCase):
     def test_visible_proof_cannot_narrow_failed_end_to_end_path(self) -> None:
         required = (
             "If an end-to-end visible proof fails, a smaller passing lane is diagnostic only",
+            "If exact replay would itself mutate real user data, spend money, trigger an external/destructive action, or alter history, do not manufacture live proof",
+            "use a focused regression plus persisted-state readback after a full restart of the canonical runtime",
+            "do not claim that interaction verified until confirmed",
+            "leave the interaction unverified pending user confirmation",
         )
         for provider, filename in (("codex", "AGENTS.md"), ("claude", "CLAUDE.md")):
             with self.subTest(provider=provider):
@@ -487,13 +492,14 @@ class PipelineTests(unittest.TestCase):
 
     def test_self_improvement_repo_lessons_require_promotion_classification(self) -> None:
         required = (
-            "Before closing a correction, repeated miss, workflow failure, or reusable lesson, choose and name its durable surface",
+            "Before closing a repeated miss, workflow failure, or reusable agent/tool/harness/workflow/doctrine lesson, choose and name its durable surface",
             "runtime record",
             "repo doctrine",
             "promotion candidate",
             "provider doctrine",
             "tool/ticket",
             "Provider doctrine routes through Agent-Doctrine source/generate/validate/install",
+            "An ordinary repository code fix needs no durable-surface label unless it exposes such a reusable lesson",
         )
         for provider, filename, module_name in (
             ("codex", "AGENTS.md", "040-rewind-and-learning.md"),
