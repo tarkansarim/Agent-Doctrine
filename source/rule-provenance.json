@@ -55,6 +55,16 @@
       "reference": "Agent-Doctrine user correction on 2026-07-21 after Helmsman campaign continuation scope expansion",
       "certainty": "The user identified generic continuation being treated as approval of review-added scope and proof-of-concept sequencing being incorrectly blocked."
     },
+    "agentic-judgment-runtime-boundary-2026-07-24": {
+      "kind": "direct-user-direction",
+      "reference": "Agent-Doctrine user direction on 2026-07-24",
+      "certainty": "The user explicitly limited this principle to agent behavior and agent-facing tools, required model judgment and recovery to remain active, and required stable mechanical agent work to move into runtime."
+    },
+    "agent-system-prompt-clarity-2026-07-24": {
+      "kind": "direct-user-direction",
+      "reference": "Agent-Doctrine user direction on 2026-07-24",
+      "certainty": "The user explicitly required agent system prompts to use wording simple enough for a toddler to understand while retaining necessary technical precision."
+    },
     "worker-interruption-contract": {
       "kind": "promoted-owner-contract",
       "reference": "AgentTerminalContact commit 00807d5",
@@ -119,6 +129,10 @@
     "operating.classify-guarded-direct": {"title": "Guarded direct classification", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "planning-classification-reconciliation", "override_status": "Agent-Doctrine owns the compact actual-consequence boundary; Planning Harness owns elaboration and is aligning through PLANE-357."},
     "operating.classify-planned": {"title": "Planned substantial classification", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "planning-classification-reconciliation", "override_status": "Agent-Doctrine owns the compact label; Planning Harness owns elaboration."},
     "operating.process-ceiling": {"title": "No process stacking", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "planning-classification-reconciliation", "override_status": "none"},
+    "operating.agentic-tools-scope": {"title": "Agentic tool design scope", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "agentic-judgment-runtime-boundary-2026-07-24", "override_status": "Does not weaken product or engineering constraints."},
+    "operating.agentic-judgment": {"title": "Preserve judgment and recovery in agentic tools", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "agentic-judgment-runtime-boundary-2026-07-24", "override_status": "Concrete irreversible, authority, scope, safety, and integrity risks still justify pre-action gates."},
+    "operating.agentic-runtime": {"title": "Deterministic runtime for agent workflow mechanics", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "agentic-judgment-runtime-boundary-2026-07-24", "override_status": "Judgment and product decisions stay agentic."},
+    "operating.simple-agent-system-prompts": {"title": "Simple agent system prompts", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "agent-system-prompt-clarity-2026-07-24", "override_status": "Exact names, necessary technical terms, and instruction strength remain intact."},
     "operating.inspect-owner-path": {"title": "Inspect owner and caller path", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "user-doctrine-cleanup-2026-07-20", "override_status": "Tiny direct work does not require broad archaeology."},
     "operating.scope-and-fallback": {"title": "Exact scope authority and honest phased delivery", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "planning-scope-authority-correction", "override_status": "Contract-preserving tested fallbacks and explicitly labeled internal proofs remain allowed."},
     "operating.explicit-user-constraints": {"title": "Honor explicit user constraints", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "legacy-adoption", "override_status": "Provider wording may differ for unsafe or autonomous side effects."},
@@ -140,6 +154,7 @@
     "routing.gui-proof": {"title": "GUI proof router", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "visible-invariant-correction", "override_status": "none"},
     "routing.skill-packaging": {"title": "Skill packaging router", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "user-doctrine-cleanup-2026-07-20", "override_status": "none"},
     "routing.control-harness": {"title": "Application control harness router", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "user-doctrine-cleanup-2026-07-20", "override_status": "none"},
+    "routing.reply-verbosity": {"title": "Reply verbosity router", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "reply-verbosity-contract", "override_status": "Provider doctrine remains the ceiling; the skill may only narrow wording and detail."},
 
     "implementation.premortem": {"title": "Risk-scaled pre-mortem", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "planning-classification-reconciliation", "override_status": "Tiny direct changes are exempt."},
     "implementation.root-cause": {"title": "Root-cause bug fixing", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "visible-root-cause-correction", "override_status": "none"},
@@ -188,15 +203,22 @@
       "id": "reply-next-reporting",
       "repo": "Reply-Verbosity",
       "path": "package/reply-verbosity/SKILL.md",
-      "rule_ids": ["operating.reply-clarity", "operating.next-reporting"],
+      "rule_ids": ["operating.reply-clarity", "operating.next-reporting", "routing.reply-verbosity"],
       "required_fragments": [
         "End every status or final reply with exactly one future-only `Next:` line.",
         "`Next: None; task complete.`",
-        "Never put completed work in `Next:`."
+        "Never put completed work in `Next:`.",
+        "Provider doctrine is the ceiling.",
+        "Default: **plain**.",
+        "Technical mode changes vocabulary only; it does not raise the verbosity tier.",
+        "Missing or invalid values mean Tier 2 and `plain`."
       ],
       "forbidden_fragments": [
         "Every reply ends with an explicit `Next:` clause",
-        "`Next: done \u2014 nothing pending.`"
+        "`Next: done \u2014 nothing pending.`",
+        "Default: **technical**",
+        "without softening or explaining unless the user asks",
+        "Assume the user knows the field"
       ]
     },
     {
@@ -222,6 +244,68 @@
         "A proof of concept is valid internal implementation order; it is not permission to claim final completion."
       ],
       "forbidden_fragments": []
+    },
+    {
+      "id": "agentic-planning-judgment-boundary",
+      "repo": "Agent-Planning-Harness",
+      "path": "skills/agent-planning-harness/SKILL.md",
+      "rule_ids": ["operating.agentic-tools-scope", "operating.agentic-judgment"],
+      "required_fragments": [
+        "Planning Harness governs agent planning behavior; it does not weaken product, safety, security, privacy, data-integrity, evidence-integrity, correctness, verification, or low-level engineering requirements.",
+        "Do not attach a fresh review merely because another planning artifact or work item exists."
+      ],
+      "forbidden_fragments": [
+        "attach it to any risky roadmap, milestone, Work Package Plan, Work Item Plan, implementation evidence, Work Item Assessment, or closeout surface"
+      ]
+    },
+    {
+      "id": "agentic-supervision-judgment-boundary",
+      "repo": "AgentTerminalContact",
+      "path": "skills/agent-tmux-control/SKILL.md",
+      "rule_ids": ["operating.agentic-tools-scope", "operating.agentic-judgment"],
+      "required_fragments": [
+        "Supervision ownership is a role boundary, not a file-count or line-count algorithm.",
+        "Use evidence-based judgment within the user's assigned role."
+      ],
+      "forbidden_fragments": [
+        "Do not apply supervisor judgment to override the gate",
+        "After 3 consecutive direct edits"
+      ]
+    },
+    {
+      "id": "agentic-work-leases-selective-loop",
+      "repo": "Agent-Work-Leases",
+      "path": "skills/agent-work-leases/SKILL.md",
+      "rule_ids": ["operating.agentic-tools-scope", "operating.agentic-judgment"],
+      "required_fragments": [
+        "This list is a menu of applicable coordination steps, not a requirement to activate every available agent system:"
+      ],
+      "forbidden_fragments": [
+        "switch on the full supervisor loop"
+      ]
+    },
+    {
+      "id": "agentic-runtime-promotion-boundary",
+      "repo": "Runtime-Promotion",
+      "path": "package/runtime-promotion/SKILL.md",
+      "rule_ids": ["operating.agentic-tools-scope", "operating.agentic-runtime"],
+      "required_fragments": [
+        "This skill concerns agent-executed workflows and agent-facing operational tooling.",
+        "Runtime owns repeatable mechanics; the agent still chooses intent, resolves ambiguity, and interprets the result."
+      ],
+      "forbidden_fragments": []
+    },
+    {
+      "id": "agentic-recall-recovery-boundary",
+      "repo": "Routed-Recall",
+      "path": "package/routed-recall/SKILL.md",
+      "rule_ids": ["operating.agentic-tools-scope", "operating.agentic-judgment"],
+      "required_fragments": [
+        "If the returned pages are irrelevant, stale, incomplete, or conflicting, say so briefly and continue with the next appropriate source or direct reasoning."
+      ],
+      "forbidden_fragments": [
+        "Only if `hits` is `[]`"
+      ]
     },
     {
       "id": "guarded-worker-interruption",

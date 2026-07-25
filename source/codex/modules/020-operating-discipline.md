@@ -9,10 +9,7 @@
 <!-- agent-doctrine-rule:operating.no-silent-tool-workaround -->
 - Do not silently work around broken tools; report and fix or route the failure.
 <!-- agent-doctrine-rule:operating.owner-defect-routing -->
-- Do not let reusable cross-repo/tool/skill/harness/workflow defects disappear:
-  surface them and fix them at the owner source when the user assigned that work.
-  File or update an owner ticket only when the fix is deferred or belongs to a
-  different owner; ordinary exploratory command mistakes do not need tickets.
+- Do not let reusable cross-repo/tool/skill/harness/workflow defects disappear: surface them and fix them at the owner source when the user assigned that work. File or update an owner ticket only when the fix is deferred or belongs to a different owner; ordinary exploratory command mistakes do not need tickets.
 <!-- agent-doctrine-rule:operating.supervisor-verification -->
 - Supervisors must independently verify implementation and live-behavior claims against the user invariant. For bounded read-only lookup, comparison, or reporting, delegate only when parallel work materially helps. If a worker supplies exact source citations, read only those passages and directly adjacent qualifiers; do not reread every source, rerun the search, or reproduce the analysis unless a spot-check fails or the evidence is incomplete or conflicting. When assigned supervision only, keep app implementation with the worker; supervisors may directly fix shared rules/tools they own and small blocking defects within the authorized scope. Worker/app self-reports are supporting evidence only.
 <!-- agent-doctrine-rule:operating.supervision-procedure-durability -->
@@ -22,9 +19,17 @@
 <!-- agent-doctrine-rule:operating.classify-guarded-direct -->
 - `guarded-direct` means a small, understood change whose failure could directly create material risk to durable defaults/contracts, security/privacy, paid/destructive actions, or data/training/history integrity. Classify the change by its actual effects and failure consequences, not its domain, filename, module, or proximity to high-consequence code. It skips a full Planning Harness packet and adversarial-review loop by default, but requires a short pre-mortem, caller/contract tracing, focused tests, exact-path proof, and rollback evidence scaled to restore risk. For ordinary scoped Git edits, current `HEAD` plus full status is the rollback anchor; use a commit or checkpoint only when overlapping dirty state, destructive work, or causal replay requires it.
 <!-- agent-doctrine-rule:operating.classify-planned -->
-- Use planned/substantial process for ambiguity, broad or cross-module blast radius, multiple work items, architecture, repeated misses with an unclear cause, reusable-agent behavior, coordinated multi-agent edits with nontrivial ownership/integration risk, or explicit planning requests. Bounded read-only delegation or disjoint low-risk worker tasks do not force planning by themselves. A correction alone does not force escalation, and a one-line diff does not justify `tiny/direct` when consequences are important.
+- Use planned/substantial process for ambiguity, broad impact, architecture, multiple work items, unclear repeated misses, reusable agent behavior, risky multi-agent integration, or explicit planning requests. A correction, read-only delegation, or disjoint low-risk workers alone do not force planning.
 <!-- agent-doctrine-rule:operating.process-ceiling -->
-- Task classification is a process ceiling, not permission to stack every matching harness. Do not accumulate Planning Harness, staged planning, Rewind, Pressure Lab, adversarial review, tickets, and friction logging merely because several descriptions match. Add a gate only for a distinct uncovered risk, and use the smallest set that proves the agreed scope safely.
+- Task classification is a process ceiling. Add only gates that cover a distinct risk; do not stack harnesses because several trigger descriptions match.
+<!-- agent-doctrine-rule:operating.agentic-tools-scope -->
+- These agent-design rules apply only to agent behavior and agent-facing tools. They do not weaken product, safety, integrity, correctness, verification, or low-level engineering requirements.
+<!-- agent-doctrine-rule:operating.agentic-judgment -->
+- For reversible agent work, preserve judgment through decide, act, verify, and recover. Add pre-action gates only for concrete irreversible, paid, safety, authority, scope, or integrity risks, or explicit user requirements; never for one mistake alone.
+<!-- agent-doctrine-rule:operating.agentic-runtime -->
+- Move stable, repeated, mechanically verifiable agent-workflow steps into deterministic runtime. Keep intent, ambiguity, judgment, and result interpretation agentic.
+<!-- agent-doctrine-rule:operating.simple-agent-system-prompts -->
+- Write agent system prompts in short, direct sentences with wording simple enough that a toddler could understand the basic action. Keep exact names and necessary technical terms, but explain them in plain words; simplicity must not weaken the instruction.
 <!-- agent-doctrine-rule:operating.inspect-owner-path -->
 - Before writing code, inspect the exact owning file and caller path. Search
   broader docs, skills, code maps, and batch workflows when ownership or contract
@@ -36,10 +41,7 @@
 - Do not override explicit user constraints. If the requested path is unsafe or
   technically self-defeating, pause and explain the concrete risk.
 <!-- agent-doctrine-rule:operating.parallel-workers -->
-- Use parallel workers when they materially help and stay within the assigned
-  scope. Read-only or isolated low-risk delegation needs no extra permission;
-  ask before delegation expands scope, causes external side effects, or creates
-  nontrivial integration risk. During an active process or end-to-end test, a `non-blocking repair` is a confirmed defect that an isolated worker can fix while a temporary workaround lets the primary path continue without changing tested semantics, corrupting state or evidence, or invalidating later results. Propose delegation to an isolated repair worker; after approval, continue the unaffected primary path and load `agent-work-leases` for batching, isolation, integration, and canonical proof. If any condition fails, treat the defect as blocking.
+- Use parallel workers when they materially help within scope. Ask before scope expansion, external side effects, or nontrivial integration risk. During active testing, a `non-blocking repair` may run in isolation only if a workaround preserves semantics, state, and evidence; otherwise it blocks. After approval, use `agent-work-leases` and prove the canonical path after integration.
 
 ## Conflicts
 
@@ -113,3 +115,5 @@
 - For creating, editing, installing, or auditing skills, load `skill-packaging-discipline-router`.
 <!-- agent-doctrine-rule:routing.control-harness -->
 - For app control surfaces, launch/control/readback APIs, or native app automation, load `agentic-control-harness`.
+<!-- agent-doctrine-rule:routing.reply-verbosity -->
+- For every status or final reply, load `reply-verbosity` and follow its saved tier and language setting.
