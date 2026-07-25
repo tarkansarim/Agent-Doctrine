@@ -133,7 +133,7 @@ class PipelineTests(unittest.TestCase):
             / "source"
             / "codex"
             / "modules"
-            / "030-implementation-discipline.md"
+            / "005-minimal-doctrine.md"
         ).read_text(encoding="utf-8")
         codex_generated = (
             REPO_ROOT / "generated" / "codex" / "AGENTS.md"
@@ -145,8 +145,9 @@ class PipelineTests(unittest.TestCase):
         normalized_codex_generated = " ".join(codex_generated.split())
         normalized_claude_generated = " ".join(claude_generated.split())
         active_fragments = (
-            "Add a short pre-mortem only for guarded-direct, planned/substantial, destructive, or hard-to-reverse work; tiny/direct changes do not require one.",
-            "Ship the full requested behavior for the agreed scope, with real error handling. Do not leave stubs, placeholders, unrelated edits, or reversions of user changes.",
+            "For bugs, fix the root cause.",
+            "prove the same user path with direct evidence",
+            "partial or proxy behavior is never complete",
         )
         retired_fragments = (
             "Python verifiers, test runners, build helpers, or agent tools",
@@ -172,15 +173,15 @@ class PipelineTests(unittest.TestCase):
 
     def test_codex_tool_failure_rule_rejects_success_looking_nonzero_exits(self) -> None:
         required = (
-            "A non-zero reusable tool exit is a failure even when stdout looks positive.",
-            "Record it and continue only after the same contract passes through a repaired or equivalent route.",
+            "Do not silently bypass a broken required tool or reusable cross-repo workflow.",
+            "Fix its owner when assigned; otherwise report it or file the owner ticket when work must be deferred.",
         )
         codex_source = (
             REPO_ROOT
             / "source"
             / "codex"
             / "modules"
-            / "020-operating-discipline.md"
+            / "005-minimal-doctrine.md"
         ).read_text(encoding="utf-8")
         codex_generated = (
             REPO_ROOT / "generated" / "codex" / "AGENTS.md"
@@ -199,59 +200,21 @@ class PipelineTests(unittest.TestCase):
 
     def test_cross_repo_issue_surfacing_is_active_for_both_providers(self) -> None:
         required = (
-            "Do not let reusable cross-repo/tool/skill/harness/workflow defects disappear",
-            "fix them at the owner source when the user assigned that work",
-            "File or update an owner ticket only when the fix is deferred or belongs to a different owner",
-            "ordinary exploratory command mistakes do not need tickets",
-            "Supervisors must independently verify implementation and live-behavior claims against the user invariant",
-            "For bounded read-only lookup, comparison, or reporting, delegate only when parallel work materially helps",
-            "If a worker supplies exact source citations, read only those passages and directly adjacent qualifiers",
-            "do not reread every source, rerun the search, or reproduce the analysis unless a spot-check fails or the evidence is incomplete or conflicting",
-            "When assigned supervision only, keep app implementation with the worker",
-            "Worker/app self-reports are supporting evidence only",
-            "When supervision creates or validates a reusable procedure, record the procedure in the owning source skill, repo doctrine, or routed owner ticket before relaunch or closeout",
-            "do not leave it only in chat or worker memory",
-            "Before heavyweight process, classify both implementation size and consequence",
-            "`tiny/direct` means one obvious, local, reversible, low-consequence action with exact verification",
-            "`guarded-direct` means a small, understood change whose failure could directly create material risk",
-            "Classify the change by its actual effects and failure consequences, not its domain, filename, module, or proximity to high-consequence code",
-            "It skips a full Planning Harness packet and adversarial-review loop by default",
-            "rollback evidence scaled to restore risk",
-            "current `HEAD` plus full status is the rollback anchor",
-            "use a commit or checkpoint only when overlapping dirty state, destructive work, or causal replay requires it",
-            "Use planned/substantial process for ambiguity, broad impact, architecture, multiple work items",
-            "risky multi-agent integration",
-            "A correction, read-only delegation, or disjoint low-risk workers alone do not force planning",
+            "Do not silently bypass a broken required tool or reusable cross-repo workflow.",
+            "During supervision, keep implementation with the worker and independently verify the claimed user result.",
+            "Only when designing agent-facing tools: preserve model judgment",
+            "Follow the user's exact scope.",
+            "Generic continuation does not approve reviewer-added work",
+            "Continue through clear implementation and verification steps.",
+        )
+        retired = (
+            "`tiny/direct`",
+            "`guarded-direct`",
             "Task classification is a process ceiling",
-            "Add only gates that cover a distinct risk",
-            "do not stack harnesses because several trigger descriptions match",
-            "These agent-design rules apply only to agent behavior and agent-facing tools",
-            "They do not weaken product, safety, integrity, correctness, verification, or low-level engineering requirements",
-            "For reversible agent work, preserve judgment through decide, act, verify, and recover",
-            "never for one mistake alone",
-            "Move stable, repeated, mechanically verifiable agent-workflow steps into deterministic runtime",
-            "Keep intent, ambiguity, judgment, and result interpretation agentic",
-            "Write agent system prompts in short, direct sentences with wording simple enough that a toddler could understand the basic action",
-            "Keep exact names and necessary technical terms, but explain them in plain words",
-            "simplicity must not weaken the instruction",
-            "Before writing code, inspect the exact owning file and caller path",
-            "Search broader docs, skills, code maps, and batch workflows when ownership or contract is unclear",
-            "Tiny/direct edits do not require a narrated search for nonexistent machinery",
-            "Distinguish an expected exploratory miss from a broken contract",
-            "corrected and continued without incident ceremony",
-            "Tiny/direct, guarded-direct, and unrelated work proceed without packet archaeology",
-            "authorizes a bounded canonical functional proof, run that proof before packet",
-            "do not edit planning metadata just to unblock the proof",
-            "A tested fallback is allowed when it preserves the contract",
-            "fallback that changes semantics, provenance, persistence, validation class, or acceptance criteria requires explicit user approval",
-            "User approval binds the exact stated scope",
-            "Later planner or reviewer additions require explicit approval that identifies the added work",
-            "generic continuation does not approve them",
-            "Phased implementation and internal proofs of concept are allowed, but are not final completion",
-            "Use parallel workers when they materially help within scope",
-            "Ask before scope expansion, external side effects, or nontrivial integration risk",
-            "a `non-blocking repair` may run in isolation only if a workaround preserves semantics, state, and evidence",
-            "After approval, use `agent-work-leases` and prove the canonical path after integration",
+            "Planning Harness packet",
+            "adversarial-review loop",
+            "`non-blocking repair`",
+            "`agent-work-leases`",
         )
         for provider, filename in (("codex", "AGENTS.md"), ("claude", "CLAUDE.md")):
             with self.subTest(provider=provider):
@@ -260,7 +223,7 @@ class PipelineTests(unittest.TestCase):
                     / "source"
                     / provider
                     / "modules"
-                    / "020-operating-discipline.md"
+                    / "005-minimal-doctrine.md"
                 ).read_text(encoding="utf-8")
                 generated = (REPO_ROOT / "generated" / provider / filename).read_text(encoding="utf-8")
                 normalized_source = " ".join(source.split())
@@ -268,9 +231,11 @@ class PipelineTests(unittest.TestCase):
                 for fragment in required:
                     self.assertIn(fragment, normalized_source)
                     self.assertIn(fragment, normalized_generated)
+                for fragment in retired:
+                    self.assertNotIn(fragment, normalized_generated)
 
-    def test_core_router_skills_are_discoverable_in_user_doctrine(self) -> None:
-        required = (
+    def test_specialist_skill_routes_are_not_always_loaded_by_user_doctrine(self) -> None:
+        retired = (
             "For tmux workers, repo-agent supervision, or worker contact, load `agent-tmux-control`.",
             "For non-blocking repair workstreams during active process testing, or multi-agent edits that may overlap files or need integration packets, load `agent-work-leases`.",
             "For repo maps, project memory, or local past lessons, load `code-map-project-memory` or `routed-recall`.",
@@ -281,19 +246,10 @@ class PipelineTests(unittest.TestCase):
         )
         for provider, filename in (("codex", "AGENTS.md"), ("claude", "CLAUDE.md")):
             with self.subTest(provider=provider):
-                source = (
-                    REPO_ROOT
-                    / "source"
-                    / provider
-                    / "modules"
-                    / "020-operating-discipline.md"
-                ).read_text(encoding="utf-8")
                 generated = (REPO_ROOT / "generated" / provider / filename).read_text(encoding="utf-8")
-                normalized_source = " ".join(source.split())
                 normalized_generated = " ".join(generated.split())
-                for fragment in required:
-                    self.assertIn(fragment, normalized_source)
-                    self.assertIn(fragment, normalized_generated)
+                for fragment in retired:
+                    self.assertNotIn(fragment, normalized_generated)
 
     def test_global_batching_rule_is_not_always_on(self) -> None:
         forbidden = (
@@ -316,36 +272,30 @@ class PipelineTests(unittest.TestCase):
 
     def test_tool_failure_rule_is_inline_not_router_owned(self) -> None:
         required = (
-            "Distinguish an expected exploratory miss from a broken contract",
-            "If a required reusable tool",
-            "repair the owner or use an explicitly equivalent route that checks the same contract",
-            "Failure in an optional supporting tool must not stop unrelated in-scope work",
+            "Do not silently bypass a broken required tool or reusable cross-repo workflow.",
+            "Fix its owner when assigned",
+            "file the owner ticket when work must be deferred",
         )
-        forbidden = "load `agent-doctrine-router`"
         for provider, filename in (("codex", "AGENTS.md"), ("claude", "CLAUDE.md")):
             with self.subTest(provider=provider):
                 generated = (REPO_ROOT / "generated" / provider / filename).read_text(encoding="utf-8")
                 normalized_generated = " ".join(generated.split())
                 for fragment in required:
                     self.assertIn(fragment, normalized_generated)
-                self.assertNotIn("for classification and recovery procedure, load `agent-doctrine-router`", normalized_generated)
+                self.assertNotIn("load `agent-doctrine-router`", normalized_generated)
 
     def test_reply_contract_and_supervisor_authority_are_narrowly_scoped(self) -> None:
         required = (
-            "When assigned supervision only, keep app implementation with the worker",
-            "supervisors may directly fix shared rules/tools they own and small blocking defects within the authorized scope",
-            "`agent-contact send --session <exact-worker> --interrupt-working`",
-            "do not inject raw PTY or direct tmux input without explicit user authorization for that exact bypass",
-            "Ask for confirmation only when proceeding would be unsafe, cross a provider boundary, or change the requested scope",
-            "End every status or final reply with exactly one future-only `Next:` line",
-            "For ongoing work, name the exact next action; when blocked, name the exact required unblock",
-            "when finished, write `Next: None; task complete.`",
-            "Never put completed work in `Next:`",
+            "During supervision, keep implementation with the worker",
+            "independently verify the claimed user result",
+            "Keep replies short, plain, and easy to scan",
+            "End status and final replies with one future-only `Next:` line",
+            "Use `Next: None; task complete.` when nothing remains",
         )
         forbidden = (
-            "The `Next:` line may include completed work or be omitted when the task is complete",
-            "patch/run implementation only when assigned",
-            "direct input or interrupt to the exact tmux pane is allowed as a last resort",
+            "`agent-contact send",
+            "interrupt-working",
+            "raw PTY",
         )
         for provider, filename in (("codex", "AGENTS.md"), ("claude", "CLAUDE.md")):
             with self.subTest(provider=provider):
@@ -357,29 +307,21 @@ class PipelineTests(unittest.TestCase):
                     self.assertNotIn(fragment, normalized)
 
     def test_skill_loading_is_observable_for_both_providers(self) -> None:
-        required = (
-            "When a skill's `SKILL.md` is read for the current task",
-            "announce `Loading skill: <skill-name>` before relying on it",
-            "Announce each newly loaded skill once; one compact list is allowed",
-            "Do not announce a skill that was not actually read",
-        )
+        required = "When reading a skill for the current task, announce `Loading skill: <name>` once before relying on it."
         for provider, filename in (("codex", "AGENTS.md"), ("claude", "CLAUDE.md")):
             with self.subTest(provider=provider):
                 generated = (REPO_ROOT / "generated" / provider / filename).read_text(encoding="utf-8")
                 normalized = " ".join(generated.split())
-                for fragment in required:
-                    self.assertIn(fragment, normalized)
+                self.assertIn(required, normalized)
 
-    def test_pressure_lab_is_targeted_and_self_improvement_is_suspended(self) -> None:
-        required = (
+    def test_pressure_lab_and_self_improvement_are_not_always_on(self) -> None:
+        retired = (
             "Load `pressure-lab` only for substantive agent-facing behavior",
             "Narrow wording, metadata, and trigger changes use source validation and focused tests without Pressure Lab",
             "The `self-improving` skill and `agent-self-improve` CLI are suspended unless the user explicitly asks to use them",
             "Do not automatically run `agenda`, `status`, `record`, `enqueue`, `reliability-gate`, or `review-add`",
             "While the mechanism is suspended, do not call ordinary source-rule, skill, repo-document, tool, or ticket changes self-improvement",
             "pause mutation of the suspect mechanism, continue unaffected work",
-        )
-        forbidden = (
             "For agent-facing skills, hooks, CLIs, validators, artifact grammars",
             "Self-improvement is optional, not a per-task gate",
             "a repeated, evidence-backed failure should produce a durable rule or tool change",
@@ -389,18 +331,14 @@ class PipelineTests(unittest.TestCase):
             with self.subTest(provider=provider):
                 generated = (REPO_ROOT / "generated" / provider / filename).read_text(encoding="utf-8")
                 normalized = " ".join(generated.split())
-                for fragment in required:
-                    self.assertIn(fragment, normalized)
-                for fragment in forbidden:
+                for fragment in retired:
                     self.assertNotIn(fragment, normalized)
 
     def test_cross_provider_diagnosis_is_readable_without_cross_provider_writes(self) -> None:
         required = (
-            "When the user explicitly asks for cross-provider diagnosis, parity, migration, or adoption",
-            "inspect both provider surfaces read-only as needed",
-            "write each provider only through its owning source/install pipeline",
-            "Provider-general doctrine changes install both Codex and Claude snapshots",
-            "single-provider rollout requires explicit scope and reason",
+            "Inspect the other provider only when the user asks for cross-provider work",
+            "write each provider only through its owning source",
+            "install snapshots for both providers unless the user explicitly limits scope",
         )
         for provider, filename in (("codex", "AGENTS.md"), ("claude", "CLAUDE.md")):
             with self.subTest(provider=provider):
@@ -416,14 +354,13 @@ class PipelineTests(unittest.TestCase):
         self.assertIn("only when creating, adopting, or restructuring the doctrine pipeline", normalized)
         self.assertIn("Ordinary rule edits", normalized)
         self.assertNotIn("## Required First Pass", repo_rules)
+        self.assertNotIn("agent-self-improvement-doctrine", repo_rules)
 
-    def test_visible_proof_cannot_narrow_failed_end_to_end_path(self) -> None:
+    def test_visible_proof_requires_the_failed_user_path(self) -> None:
         required = (
-            "If an end-to-end visible proof fails, a smaller passing lane is diagnostic only",
-            "If exact replay would itself mutate real user data, spend money, trigger an external/destructive action, or alter history, do not manufacture live proof",
-            "use a focused regression plus persisted-state readback after a full restart of the canonical runtime",
-            "do not claim that interaction verified until confirmed",
-            "leave the interaction unverified pending user confirmation",
+            "For bugs, fix the root cause.",
+            "For visible, realtime, performance, or hardware claims, prove the same user path with direct evidence",
+            "if the user says the result is unchanged, the earlier success claim is invalid",
         )
         for provider, filename in (("codex", "AGENTS.md"), ("claude", "CLAUDE.md")):
             with self.subTest(provider=provider):
@@ -432,7 +369,7 @@ class PipelineTests(unittest.TestCase):
                     / "source"
                     / provider
                     / "modules"
-                    / "030-implementation-discipline.md"
+                    / "005-minimal-doctrine.md"
                 ).read_text(encoding="utf-8")
                 generated = (REPO_ROOT / "generated" / provider / filename).read_text(encoding="utf-8")
                 normalized_source = " ".join(source.split())
@@ -441,7 +378,6 @@ class PipelineTests(unittest.TestCase):
                     normalized_fragment = " ".join(fragment.split())
                     self.assertIn(normalized_fragment, normalized_source)
                     self.assertIn(normalized_fragment, normalized_generated)
-                self.assertNotIn("For detailed visible-proof procedure, load `agent-doctrine-router`.", normalized_generated)
 
     def test_reddit_access_procedure_is_not_always_on(self) -> None:
         retired_rule = "For Reddit primary-thread access during current/community research"
@@ -471,11 +407,8 @@ class PipelineTests(unittest.TestCase):
 
     def test_continuation_contract_is_provider_general(self) -> None:
         required = (
-            "stay awake until this is complete",
-            "don't stop until this is finished",
-            "bounded continuation contract",
-            "use the approved heartbeat/watchdog route",
-            "complete, blocked, risky without a decision, or intentionally handed off",
+            "Continue through clear implementation and verification steps.",
+            "An explicit request to stay awake continues until completion, a real blocker, or a decision only the user can make.",
         )
         for provider, filename in (("codex", "AGENTS.md"), ("claude", "CLAUDE.md")):
             with self.subTest(provider=provider):
@@ -484,7 +417,7 @@ class PipelineTests(unittest.TestCase):
                     / "source"
                     / provider
                     / "modules"
-                    / "020-operating-discipline.md"
+                    / "005-minimal-doctrine.md"
                 ).read_text(encoding="utf-8")
                 generated = (
                     REPO_ROOT / "generated" / provider / filename
@@ -495,8 +428,8 @@ class PipelineTests(unittest.TestCase):
                     self.assertIn(fragment, normalized_source)
                     self.assertIn(fragment, normalized_generated)
 
-    def test_self_improvement_repo_lessons_require_promotion_classification(self) -> None:
-        required = (
+    def test_self_improvement_classification_is_not_always_on(self) -> None:
+        retired = (
             "Before closing a repeated miss, workflow failure, or reusable agent/tool/harness/workflow/doctrine lesson, choose and name its durable surface",
             "runtime record",
             "repo doctrine",
@@ -506,22 +439,14 @@ class PipelineTests(unittest.TestCase):
             "Provider doctrine routes through Agent-Doctrine source/generate/validate/install",
             "An ordinary repository code fix needs no durable-surface label unless it exposes such a reusable lesson",
         )
-        for provider, filename, module_name in (
-            ("codex", "AGENTS.md", "040-rewind-and-learning.md"),
-            ("claude", "CLAUDE.md", "040-replay-and-learning.md"),
-        ):
+        for provider, filename in (("codex", "AGENTS.md"), ("claude", "CLAUDE.md")):
             with self.subTest(provider=provider):
-                source = (
-                    REPO_ROOT / "source" / provider / "modules" / module_name
-                ).read_text(encoding="utf-8")
                 generated = (
                     REPO_ROOT / "generated" / provider / filename
                 ).read_text(encoding="utf-8")
-                normalized_source = " ".join(source.split())
                 normalized_generated = " ".join(generated.split())
-                for fragment in required:
-                    self.assertIn(fragment, normalized_source)
-                    self.assertIn(fragment, normalized_generated)
+                for fragment in retired:
+                    self.assertNotIn(fragment, normalized_generated)
 
     def test_doctrine_router_names_self_improvement_landing_surfaces(self) -> None:
         router = (REPO_ROOT / "package" / "agent-doctrine-router" / "SKILL.md").read_text(encoding="utf-8")
@@ -540,8 +465,8 @@ class PipelineTests(unittest.TestCase):
         for fragment in required:
             self.assertIn(fragment, normalized_router)
 
-    def test_rollback_anchor_scales_with_actual_restore_risk(self) -> None:
-        required = (
+    def test_rewind_and_patch_stacking_procedure_is_not_always_on(self) -> None:
+        retired = (
             "Do not initialize or snapshot",
             "merely because work is substantive, visible, or a correction",
             "Before destructive operations",
@@ -552,27 +477,19 @@ class PipelineTests(unittest.TestCase):
             "use a commit or explicit manual checkpoint only when Git cannot preserve",
             "restore to the anchor, and apply it cleanly",
         )
-        for provider, filename, module_name in (
-            ("codex", "AGENTS.md", "040-rewind-and-learning.md"),
-            ("claude", "CLAUDE.md", "040-replay-and-learning.md"),
-        ):
+        for provider, filename in (("codex", "AGENTS.md"), ("claude", "CLAUDE.md")):
             with self.subTest(provider=provider):
-                source = (
-                    REPO_ROOT / "source" / provider / "modules" / module_name
-                ).read_text(encoding="utf-8")
                 generated = (
                     REPO_ROOT / "generated" / provider / filename
                 ).read_text(encoding="utf-8")
-                normalized_source = " ".join(source.split())
                 normalized_generated = " ".join(generated.split())
-                for fragment in required:
-                    self.assertIn(fragment, normalized_source)
-                    self.assertIn(fragment, normalized_generated)
+                for fragment in retired:
+                    self.assertNotIn(fragment, normalized_generated)
 
     def test_generated_outputs_start_at_first_rule_section(self) -> None:
         for provider, filename, first_heading in (
-            ("codex", "AGENTS.md", "# Codex Configuration Boundary"),
-            ("claude", "CLAUDE.md", "# Claude Configuration Boundary"),
+            ("codex", "AGENTS.md", "# Codex User Rules"),
+            ("claude", "CLAUDE.md", "# Claude User Rules"),
         ):
             with self.subTest(provider=provider):
                 text = (REPO_ROOT / "generated" / provider / filename).read_text(encoding="utf-8")
@@ -600,7 +517,7 @@ class PipelineTests(unittest.TestCase):
                 ).read_text(encoding="utf-8")
                 self.assertNotIn("<!-- agent-doctrine-rule:", generated)
 
-    def test_owner_derived_rules_require_live_owner_contract_checks(self) -> None:
+    def test_inactive_owner_derived_rules_do_not_require_live_contracts(self) -> None:
         registry = json.loads(
             (REPO_ROOT / "source" / "rule-provenance.json").read_text(
                 encoding="utf-8"
@@ -618,7 +535,7 @@ class PipelineTests(unittest.TestCase):
         ):
             violations = validate_common.validate_rule_registry()
         messages = [violation.message for violation in violations]
-        self.assertIn(
+        self.assertNotIn(
             "owner-derived rule 'rewind.opt-in' requires an owner_contract check",
             messages,
         )
@@ -647,11 +564,7 @@ class PipelineTests(unittest.TestCase):
         self.assertEqual(validate_common.validate_owner_contracts(), [])
 
     def test_userlevel_backup_artifacts_are_forbidden_for_both_providers(self) -> None:
-        required = (
-            "Do not create, keep, or install backup artifacts inside user-level provider",
-            "`.bak`, `.old`, timestamped, or",
-            "outside those roots",
-        )
+        required = "Keep backups outside provider roots."
         for provider, filename in (("codex", "AGENTS.md"), ("claude", "CLAUDE.md")):
             with self.subTest(provider=provider):
                 source = (
@@ -659,15 +572,13 @@ class PipelineTests(unittest.TestCase):
                     / "source"
                     / provider
                     / "modules"
-                    / "010-configuration-boundary.md"
+                    / "005-minimal-doctrine.md"
                 ).read_text(encoding="utf-8")
                 generated = (REPO_ROOT / "generated" / provider / filename).read_text(encoding="utf-8")
                 normalized_source = " ".join(source.split())
                 normalized_generated = " ".join(generated.split())
-                for fragment in required:
-                    normalized_fragment = " ".join(fragment.split())
-                    self.assertIn(normalized_fragment, normalized_source)
-                    self.assertIn(normalized_fragment, normalized_generated)
+                self.assertIn(required, normalized_source)
+                self.assertIn(required, normalized_generated)
 
     def test_installer_blocks_userlevel_backup_artifacts_by_default(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
@@ -757,7 +668,7 @@ class PipelineTests(unittest.TestCase):
             text = target.read_text(encoding="utf-8")
             self.assertTrue(text.startswith("user prefix\n\n"))
             self.assertTrue(text.rstrip().endswith("user suffix"))
-            self.assertIn("# Codex Configuration Boundary", text)
+            self.assertIn("# Codex User Rules", text)
             self.assertNotIn("old managed", text)
 
     def test_codex_installer_discards_unmanaged_doctrine_only_with_decision(self) -> None:
@@ -780,7 +691,7 @@ class PipelineTests(unittest.TestCase):
             )
             text = target.read_text(encoding="utf-8")
             self.assertTrue(text.startswith("<!-- agent-doctrine:codex:begin -->\n"))
-            self.assertIn("# Codex Configuration Boundary", text)
+            self.assertIn("# Codex User Rules", text)
             self.assertNotIn("old managed", text)
             self.assertNotIn("user prefix", text)
             self.assertNotIn("user suffix", text)
@@ -837,7 +748,7 @@ class PipelineTests(unittest.TestCase):
             text = target.read_text(encoding="utf-8")
             self.assertTrue(text.startswith("user prefix\n\n"))
             self.assertTrue(text.rstrip().endswith("user suffix"))
-            self.assertIn("# Claude Configuration Boundary", text)
+            self.assertIn("# Claude User Rules", text)
             self.assertNotIn("old managed", text)
 
     def test_codex_adopts_whole_unmanaged_file_then_installs_without_drift(self) -> None:
@@ -870,10 +781,10 @@ class PipelineTests(unittest.TestCase):
                 ).read_text(encoding="utf-8")
                 self.assertNotIn("<!-- BEGIN: reply-verbosity", generated_text)
                 self.assertNotIn("## Verbosity Tiers", generated_text)
-                self.assertIn("Write replies in plain, direct language", generated_text)
-                self.assertIn("Make key points easy to find", generated_text)
-                self.assertIn("End every status or final reply with exactly one future-only `Next:` line", generated_text)
-                self.assertIn("Never put completed work in `Next:`", generated_text)
+                self.assertIn("Keep replies short, plain, and easy to scan", generated_text)
+                self.assertIn("Put the result, blocker, or decision first", generated_text)
+                self.assertIn("End status and final replies with one future-only `Next:` line", generated_text)
+                self.assertNotIn("load `reply-verbosity`", generated_text)
 
                 with tempfile.TemporaryDirectory() as tmp:
                     root = Path(tmp) / f"{provider}-home"

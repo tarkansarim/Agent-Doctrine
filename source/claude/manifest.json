@@ -5,13 +5,7 @@
   "managed_start": "<!-- agent-doctrine:claude:begin -->",
   "managed_end": "<!-- agent-doctrine:claude:end -->",
   "modules": [
-    "modules/010-configuration-boundary.md",
-    "modules/020-operating-discipline.md",
-    "modules/030-implementation-discipline.md",
-    "modules/035-pressure-lab-hardenability.md",
-    "modules/040-replay-and-learning.md",
-    "modules/050-doctrine-change-routing.md",
-    "modules/060-cppstudio-relay.md"
+    "modules/005-minimal-doctrine.md"
   ],
   "live_adoption": {
     "snapshot": "adopted/live-user-level-CLAUDE.md",

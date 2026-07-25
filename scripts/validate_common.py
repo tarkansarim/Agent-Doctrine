@@ -211,6 +211,22 @@ def validate_rule_registry() -> list[Violation]:
                     )
                 )
 
+    active_rule_ids = registry.get("active_rules")
+    if (
+        not isinstance(active_rule_ids, list)
+        or not active_rule_ids
+        or len(active_rule_ids) != len(set(active_rule_ids))
+        or any(not isinstance(rule_id, str) or rule_id not in rules for rule_id in active_rule_ids)
+    ):
+        violations.append(
+            Violation(
+                RULE_REGISTRY_PATH,
+                "active_rules must be a non-empty unique list of registered rule ids",
+            )
+        )
+        active_rule_ids = list(rules)
+    active_rules = set(active_rule_ids)
+
     contracts = registry.get("owner_contracts")
     if not isinstance(contracts, list):
         violations.append(Violation(RULE_REGISTRY_PATH, "owner_contracts must be a list"))
@@ -262,7 +278,8 @@ def validate_rule_registry() -> list[Violation]:
             continue
         origin = origins.get(metadata.get("origin"))
         if (
-            isinstance(origin, dict)
+            rule_id in active_rules
+            and isinstance(origin, dict)
             and origin.get("kind") in OWNER_DERIVED_ORIGIN_KINDS
             and rule_id not in owner_checked_rule_ids
         ):
@@ -282,6 +299,12 @@ def validate_provider_rule_markers(provider: str) -> list[Violation]:
     rules = registry.get("rules")
     if not isinstance(rules, dict):
         return violations
+    active_rule_ids = registry.get("active_rules")
+    active_rules = (
+        set(active_rule_ids)
+        if isinstance(active_rule_ids, list)
+        else set(rules)
+    )
 
     occurrences: dict[str, list[tuple[Path, int]]] = {}
     for path in module_paths(provider):
@@ -342,6 +365,7 @@ def validate_provider_rule_markers(provider: str) -> list[Violation]:
     expected = {
         rule_id
         for rule_id, metadata in rules.items()
+        if rule_id in active_rules
         if isinstance(metadata, dict)
         and isinstance(metadata.get("providers"), list)
         and provider in metadata["providers"]
@@ -371,6 +395,13 @@ def validate_owner_contracts(owner_root: Path | None = None) -> list[Violation]:
     contracts = registry.get("owner_contracts")
     if not isinstance(contracts, list):
         return violations
+    rules = registry.get("rules")
+    active_rule_ids = registry.get("active_rules")
+    active_rules = (
+        set(active_rule_ids)
+        if isinstance(active_rule_ids, list)
+        else set(rules) if isinstance(rules, dict) else set()
+    )
     if owner_root is None:
         owner_root = Path(os.environ.get("AGENT_DOCTRINE_OWNER_ROOT", REPO_ROOT.parent))
 
@@ -380,6 +411,9 @@ def validate_owner_contracts(owner_root: Path | None = None) -> list[Violation]:
         repo_name = contract.get("repo")
         relative_path = contract.get("path")
         if not isinstance(repo_name, str) or not isinstance(relative_path, str):
+            continue
+        rule_ids = contract.get("rule_ids")
+        if isinstance(rule_ids, list) and active_rules.isdisjoint(rule_ids):
             continue
         repo_path = owner_root / repo_name
         if not repo_path.is_dir():
