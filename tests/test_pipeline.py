@@ -127,7 +127,7 @@ class PipelineTests(unittest.TestCase):
             with self.subTest(fragment=fragment):
                 self.assertNotIn(fragment, codex_generated)
 
-    def test_codex_implementation_discipline_is_compressed_and_retired_perf_rules_are_dormant(self) -> None:
+    def test_historical_implementation_protections_are_not_always_on(self) -> None:
         codex_source = (
             REPO_ROOT
             / "source"
@@ -144,12 +144,10 @@ class PipelineTests(unittest.TestCase):
         normalized_codex_source = " ".join(codex_source.split())
         normalized_codex_generated = " ".join(codex_generated.split())
         normalized_claude_generated = " ".join(claude_generated.split())
-        active_fragments = (
+        retired_fragments = (
             "For bugs, fix the root cause.",
             "prove the same user path with direct evidence",
             "partial or proxy behavior is never complete",
-        )
-        retired_fragments = (
             "Python verifiers, test runners, build helpers, or agent tools",
             ">60s repeated paths",
             ">5 min critical paths",
@@ -161,18 +159,14 @@ class PipelineTests(unittest.TestCase):
             "Rust for agent-facing CLI verifiers",
             "C++ only when the hot path is already native",
         )
-        for fragment in active_fragments:
-            with self.subTest(fragment=fragment):
-                self.assertIn(fragment, normalized_codex_source)
-                self.assertIn(fragment, normalized_codex_generated)
         for fragment in retired_fragments:
             with self.subTest(fragment=fragment):
                 self.assertNotIn(fragment, normalized_codex_source)
                 self.assertNotIn(fragment, normalized_codex_generated)
                 self.assertNotIn(fragment, normalized_claude_generated)
 
-    def test_codex_tool_failure_rule_rejects_success_looking_nonzero_exits(self) -> None:
-        required = (
+    def test_historical_tool_failure_protection_is_not_always_on(self) -> None:
+        retired = (
             "Do not silently bypass a broken required tool or reusable cross-repo workflow.",
             "Fix its owner when assigned; otherwise report it or file the owner ticket when work must be deferred.",
         )
@@ -192,22 +186,22 @@ class PipelineTests(unittest.TestCase):
         normalized_codex_source = " ".join(codex_source.split())
         normalized_codex_generated = " ".join(codex_generated.split())
         normalized_claude_generated = " ".join(claude_generated.split())
-        for fragment in required:
+        for fragment in retired:
             with self.subTest(fragment=fragment):
-                self.assertIn(fragment, normalized_codex_source)
-                self.assertIn(fragment, normalized_codex_generated)
-                self.assertIn(fragment, normalized_claude_generated)
+                self.assertNotIn(fragment, normalized_codex_source)
+                self.assertNotIn(fragment, normalized_codex_generated)
+                self.assertNotIn(fragment, normalized_claude_generated)
 
-    def test_cross_repo_issue_surfacing_is_active_for_both_providers(self) -> None:
+    def test_minimal_behavior_rules_are_active_for_both_providers(self) -> None:
         required = (
-            "Do not silently bypass a broken required tool or reusable cross-repo workflow.",
-            "During supervision, keep implementation with the worker and independently verify the claimed user result.",
             "Only when designing agent-facing tools: preserve model judgment",
-            "Follow the user's exact scope.",
-            "Generic continuation does not approve reviewer-added work",
             "Continue through clear implementation and verification steps.",
         )
         retired = (
+            "Do not silently bypass a broken required tool",
+            "During supervision, keep implementation with the worker",
+            "Follow the user's exact scope",
+            "For bugs, fix the root cause",
             "`tiny/direct`",
             "`guarded-direct`",
             "Task classification is a process ceiling",
@@ -270,32 +264,19 @@ class PipelineTests(unittest.TestCase):
                     self.assertNotIn(fragment, source)
                     self.assertNotIn(fragment, generated)
 
-    def test_tool_failure_rule_is_inline_not_router_owned(self) -> None:
+    def test_reply_contract_is_narrowly_scoped(self) -> None:
         required = (
-            "Do not silently bypass a broken required tool or reusable cross-repo workflow.",
-            "Fix its owner when assigned",
-            "file the owner ticket when work must be deferred",
-        )
-        for provider, filename in (("codex", "AGENTS.md"), ("claude", "CLAUDE.md")):
-            with self.subTest(provider=provider):
-                generated = (REPO_ROOT / "generated" / provider / filename).read_text(encoding="utf-8")
-                normalized_generated = " ".join(generated.split())
-                for fragment in required:
-                    self.assertIn(fragment, normalized_generated)
-                self.assertNotIn("load `agent-doctrine-router`", normalized_generated)
-
-    def test_reply_contract_and_supervisor_authority_are_narrowly_scoped(self) -> None:
-        required = (
-            "During supervision, keep implementation with the worker",
-            "independently verify the claimed user result",
             "Keep replies short, plain, and easy to scan",
             "End status and final replies with one future-only `Next:` line",
             "Use `Next: None; task complete.` when nothing remains",
         )
         forbidden = (
+            "The `Next:` line may include completed work or be omitted when the task is complete",
             "`agent-contact send",
             "interrupt-working",
             "raw PTY",
+            "During supervision, keep implementation with the worker",
+            "independently verify the claimed user result",
         )
         for provider, filename in (("codex", "AGENTS.md"), ("claude", "CLAUDE.md")):
             with self.subTest(provider=provider):
@@ -356,8 +337,8 @@ class PipelineTests(unittest.TestCase):
         self.assertNotIn("## Required First Pass", repo_rules)
         self.assertNotIn("agent-self-improvement-doctrine", repo_rules)
 
-    def test_visible_proof_requires_the_failed_user_path(self) -> None:
-        required = (
+    def test_historical_visible_proof_protection_is_not_always_on(self) -> None:
+        retired = (
             "For bugs, fix the root cause.",
             "For visible, realtime, performance, or hardware claims, prove the same user path with direct evidence",
             "if the user says the result is unchanged, the earlier success claim is invalid",
@@ -374,10 +355,10 @@ class PipelineTests(unittest.TestCase):
                 generated = (REPO_ROOT / "generated" / provider / filename).read_text(encoding="utf-8")
                 normalized_source = " ".join(source.split())
                 normalized_generated = " ".join(generated.split())
-                for fragment in required:
+                for fragment in retired:
                     normalized_fragment = " ".join(fragment.split())
-                    self.assertIn(normalized_fragment, normalized_source)
-                    self.assertIn(normalized_fragment, normalized_generated)
+                    self.assertNotIn(normalized_fragment, normalized_source)
+                    self.assertNotIn(normalized_fragment, normalized_generated)
 
     def test_reddit_access_procedure_is_not_always_on(self) -> None:
         retired_rule = "For Reddit primary-thread access during current/community research"

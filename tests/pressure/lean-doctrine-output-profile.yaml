@@ -73,7 +73,7 @@ lanes:
       argv:
         - bash
         - "-lc"
-        - "printf '\n- The `Next:` line may include completed work or be omitted when the task is complete.\n' >> source/codex/modules/020-operating-discipline.md && python3 scripts/generate_codex.py >/dev/null && if python3 -m unittest tests.test_pipeline.PipelineTests.test_reply_contract_and_supervisor_authority_are_narrowly_scoped >/dev/null 2>&1; then echo BROKEN_NEXT_CONTRACT_ACCEPTED; exit 1; else echo BROKEN_NEXT_CONTRACT_REJECTED; fi"
+        - "printf '\n- The `Next:` line may include completed work or be omitted when the task is complete.\n' >> source/codex/modules/005-minimal-doctrine.md && python3 scripts/generate_codex.py >/dev/null && if python3 -m unittest tests.test_pipeline.PipelineTests.test_reply_contract_is_narrowly_scoped >/dev/null 2>&1; then echo BROKEN_NEXT_CONTRACT_ACCEPTED; exit 1; else echo BROKEN_NEXT_CONTRACT_REJECTED; fi"
       cwd: .
       timeout_seconds: 60
     expected:

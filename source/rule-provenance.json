@@ -10,13 +10,9 @@
     "config.source-owned-doctrine",
     "operating.reply-clarity",
     "operating.next-reporting",
-    "operating.owner-defect-routing",
-    "operating.supervisor-verification",
     "operating.agentic-judgment",
-    "operating.scope-and-fallback",
     "operating.autonomous-progress",
-    "operating.skill-load-announcement",
-    "implementation.root-cause"
+    "operating.skill-load-announcement"
   ],
   "origins": {
     "legacy-adoption": {
