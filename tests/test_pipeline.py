@@ -42,17 +42,18 @@ class PipelineTests(unittest.TestCase):
         result = run_script("scripts/validate_claude.py")
         self.assertIn("claude validation passed", result.stdout)
 
-    def test_doctrine_router_has_no_procedure_modules(self) -> None:
+    def test_doctrine_router_thin_relay_routes_to_core_module(self) -> None:
         package = REPO_ROOT / "package" / "agent-doctrine-router"
         skill = (package / "SKILL.md").read_text(encoding="utf-8")
-        normalized_skill = " ".join(skill.split())
-        modules = package / "modules"
-        self.assertFalse(modules.exists())
-        self.assertNotIn("modules/", skill)
-        self.assertIn("Landing Surface Classification", skill)
-        self.assertIn("source/rule-provenance.json", skill)
-        self.assertIn("Unknown historical origin must be recorded as unknown", normalized_skill)
-        self.assertIn("add an owner-contract check", normalized_skill)
+        core = (package / "modules" / "core.md").read_text(encoding="utf-8")
+        normalized_core = " ".join(core.split())
+        self.assertIn("<!-- thin-relay:v1 -->", skill)
+        self.assertIn("modules/core.md", skill)
+        self.assertNotIn("Landing Surface Classification", skill)
+        self.assertIn("Landing Surface Classification", core)
+        self.assertIn("source/rule-provenance.json", core)
+        self.assertIn("Unknown historical origin must be recorded as unknown", normalized_core)
+        self.assertIn("add an owner-contract check", normalized_core)
 
     def test_codex_parity_completion_closeout_rule_is_not_router_owned(self) -> None:
         codex_source = (
@@ -383,8 +384,13 @@ class PipelineTests(unittest.TestCase):
 
         package = REPO_ROOT / "package" / "agent-doctrine-router"
         skill = (package / "SKILL.md").read_text(encoding="utf-8")
+        core = (package / "modules" / "core.md").read_text(encoding="utf-8")
         self.assertNotIn("modules/reddit-access.md", skill)
-        self.assertFalse((package / "modules").exists())
+        self.assertNotIn("Reddit primary-thread access", core)
+        self.assertEqual(
+            [path.name for path in (package / "modules").glob("*.md")],
+            ["core.md"],
+        )
 
     def test_continuation_contract_is_provider_general(self) -> None:
         required = (
@@ -430,8 +436,14 @@ class PipelineTests(unittest.TestCase):
                     self.assertNotIn(fragment, normalized_generated)
 
     def test_doctrine_router_names_self_improvement_landing_surfaces(self) -> None:
-        router = (REPO_ROOT / "package" / "agent-doctrine-router" / "SKILL.md").read_text(encoding="utf-8")
-        normalized_router = " ".join(router.split())
+        core = (
+            REPO_ROOT
+            / "package"
+            / "agent-doctrine-router"
+            / "modules"
+            / "core.md"
+        ).read_text(encoding="utf-8")
+        normalized_core = " ".join(core.split())
         required = (
             "choose the landing surface before closeout",
             "`no-action with reason`",
@@ -444,10 +456,18 @@ class PipelineTests(unittest.TestCase):
             "do not create a ticket solely to satisfy process",
         )
         for fragment in required:
-            self.assertIn(fragment, normalized_router)
+            self.assertIn(fragment, normalized_core)
 
-    def test_rewind_and_patch_stacking_procedure_is_not_always_on(self) -> None:
-        retired = (
+    def test_patch_stacking_guard_is_always_on_without_full_rewind_procedure(self) -> None:
+        required = (
+            "A `failed patch` is a code-change attempt that fails required validation or does not fix the reported behavior.",
+            "After the first failed patch, commit that exact state as a diagnostic rollback anchor before making more repair edits.",
+            "Further patch stacking is exploratory: use it to find and record the real fix.",
+            "Once the fix is proven, preserve its required changes, restore the diagnostic anchor, apply only the proven fix cleanly, and rerun the exact validation.",
+            "If the first patch itself proved wrong, return to the original pre-repair commit instead.",
+            "Load `rewind-checkpoints` for the rollback procedure.",
+        )
+        routed_procedure = (
             "Do not initialize or snapshot",
             "merely because work is substantive, visible, or a correction",
             "Before destructive operations",
@@ -456,7 +476,6 @@ class PipelineTests(unittest.TestCase):
             "a second fix attempt that would stack on an unproven first attempt",
             "current `HEAD` plus a full changed-file inventory is sufficient",
             "use a commit or explicit manual checkpoint only when Git cannot preserve",
-            "restore to the anchor, and apply it cleanly",
         )
         for provider, filename in (("codex", "AGENTS.md"), ("claude", "CLAUDE.md")):
             with self.subTest(provider=provider):
@@ -464,7 +483,9 @@ class PipelineTests(unittest.TestCase):
                     REPO_ROOT / "generated" / provider / filename
                 ).read_text(encoding="utf-8")
                 normalized_generated = " ".join(generated.split())
-                for fragment in retired:
+                for fragment in required:
+                    self.assertIn(fragment, normalized_generated)
+                for fragment in routed_procedure:
                     self.assertNotIn(fragment, normalized_generated)
 
     def test_generated_outputs_start_at_first_rule_section(self) -> None:
@@ -879,22 +900,32 @@ class PipelineTests(unittest.TestCase):
             run_script("scripts/install_codex_skill.py", "--skills-root", str(codex_skills))
             run_script("scripts/install_claude_skill.py", "--skills-root", str(claude_skills))
             run_script("scripts/install_claude_skill.py", "--skills-root", str(claude_skills))
+            source_package = REPO_ROOT / "package" / "agent-doctrine-router"
+            source_files = {
+                path.relative_to(source_package): path.read_bytes()
+                for path in source_package.rglob("*")
+                if path.is_file()
+            }
             for root in (codex_skills, claude_skills):
                 installed = root / "agent-doctrine-router"
                 self.assertTrue((installed / "SKILL.md").is_file())
+                self.assertTrue((installed / "modules" / "core.md").is_file())
                 self.assertTrue((installed / ".skill-source").is_file())
                 self.assertFalse(any(path.is_symlink() for path in installed.rglob("*")))
                 self.assertFalse(any("previous" in path.name or path.name.endswith(".new") for path in root.iterdir()))
-            result = run_script(
-                "scripts/validate.py",
-                "--source",
-                str(REPO_ROOT),
-                "--installed",
-                str(codex_skills),
-                "--installed",
-                str(claude_skills),
+                installed_files = {
+                    path.relative_to(installed): path.read_bytes()
+                    for path in installed.rglob("*")
+                    if path.is_file() and path.name != ".skill-source"
+                }
+                self.assertEqual(installed_files, source_files)
+            self.assertEqual(validate_common.validate_skill_source(), [])
+            self.assertEqual(
+                validate_common.validate_installed_skill_root(codex_skills), []
             )
-            self.assertIn("Agent-Doctrine validation passed", result.stdout)
+            self.assertEqual(
+                validate_common.validate_installed_skill_root(claude_skills), []
+            )
 
     def test_codex_router_install_verifier(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
@@ -916,10 +947,22 @@ class PipelineTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             codex_skills = Path(tmp) / "codex-skills"
             run_script("scripts/install_codex_skill.py", "--skills-root", str(codex_skills))
-            installed_skill = codex_skills / "agent-doctrine-router" / "SKILL.md"
-            installed_skill.write_text(
-                installed_skill.read_text(encoding="utf-8") + "\nlocal drift\n",
+            installed_module = (
+                codex_skills
+                / "agent-doctrine-router"
+                / "modules"
+                / "core.md"
+            )
+            installed_module.write_text(
+                installed_module.read_text(encoding="utf-8") + "\nlocal drift\n",
                 encoding="utf-8",
+            )
+            violations = validate_common.validate_installed_skill_root(codex_skills)
+            self.assertTrue(
+                any(
+                    "differs from source file(s): modules/core.md" in violation.message
+                    for violation in violations
+                )
             )
             result = subprocess.run(
                 [

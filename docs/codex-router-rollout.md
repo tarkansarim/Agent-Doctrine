@@ -45,5 +45,7 @@ Passing evidence requires:
 - The installed skill contains no symlinks or backup-pattern artifacts.
 - The installed tree matches `package/agent-doctrine-router/`, excluding only
   the installer-owned `.skill-source` sentinel and ignored bytecode/cache files.
+- The installed tree includes the thin `SKILL.md` relay and its routed
+  `modules/core.md` doctrine body.
 - The verifier reports that it checked only the Codex skill root and did not
   install the generated `AGENTS.md` block.

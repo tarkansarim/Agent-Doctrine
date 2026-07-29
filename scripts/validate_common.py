@@ -66,6 +66,12 @@ OWNER_DERIVED_ORIGIN_KINDS = {
     "promoted-owner-contract",
     "shared-contract-reconciliation",
 }
+SKILL_NAME = "agent-doctrine-router"
+SKILL_PACKAGE = REPO_ROOT / "package" / SKILL_NAME
+SKILL_CORE_MODULE = Path("modules/core.md")
+SKILL_IGNORED_NAMES = {".skill-source", ".DS_Store"}
+SKILL_IGNORED_SUFFIXES = {".pyc"}
+SKILL_IGNORED_DIRS = {"__pycache__"}
 
 
 @dataclass(frozen=True)
@@ -578,8 +584,21 @@ def validate_provider(provider: str) -> list[Violation]:
     return violations
 
 
+def skill_tree_hashes(root: Path) -> dict[Path, str]:
+    hashes: dict[Path, str] = {}
+    for path in sorted(root.rglob("*")):
+        relative = path.relative_to(root)
+        if any(part in SKILL_IGNORED_DIRS for part in relative.parts):
+            continue
+        if path.name in SKILL_IGNORED_NAMES or path.suffix in SKILL_IGNORED_SUFFIXES:
+            continue
+        if path.is_file():
+            hashes[relative] = hashlib.sha256(path.read_bytes()).hexdigest()
+    return hashes
+
+
 def validate_skill_source() -> list[Violation]:
-    package = REPO_ROOT / "package" / "agent-doctrine-router"
+    package = SKILL_PACKAGE
     violations: list[Violation] = []
     skill_files = sorted(package.rglob("SKILL.md")) if package.exists() else []
     if skill_files != [package / "SKILL.md"]:
@@ -602,6 +621,25 @@ def validate_skill_source() -> list[Violation]:
             violations.append(Violation(package / "SKILL.md", "skill description is missing"))
         elif len(desc_match.group(1).strip().strip('"')) > 300:
             violations.append(Violation(package / "SKILL.md", "skill description exceeds 300 characters"))
+    core_module = package / SKILL_CORE_MODULE
+    if not core_module.is_file():
+        violations.append(Violation(core_module, "routed doctrine module is missing"))
+    else:
+        core_text = core_module.read_text(encoding="utf-8")
+        if TODO_MARKER.search(core_text) or PLACEHOLDER_MARKER.search(core_text):
+            violations.append(
+                Violation(
+                    core_module,
+                    "routed doctrine module contains unresolved TODO or placeholder marker",
+                )
+            )
+    if str(SKILL_CORE_MODULE) not in text:
+        violations.append(
+            Violation(
+                package / "SKILL.md",
+                f"thin relay must route to {SKILL_CORE_MODULE}",
+            )
+        )
     openai_yaml = package / "agents" / "openai.yaml"
     if not openai_yaml.is_file():
         violations.append(Violation(openai_yaml, "agents/openai.yaml is missing"))
@@ -645,7 +683,7 @@ def validate_installed_skill_root(root: Path) -> list[Violation]:
     violations: list[Violation] = []
     if not root.exists():
         return [Violation(root, "installed skill root does not exist")]
-    target = root / "agent-doctrine-router"
+    target = root / SKILL_NAME
     if not target.exists():
         return [Violation(target, "agent-doctrine-router is not installed in this root")]
     if target.is_symlink():
@@ -659,6 +697,37 @@ def validate_installed_skill_root(root: Path) -> list[Violation]:
         violations.append(Violation(source_marker, "installed skill is missing .skill-source"))
     elif source_marker.read_text(encoding="utf-8").strip() != str(REPO_ROOT):
         violations.append(Violation(source_marker, ".skill-source does not point at Agent-Doctrine"))
+    if SKILL_PACKAGE.is_dir():
+        source_hashes = skill_tree_hashes(SKILL_PACKAGE)
+        installed_hashes = skill_tree_hashes(target)
+        missing = sorted(source_hashes.keys() - installed_hashes.keys())
+        extra = sorted(installed_hashes.keys() - source_hashes.keys())
+        changed = sorted(
+            path
+            for path in source_hashes.keys() & installed_hashes.keys()
+            if source_hashes[path] != installed_hashes[path]
+        )
+        if missing:
+            violations.append(
+                Violation(
+                    target,
+                    f"installed skill is missing source file(s): {', '.join(map(str, missing))}",
+                )
+            )
+        if extra:
+            violations.append(
+                Violation(
+                    target,
+                    f"installed skill has extra file(s): {', '.join(map(str, extra))}",
+                )
+            )
+        if changed:
+            violations.append(
+                Violation(
+                    target,
+                    f"installed skill differs from source file(s): {', '.join(map(str, changed))}",
+                )
+            )
     return violations
 
 

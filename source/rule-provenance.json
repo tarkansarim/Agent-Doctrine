@@ -12,6 +12,7 @@
     "operating.next-reporting",
     "operating.agentic-judgment",
     "operating.autonomous-progress",
+    "rewind.patch-stacking",
     "operating.skill-load-announcement"
   ],
   "origins": {
@@ -186,7 +187,7 @@
     "rewind.opt-in": {"title": "Opt-in replay and rollback", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "rewind-contract", "override_status": "Provider implementation details remain separate."},
     "rewind.causal-evidence": {"title": "Same-branch causal evidence", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "rewind-contract", "override_status": "none"},
     "rewind.rollback-anchor": {"title": "Risk-scaled rollback anchor", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "rewind-contract", "override_status": "Current HEAD plus full status is enough for ordinary scoped Git edits."},
-    "rewind.patch-stacking": {"title": "Temporary patch stacking", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "rewind-contract", "override_status": "Restore the anchor and apply the known fix cleanly."},
+    "rewind.patch-stacking": {"title": "Exploratory patch stacking with clean replay", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "rewind-contract", "override_status": "Anchor the first failed state, explore freely, then restore and replay only the proven fix."},
     "rewind.router": {"title": "Rewind procedure router", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "rewind-contract", "override_status": "none"},
     "learning.self-improvement-suspended": {"title": "Self-improvement suspension", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "self-improvement-suspension", "override_status": "Overrides historical automatic trigger text until the user explicitly re-enables the mechanism."},
     "learning.durable-surface": {"title": "Durable lesson landing surface", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "durable-surface-correction", "override_status": "Runtime records require explicit user activation while self-improvement is suspended; ordinary code fixes with no reusable lesson need no label."},
@@ -203,7 +204,7 @@
     {
       "id": "self-improvement-suspension",
       "repo": "Self-Improvement",
-      "path": "skills/self-improving/SKILL.md",
+      "path": "skills/self-improving/modules/core.md",
       "rule_ids": ["learning.self-improvement-suspended", "learning.no-false-self-improvement"],
       "required_fragments": [
         "Load this skill only when the user explicitly asks to use self-improvement.",
@@ -217,7 +218,7 @@
     {
       "id": "reply-next-reporting",
       "repo": "Reply-Verbosity",
-      "path": "package/reply-verbosity/SKILL.md",
+      "path": "package/reply-verbosity/modules/core.md",
       "rule_ids": ["routing.reply-verbosity"],
       "required_fragments": [
         "End every status or final reply with exactly one future-only `Next:` line.",
@@ -239,7 +240,7 @@
     {
       "id": "planning-classification-ownership",
       "repo": "Agent-Planning-Harness",
-      "path": "skills/agent-planning-harness/SKILL.md",
+      "path": "skills/agent-planning-harness/modules/core.md",
       "rule_ids": ["operating.classify-tiny-direct", "operating.classify-guarded-direct", "operating.classify-planned", "operating.process-ceiling", "operating.packet-rebind", "implementation.premortem"],
       "required_fragments": [
         "Agent-Doctrine owns the provider-general classification labels and boundary.",
@@ -251,7 +252,7 @@
     {
       "id": "planning-review-scope-authority",
       "repo": "Agent-Planning-Harness",
-      "path": "skills/agent-planning-harness/SKILL.md",
+      "path": "skills/agent-planning-harness/modules/core.md",
       "rule_ids": ["operating.scope-and-fallback"],
       "required_fragments": [
         "Generic responses such as `continue`, `yes`, `proceed`, or `go ahead` can stop another review iteration, but cannot approve added architecture, requirements, validation classes, or runtime surfaces.",
@@ -263,11 +264,11 @@
     {
       "id": "agentic-planning-judgment-boundary",
       "repo": "Agent-Planning-Harness",
-      "path": "skills/agent-planning-harness/SKILL.md",
+      "path": "skills/agent-planning-harness/modules/core.md",
       "rule_ids": ["operating.agentic-tools-scope", "operating.agentic-judgment"],
       "required_fragments": [
-        "Planning Harness governs agent planning behavior; it does not weaken product, safety, security, privacy, data-integrity, evidence-integrity, correctness, verification, or low-level engineering requirements.",
-        "Do not attach a fresh review merely because another planning artifact or work item exists."
+        "Use Planning Harness only for work already classified as planned/substantial or when the user explicitly asks for a durable plan.",
+        "Add `--review` only when `modules/review.md` identifies a concrete review risk."
       ],
       "forbidden_fragments": [
         "attach it to any risky roadmap, milestone, Work Package Plan, Work Item Plan, implementation evidence, Work Item Assessment, or closeout surface"
@@ -276,7 +277,7 @@
     {
       "id": "agentic-supervision-judgment-boundary",
       "repo": "AgentTerminalContact",
-      "path": "skills/agent-tmux-control/SKILL.md",
+      "path": "skills/agent-tmux-control/modules/core.md",
       "rule_ids": ["operating.agentic-tools-scope", "operating.agentic-judgment"],
       "required_fragments": [
         "Supervision ownership is a role boundary, not a file-count or line-count algorithm.",
@@ -290,7 +291,7 @@
     {
       "id": "agentic-work-leases-selective-loop",
       "repo": "Agent-Work-Leases",
-      "path": "skills/agent-work-leases/SKILL.md",
+      "path": "skills/agent-work-leases/modules/core.md",
       "rule_ids": ["operating.agentic-tools-scope", "operating.agentic-judgment"],
       "required_fragments": [
         "This list is a menu of applicable coordination steps, not a requirement to activate every available agent system:"
@@ -302,7 +303,7 @@
     {
       "id": "agentic-runtime-promotion-boundary",
       "repo": "Runtime-Promotion",
-      "path": "package/runtime-promotion/SKILL.md",
+      "path": "package/runtime-promotion/modules/core.md",
       "rule_ids": ["operating.agentic-tools-scope", "operating.agentic-runtime"],
       "required_fragments": [
         "This skill concerns agent-executed workflows and agent-facing operational tooling.",
@@ -313,7 +314,7 @@
     {
       "id": "agentic-recall-recovery-boundary",
       "repo": "Routed-Recall",
-      "path": "package/routed-recall/SKILL.md",
+      "path": "package/routed-recall/modules/core.md",
       "rule_ids": ["operating.agentic-tools-scope", "operating.agentic-judgment"],
       "required_fragments": [
         "If the returned pages are irrelevant, stale, incomplete, or conflicting, say so briefly and continue with the next appropriate source or direct reasoning."
@@ -325,7 +326,7 @@
     {
       "id": "guarded-worker-interruption",
       "repo": "AgentTerminalContact",
-      "path": "skills/agent-tmux-control/SKILL.md",
+      "path": "skills/agent-tmux-control/modules/core.md",
       "rule_ids": ["operating.worker-interruption", "routing.tmux"],
       "required_fragments": [
         "agent-contact send --session <exact-worker> --interrupt-working",
@@ -336,7 +337,7 @@
     {
       "id": "parallel-repair-workstream",
       "repo": "Agent-Work-Leases",
-      "path": "skills/agent-work-leases/SKILL.md",
+      "path": "skills/agent-work-leases/modules/core.md",
       "rule_ids": ["operating.parallel-workers", "routing.work-leases"],
       "required_fragments": [
         "## Parallel Repair During Active Testing",
@@ -364,7 +365,7 @@
     {
       "id": "rewind-routing-boundary",
       "repo": "Rewind",
-      "path": "skills/rewind-checkpoints/SKILL.md",
+      "path": "skills/rewind-checkpoints/modules/core.md",
       "rule_ids": ["rewind.opt-in", "rewind.causal-evidence", "rewind.rollback-anchor", "rewind.patch-stacking", "rewind.router"],
       "required_fragments": [
         "Do not load, initialize, or checkpoint Rewind solely because a task is substantive, visible, or a correction.",

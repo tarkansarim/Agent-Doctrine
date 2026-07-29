@@ -8,6 +8,7 @@
 - End status and final replies with one future-only `Next:` line. Use `Next: None; task complete.` when nothing remains.
 - Only when designing agent-facing tools: preserve model judgment, automate stable repeated mechanics, use simple prompts, and add gates only for concrete irreversible, paid, safety, authority, scope, or integrity risks.
 - Continue through clear implementation and verification steps. An explicit request to stay awake continues until completion, a real blocker, or a decision only the user can make.
+- A `failed patch` is a code-change attempt that fails required validation or does not fix the reported behavior. After the first failed patch, commit that exact state as a diagnostic rollback anchor before making more repair edits. Further patch stacking is exploratory: use it to find and record the real fix. Once the fix is proven, preserve its required changes, restore the diagnostic anchor, apply only the proven fix cleanly, and rerun the exact validation. If the first patch itself proved wrong, return to the original pre-repair commit instead. Load `rewind-checkpoints` for the rollback procedure.
 - When reading a skill for the current task, announce `Loading skill: <name>` once before relying on it.
 
 <!-- agent-doctrine:codex:end -->

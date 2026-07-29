@@ -14,18 +14,12 @@ Rules are not silently dropped. Dispositions below are:
 ## Verified Relay Homes
 
 - `agent-doctrine-router` remains the single shipped Agent-Doctrine relay skill.
-  Its top-level router points to procedure modules under
-  `package/agent-doctrine-router/modules/`.
-- `agent-doctrine-router/modules/implementation-discipline.md` owns the moved
-  Before Editing, While Editing, dependency, MCP argument-loss, and Verification
-  procedure.
-- `agent-doctrine-router/modules/tool-failures.md` owns the moved Bash/MCP/hook/
-  installer/build/validation failure classification and recovery procedure.
-- `agent-doctrine-router/modules/plane-ticketing.md` owns Local Plane filing and
-  Plane closeout procedure.
-- `agent-doctrine-router/modules/parity-closeouts.md` owns parity, migration,
-  replacement, feature-completion, integration, and multi-point-plan closeout
-  procedure.
+  Its thin top-level `SKILL.md` routes every matched task to
+  `package/agent-doctrine-router/modules/core.md`.
+- `modules/core.md` owns the detailed doctrine-change workflow, landing-surface
+  classification, provider boundaries, and stop conditions. Both Codex and
+  Claude skill installers snapshot the full package tree so this routed body is
+  available at runtime.
 - Existing relay pointers to `pressure-lab`, `rewind-checkpoints`,
   `self-improving`, `reply-verbosity`, and `cpp-cuda-vulkan-studio` remain
   unchanged where the generated doctrine already delegates to those skills.
@@ -49,10 +43,10 @@ Rules are not silently dropped. Dispositions below are:
 | `# Claude Configuration Boundary` | Inline; first rule section in generated `CLAUDE.md`. |
 | `# Claude Operating Discipline` always-on constraints | Inline. |
 | Conflicts procedure | Inline compact rule. |
-| Tool Failures: stop, classify real issue vs wrapper limitation, fix/validate owned real issues, permitted alternate route for external limitations | Inline trigger to load `agent-doctrine-router`; Relay in `modules/tool-failures.md`. |
+| Tool Failures: stop, classify real issue vs wrapper limitation, fix/validate owned real issues, permitted alternate route for external limitations | Inline. |
 | Autonomous Progress | Inline. |
-| Implementation Discipline: Before Editing, While Editing, Verification | Inline trigger bullets; Relay in `modules/implementation-discipline.md`. |
-| Plane ticket closeout install/comment/no-close-while-uninstalled rule | Inline trigger in Claude verification bullet; Relay in `modules/plane-ticketing.md`. |
+| Implementation Discipline: Before Editing, While Editing, Verification | Inline. |
+| Plane ticket closeout install/comment/no-close-while-uninstalled rule | Retired from the current generated output and router package. |
 | Pressure-Lab Hardenability | Inline trigger to `pressure-lab`. |
 | Replay And Learning | Inline causal/replay invariants plus relay pointers to `rewind-checkpoints` and `self-improving`. |
 | Doctrine Change Routing | Inline source boundary and provider separation rules plus relay pointer to `agent-doctrine-router`. |
@@ -64,12 +58,12 @@ Rules are not silently dropped. Dispositions below are:
 | `# Codex Configuration Boundary` | Inline; first rule section in generated `AGENTS.md`. |
 | `# Codex Operating Discipline` always-on constraints | Inline. |
 | Conflicts procedure | Inline compact rule. |
-| Tool Failures: stop, classify real issue vs wrapper limitation, fix/validate owned real issues, permitted alternate route for external limitations | Inline trigger to load `agent-doctrine-router`; Relay in `modules/tool-failures.md`. |
+| Tool Failures: stop, classify real issue vs wrapper limitation, fix/validate owned real issues, permitted alternate route for external limitations | Inline. |
 | Autonomous Progress | Inline. |
-| Parity And Completion Closeouts: implemented slices, verified behavior, remaining weaker/missing features, live-proof gaps, accepted non-goals, unfinished planned points, no premature parity claims | Inline trigger summary; Relay in `modules/parity-closeouts.md`. |
-| Implementation Discipline: Before Editing, While Editing, Verification | Inline trigger bullets; Relay in `modules/implementation-discipline.md`. |
-| Codex-only implementation depth Tier 2, request interpretation, and MCP argument-loss handling | Relay in `modules/implementation-discipline.md`. |
-| Local Plane Ticketing: Plane filing, repo project/tag, no Kanboard unless explicit, report id/URL | Inline trigger summary; Relay in `modules/plane-ticketing.md`. |
+| Parity And Completion Closeouts: implemented slices, verified behavior, remaining weaker/missing features, live-proof gaps, accepted non-goals, unfinished planned points, no premature parity claims | Retired from the current generated output and router package. |
+| Implementation Discipline: Before Editing, While Editing, Verification | Inline. |
+| Codex-only implementation depth Tier 2, request interpretation, and MCP argument-loss handling | Retired from the current generated output and router package. |
+| Local Plane Ticketing: Plane filing, repo project/tag, no Kanboard unless explicit, report id/URL | Dormant source module; excluded from the active Codex manifest and router package. |
 | Pressure-Lab Hardenability | Inline trigger to `pressure-lab`. |
 | Rewind And Learning | Inline causal/replay invariants plus relay pointers to `rewind-checkpoints`, `self-improving`, and `cpp-cuda-vulkan-studio`. |
 | Doctrine Change Routing | Inline source boundary and provider separation rules plus relay pointer to `agent-doctrine-router`. |

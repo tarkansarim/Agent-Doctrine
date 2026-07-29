@@ -14,8 +14,6 @@
   changed-file inventory is sufficient when no overlapping uncommitted work is
   endangered; use a commit or explicit manual checkpoint only when Git cannot
   preserve the state that must survive.
-<!-- agent-doctrine-rule:rewind.patch-stacking -->
-- Patch stacking is temporary repair-diagnostic work after a verified rollback anchor exists: use hook-created Rewind when automatic coverage is active, otherwise use an explicit commit/manual checkpoint; once the fix is known, record the lesson, restore to the anchor, and apply it cleanly.
 <!-- agent-doctrine-rule:rewind.router -->
 - For rollback anchors, same-branch replay, Rewind checkpoints, hook review, or fork comparison, load `rewind-checkpoints`.
 <!-- agent-doctrine-rule:learning.self-improvement-suspended -->

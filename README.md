@@ -26,7 +26,8 @@ repository instead of being hand-edited in live user-level files.
   `CLAUDE.md` examples.
 - `generated/codex/AGENTS.md` - generated Codex managed block.
 - `generated/claude/CLAUDE.md` - generated Claude managed block.
-- `package/agent-doctrine-router/` - discoverable router skill source.
+- `package/agent-doctrine-router/` - one discoverable thin relay plus its
+  detailed `modules/core.md` doctrine module.
 - `package/claude-repo-write-guard/` - Claude PreToolUse Write/Edit guard
   source for blocking writes into non-active workspace repositories.
 - `scripts/` - separate provider generators, installers, skill installers, and
@@ -60,7 +61,7 @@ python scripts/adopt_live_doctrine.py --provider claude
 
 Fresh-agent BenchFlow tasks for whole user-level doctrine and isolated skill
 packs are owned by
-`/home/tarkan/Dropbox/work/MyTools/Agent-Behavior-Evals`. This repository
+`<workspace root>/Agent-Behavior-Evals`. This repository
 supplies generated doctrine and router skill sources as inputs under test; it
 does not own the evaluation harness or task definitions.
 
@@ -88,6 +89,11 @@ module under `source/<provider>/modules/`, and updates the provider manifest.
 After regeneration, the installer recognizes the adopted unmanaged live file by
 hash and can replace it with the managed Agent-Doctrine block without
 `--discard-unmanaged`.
+
+Both skill installers snapshot the complete
+`package/agent-doctrine-router/` tree, including `modules/core.md`, into their
+provider-specific skill roots. The installed `.skill-source` file is
+installer-owned metadata and is not part of the source package.
 
 Codex and Claude remain separate throughout the pipeline. Do not edit deployed
 user-level provider files directly; patch source modules here, regenerate,
