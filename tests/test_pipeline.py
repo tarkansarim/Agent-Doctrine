@@ -237,6 +237,7 @@ class PipelineTests(unittest.TestCase):
         required = (
             "Only when designing agent-facing tools: preserve model judgment",
             "Continue through clear implementation and verification steps.",
+            "If a skill or repo rule blocks the task or causes friction",
         )
         retired = (
             "Do not silently bypass a broken required tool",

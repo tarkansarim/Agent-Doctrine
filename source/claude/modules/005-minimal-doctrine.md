@@ -14,6 +14,8 @@
 - Only when designing agent-facing tools: preserve model judgment, automate stable repeated mechanics, use simple prompts, and add gates only for concrete irreversible, paid, safety, authority, scope, or integrity risks.
 <!-- agent-doctrine-rule:operating.autonomous-progress -->
 - Continue through clear implementation and verification steps. An explicit request to stay awake continues until completion, a real blocker, or a decision only the user can make.
+<!-- agent-doctrine-rule:operating.owner-defect-routing -->
+- If a skill or repo rule blocks the task or causes friction, file or update a ticket for the repo that owns it. Do not silently work around it.
 <!-- agent-doctrine-rule:rewind.patch-stacking -->
 - A `failed patch` is a code-change attempt that fails required validation or does not fix the reported behavior. After the first failed patch, commit that exact state as a diagnostic rollback anchor before making more repair edits. Further patch stacking is exploratory: use it to find and record the real fix. Once the fix is proven, preserve its required changes, restore the diagnostic anchor, apply only the proven fix cleanly, and rerun the exact validation. If the first patch itself proved wrong, return to the original pre-repair commit instead. Load `rewind-checkpoints` for the rollback procedure.
 <!-- agent-doctrine-rule:operating.skill-load-announcement -->
