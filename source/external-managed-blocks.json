@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "providers": {
+    "codex": [
+      {
+        "owner": "CppStudio",
+        "start": "<!-- cppstudio-user-agents-relay:begin -->",
+        "end": "<!-- cppstudio-user-agents-relay:end -->"
+      }
+    ],
+    "claude": []
+  }
+}

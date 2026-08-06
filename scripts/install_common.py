@@ -17,6 +17,13 @@ class UnmanagedSection:
     content: str
 
 
+@dataclass(frozen=True)
+class ExternalManagedBlock:
+    owner: str
+    start: str
+    end: str
+
+
 USERLEVEL_BACKUP_PATTERNS = (
     re.compile(r".*\.bak$"),
     re.compile(r".*\.old$"),
@@ -24,6 +31,67 @@ USERLEVEL_BACKUP_PATTERNS = (
     re.compile(r".*\.orig$"),
     re.compile(r".*\.[0-9]{8}.*"),
 )
+
+
+def external_managed_blocks(provider: str) -> list[ExternalManagedBlock]:
+    path = REPO_ROOT / "source" / "external-managed-blocks.json"
+    try:
+        payload = json.loads(path.read_text(encoding="utf-8"))
+        entries = payload["providers"][provider]
+    except (FileNotFoundError, KeyError, TypeError, json.JSONDecodeError) as exc:
+        raise DoctrineError(f"invalid external managed-block registry: {path}") from exc
+    blocks = []
+    for entry in entries:
+        if not isinstance(entry, dict):
+            raise DoctrineError(f"invalid external managed-block entry for {provider}: {entry!r}")
+        owner = entry.get("owner")
+        start = entry.get("start")
+        end = entry.get("end")
+        if not all(isinstance(value, str) and value for value in (owner, start, end)):
+            raise DoctrineError(f"invalid external managed-block entry for {provider}: {entry!r}")
+        blocks.append(ExternalManagedBlock(owner, start, end))
+    return blocks
+
+
+def external_managed_spans(existing: str, blocks: list[ExternalManagedBlock]) -> list[tuple[int, int]]:
+    spans = []
+    for block in blocks:
+        start_count = existing.count(block.start)
+        end_count = existing.count(block.end)
+        if start_count != end_count:
+            raise DoctrineError(f"target has unmatched {block.owner} managed markers")
+        if start_count > 1:
+            raise DoctrineError(f"target has multiple {block.owner} managed blocks")
+        if start_count == 0:
+            continue
+        start_index = existing.index(block.start)
+        end_index = existing.index(block.end, start_index)
+        if end_index <= start_index:
+            raise DoctrineError(f"target has reversed {block.owner} managed markers")
+        spans.append((start_index, end_index + len(block.end)))
+    spans.sort()
+    for previous, current in zip(spans, spans[1:]):
+        if current[0] < previous[1]:
+            raise DoctrineError("target has overlapping registered external managed blocks")
+    return spans
+
+
+def mask_external_managed_blocks(existing: str, spans: list[tuple[int, int]]) -> str:
+    if not spans:
+        return existing
+    parts = []
+    cursor = 0
+    for start, end in spans:
+        parts.append(existing[cursor:start])
+        parts.append("".join("\n" if char == "\n" else " " for char in existing[start:end]))
+        cursor = end
+    parts.append(existing[cursor:])
+    return "".join(parts)
+
+
+def registered_external_blocks(existing: str, provider: str) -> list[str]:
+    spans = external_managed_spans(existing, external_managed_blocks(provider))
+    return [existing[start:end].strip() for start, end in spans]
 
 
 def userlevel_backup_artifacts(root: Path) -> list[Path]:
@@ -47,7 +115,15 @@ def managed_block(provider: str) -> tuple[str, str, str]:
     return manifest["managed_start"], manifest["managed_end"], block
 
 
-def unmanaged_sections(existing: str, start: str, end: str) -> list[UnmanagedSection]:
+def unmanaged_sections(
+    existing: str,
+    start: str,
+    end: str,
+    *,
+    external_blocks: list[ExternalManagedBlock] | None = None,
+) -> list[UnmanagedSection]:
+    spans = external_managed_spans(existing, external_blocks or [])
+    existing_without_external = mask_external_managed_blocks(existing, spans)
     start_count = existing.count(start)
     end_count = existing.count(end)
     if start_count != end_count:
@@ -55,7 +131,7 @@ def unmanaged_sections(existing: str, start: str, end: str) -> list[UnmanagedSec
     if start_count > 1:
         raise DoctrineError("target has multiple Agent-Doctrine managed blocks")
     if start_count == 0:
-        stripped = existing.strip()
+        stripped = existing_without_external.strip()
         if not stripped:
             return []
         return [UnmanagedSection("entire file (no Agent-Doctrine managed block)", stripped)]
@@ -63,8 +139,8 @@ def unmanaged_sections(existing: str, start: str, end: str) -> list[UnmanagedSec
     start_index = existing.index(start)
     end_index = existing.index(end, start_index) + len(end)
     sections = []
-    before = existing[:start_index].strip()
-    after = existing[end_index:].strip()
+    before = existing_without_external[:start_index].strip()
+    after = existing_without_external[end_index:].strip()
     if before:
         sections.append(UnmanagedSection("before Agent-Doctrine managed block", before))
     if after:
@@ -145,6 +221,7 @@ def merge_managed_block(
     block: str,
     *,
     discard_unmanaged: bool = False,
+    external_blocks: list[str] | None = None,
 ) -> str:
     start_count = existing.count(start)
     end_count = existing.count(end)
@@ -153,7 +230,10 @@ def merge_managed_block(
     if start_count > 1:
         raise DoctrineError("target has multiple Agent-Doctrine managed blocks")
     if discard_unmanaged:
-        return block
+        preserved = [item for item in (external_blocks or []) if item]
+        if not preserved:
+            return block
+        return block.rstrip() + "\n\n" + "\n\n".join(preserved) + "\n"
     if start_count == 0:
         prefix = existing.rstrip()
         if prefix:
@@ -195,11 +275,19 @@ def install_provider(
         )
     start, end, block = managed_block(provider)
     existing = target.read_text(encoding="utf-8") if target.exists() else ""
-    sections = unmanaged_sections(existing, start, end)
+    registered_blocks = external_managed_blocks(provider)
+    sections = unmanaged_sections(existing, start, end, external_blocks=registered_blocks)
     adopted_unmanaged = sections_are_adopted(sections, block) or sections_are_adopted_by_sidecar(provider, sections)
     if sections and not allow_unmanaged_exception and not discard_unmanaged and not adopted_unmanaged:
         raise DoctrineError(format_unmanaged_report(provider, target, sections))
-    merged = merge_managed_block(existing, start, end, block, discard_unmanaged=discard_unmanaged or adopted_unmanaged)
+    merged = merge_managed_block(
+        existing,
+        start,
+        end,
+        block,
+        discard_unmanaged=discard_unmanaged or adopted_unmanaged,
+        external_blocks=registered_external_blocks(existing, provider),
+    )
     tmp = target.with_name(f".{target.name}.agent-doctrine-new")
     try:
         tmp.write_text(merged, encoding="utf-8")

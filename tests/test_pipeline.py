@@ -17,6 +17,7 @@ sys.path.insert(0, str(REPO_ROOT / "scripts"))
 sys.path.insert(0, str(REPO_ROOT / "package" / "claude-repo-write-guard"))
 
 import validate_common
+from install_common import DoctrineError, install_provider
 from install_claude_repo_write_guard import install_hook
 from repo_write_guard import BLOCK_EXIT_CODE
 
@@ -41,6 +42,45 @@ class PipelineTests(unittest.TestCase):
         self.assertIn("codex validation passed", result.stdout)
         result = run_script("scripts/validate_claude.py")
         self.assertIn("claude validation passed", result.stdout)
+
+    def test_registered_cppstudio_relay_is_not_unmanaged_doctrine(self) -> None:
+        generated = (REPO_ROOT / "generated" / "codex" / "AGENTS.md").read_text(encoding="utf-8")
+        relay = "\n".join(
+            (
+                "<!-- cppstudio-user-agents-relay:begin -->",
+                "## CppStudio Skill Relay",
+                "",
+                "For native C++ GPU work, load `cpp-cuda-vulkan-studio`.",
+                "<!-- cppstudio-user-agents-relay:end -->",
+            )
+        )
+        with tempfile.TemporaryDirectory() as tmp:
+            target = Path(tmp) / "AGENTS.md"
+            target.write_text(generated + "\n" + relay + "\n", encoding="utf-8")
+            install_provider("codex", target_file=target)
+            installed = target.read_text(encoding="utf-8")
+        self.assertIn(relay, installed)
+        self.assertEqual(installed.count("<!-- agent-doctrine:codex:begin -->"), 1)
+
+    def test_unknown_text_still_blocks_when_registered_relay_is_present(self) -> None:
+        generated = (REPO_ROOT / "generated" / "codex" / "AGENTS.md").read_text(encoding="utf-8")
+        relay = "<!-- cppstudio-user-agents-relay:begin -->\nrelay\n<!-- cppstudio-user-agents-relay:end -->"
+        with tempfile.TemporaryDirectory() as tmp:
+            target = Path(tmp) / "AGENTS.md"
+            target.write_text(generated + "\n" + relay + "\nunknown user doctrine\n", encoding="utf-8")
+            with self.assertRaisesRegex(DoctrineError, "unmanaged non-empty doctrine"):
+                install_provider("codex", target_file=target)
+
+    def test_discard_unmanaged_preserves_registered_cppstudio_relay(self) -> None:
+        generated = (REPO_ROOT / "generated" / "codex" / "AGENTS.md").read_text(encoding="utf-8")
+        relay = "<!-- cppstudio-user-agents-relay:begin -->\nrelay\n<!-- cppstudio-user-agents-relay:end -->"
+        with tempfile.TemporaryDirectory() as tmp:
+            target = Path(tmp) / "AGENTS.md"
+            target.write_text(generated + "\n" + relay + "\nunknown user doctrine\n", encoding="utf-8")
+            install_provider("codex", target_file=target, discard_unmanaged=True)
+            installed = target.read_text(encoding="utf-8")
+        self.assertIn(relay, installed)
+        self.assertNotIn("unknown user doctrine", installed)
 
     def test_doctrine_router_thin_relay_routes_to_core_module(self) -> None:
         package = REPO_ROOT / "package" / "agent-doctrine-router"
