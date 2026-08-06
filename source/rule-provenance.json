@@ -13,7 +13,8 @@
     "operating.agentic-judgment",
     "operating.autonomous-progress",
     "rewind.patch-stacking",
-    "operating.skill-load-announcement"
+    "operating.skill-load-announcement",
+    "config.discipline-profile-authority"
   ],
   "origins": {
     "legacy-adoption": {
@@ -125,6 +126,11 @@
       "kind": "direct-user-direction",
       "reference": "Agent-Doctrine user direction on 2026-07-25 after newer models thrashed under the accumulated rule set",
       "certainty": "The user explicitly requested Git-anchored removal of redundant and process-multiplying always-loaded rules while retaining environment-specific safeguards."
+    },
+    "discipline-profile-contract": {
+      "kind": "promoted-owner-contract",
+      "reference": "Enterprise-Discipline commit b47215f (package/discipline/modules/profile-schema.md, modules/enrollment.md, DESIGN.md section 13 cross-skill contract); promoted via Plane ticket PLANE-418.",
+      "certainty": "Known owner source. The discipline-profile block is generated and owned entirely by Enterprise-Discipline's enrollment tool; this rule only routes recognition of that ownership into provider-general doctrine instead of fanning owner detail out across skill packs."
     }
   },
   "rules": {
@@ -198,7 +204,9 @@
     "doctrine.lean-runtime": {"title": "Lean runtime doctrine", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "agent-doctrine-bootstrap", "override_status": "Procedure remains skill-owned."},
     "doctrine.install-drift": {"title": "Unmanaged install drift", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "agent-doctrine-bootstrap", "override_status": "none"},
     "doctrine.router": {"title": "Doctrine workflow router", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "agent-doctrine-bootstrap", "override_status": "none"},
-    "doctrine.provider-lane-separation": {"title": "Provider lane separation", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "agent-doctrine-bootstrap", "override_status": "none"}
+    "doctrine.provider-lane-separation": {"title": "Provider lane separation", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "agent-doctrine-bootstrap", "override_status": "none"},
+
+    "config.discipline-profile-authority": {"title": "Discipline-profile block authority", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "discipline-profile-contract", "override_status": "Applies only where a discipline-profile block is installed; the block's own activation line governs which changes it binds, and it is inert in un-enrolled or T0/T1 repos."}
   },
   "owner_contracts": [
     {
@@ -371,6 +379,27 @@
         "Do not load, initialize, or checkpoint Rewind solely because a task is substantive, visible, or a correction.",
         "Patch stacking is allowed only as a temporary exploratory or repair-diagnostic phase after a verified rollback anchor exists",
         "Once the cause and real fix are known, record the lesson, restore to the rollback anchor, and apply the clean fix without carrying diagnostic patch layers forward."
+      ],
+      "forbidden_fragments": []
+    },
+    {
+      "id": "discipline-profile-schema-boundary",
+      "repo": "Enterprise-Discipline",
+      "path": "package/discipline/modules/profile-schema.md",
+      "rule_ids": ["config.discipline-profile-authority"],
+      "required_fragments": [
+        "generated content: never hand-edit inside the markers; route changes through"
+      ],
+      "forbidden_fragments": []
+    },
+    {
+      "id": "discipline-profile-enrollment-boundary",
+      "repo": "Enterprise-Discipline",
+      "path": "package/discipline/modules/enrollment.md",
+      "rule_ids": ["config.discipline-profile-authority"],
+      "required_fragments": [
+        "re-install via `enroll.py`, which replaces the block in both files",
+        "Unmanaged edits inside the markers are drift"
       ],
       "forbidden_fragments": []
     }

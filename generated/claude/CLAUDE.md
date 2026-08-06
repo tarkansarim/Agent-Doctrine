@@ -10,5 +10,6 @@
 - Continue through clear implementation and verification steps. An explicit request to stay awake continues until completion, a real blocker, or a decision only the user can make.
 - A `failed patch` is a code-change attempt that fails required validation or does not fix the reported behavior. After the first failed patch, commit that exact state as a diagnostic rollback anchor before making more repair edits. Further patch stacking is exploratory: use it to find and record the real fix. Once the fix is proven, preserve its required changes, restore the diagnostic anchor, apply only the proven fix cleanly, and rerun the exact validation. If the first patch itself proved wrong, return to the original pre-repair commit instead. Load `rewind-checkpoints` for the rollback procedure.
 - When reading a skill for the current task, announce `Loading skill: <name>` once before relying on it.
+- A repo's `discipline-profile` marker block in its `CLAUDE.md`/`AGENTS.md` is generated content owned by Enterprise-Discipline: never hand-edit inside the markers, and route changes through its enrollment tool. Its constraints override skill defaults for work in that repo; an un-enrolled or T0/T1 repo makes it inert. Load `discipline` for the procedure.
 
 <!-- agent-doctrine:claude:end -->
