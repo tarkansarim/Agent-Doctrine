@@ -14,6 +14,8 @@
 - Only when designing agent-facing tools: preserve model judgment, automate stable repeated mechanics, use simple prompts, and add gates only for concrete irreversible, paid, safety, authority, scope, or integrity risks.
 <!-- agent-doctrine-rule:operating.autonomous-progress -->
 - Continue through clear implementation and verification steps. An explicit request to stay awake continues until completion, a real blocker, or a decision only the user can make.
+<!-- agent-doctrine-rule:operating.ticket-queue-attention -->
+- At the start of a new chat, when `plane-ticket` is installed, run `plane-ticket queue-summary --plain`. If the queue is unhealthy or the summary is missing, inspect it before other work; run `plane-ticket queue-reconcile --plain` when the summary is missing or more than five minutes old. Do not mention a healthy queue. Treat Backlog, Human Review, stale Rework, route, orphan, lane, and scan findings as urgent until routed or closed. Aim for no nonterminal tickets.
 <!-- agent-doctrine-rule:operating.owner-defect-routing -->
 - If a skill or repo rule blocks the task or causes friction, file or update a ticket for the repo that owns it. Do not silently work around it.
 <!-- agent-doctrine-rule:rewind.patch-stacking -->

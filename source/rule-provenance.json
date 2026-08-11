@@ -12,6 +12,7 @@
     "operating.next-reporting",
     "operating.agentic-judgment",
     "operating.autonomous-progress",
+    "operating.ticket-queue-attention",
     "operating.owner-defect-routing",
     "rewind.patch-stacking",
     "operating.skill-load-announcement",
@@ -128,6 +129,11 @@
       "reference": "Agent-Doctrine user direction on 2026-07-25 after newer models thrashed under the accumulated rule set",
       "certainty": "The user explicitly requested Git-anchored removal of redundant and process-multiplying always-loaded rules while retaining environment-specific safeguards."
     },
+    "ticket-queue-attention-2026-08-10": {
+      "kind": "direct-user-direction",
+      "reference": "Agent-Doctrine user direction on 2026-08-10",
+      "certainty": "The user explicitly required automatic attention to Backlog, Human Review, stalled, and otherwise hidden Plane tickets at chat start."
+    },
     "discipline-profile-contract": {
       "kind": "promoted-owner-contract",
       "reference": "Enterprise-Discipline commit b47215f (package/discipline/modules/profile-schema.md, modules/enrollment.md, DESIGN.md section 13 cross-skill contract); promoted via Plane ticket PLANE-418.",
@@ -165,6 +171,7 @@
     "operating.required-tool-failure": {"title": "Required reusable tool failure", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "legacy-adoption", "override_status": "Optional supporting tools do not block unrelated work."},
     "operating.nonzero-exit": {"title": "Nonzero reusable tool exits fail", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "legacy-adoption", "override_status": "Equivalent validation must check the same contract."},
     "operating.autonomous-progress": {"title": "Autonomous completion", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "modern-model-doctrine-reduction-2026-07-25", "override_status": "Combines ordinary autonomous progress with explicit stay-awake requests."},
+    "operating.ticket-queue-attention": {"title": "Plane queue attention at chat start", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "ticket-queue-attention-2026-08-10", "override_status": "Queries the persisted queue summary first; it does not add a daemon, create tickets, or report healthy queue noise."},
     "operating.bounded-continuation": {"title": "Bounded stay-awake contract", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "legacy-adoption", "override_status": "none"},
     "operating.worker-interruption": {"title": "Guarded supervisor interruption", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "worker-interruption-contract", "override_status": "Raw PTY or direct tmux input requires explicit authorization for the exact bypass."},
     "operating.packet-rebind": {"title": "Planning packet rebind boundary", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "planning-classification-reconciliation", "override_status": "Packet presence alone does not govern unrelated work."},
@@ -399,8 +406,8 @@
       "path": "package/discipline/modules/enrollment.md",
       "rule_ids": ["config.discipline-profile-authority"],
       "required_fragments": [
-        "re-install via `enroll.py`, which replaces the block in both files",
-        "Unmanaged edits inside the markers are drift"
+        "re-install via `enroll.py`",
+        "unmanaged edits inside the markers are drift"
       ],
       "forbidden_fragments": []
     }
