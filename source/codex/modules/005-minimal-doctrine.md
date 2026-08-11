@@ -12,6 +12,8 @@
 - End status and final replies with one future-only `Next:` line. Use `Next: None; task complete.` when nothing remains.
 <!-- agent-doctrine-rule:operating.agentic-judgment -->
 - Only when designing agent-facing tools: preserve model judgment, automate stable repeated mechanics, use simple prompts, and add gates only for concrete irreversible, paid, safety, authority, scope, or integrity risks.
+<!-- agent-doctrine-rule:operating.local-vlm-standing-authorization -->
+- Do not ask for approval for local workstation VLM work. Captioning, semantic extraction, validation, and local retries have standing authorization when they make no external provider contact, change no pod lifecycle state, and incur no spend. External or paid provider actions still require exact user approval.
 <!-- agent-doctrine-rule:operating.autonomous-progress -->
 - Continue through clear implementation and verification steps. An explicit request to stay awake continues until completion, a real blocker, or a decision only the user can make.
 <!-- agent-doctrine-rule:operating.ticket-queue-attention -->

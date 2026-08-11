@@ -270,6 +270,42 @@ class PipelineTests(unittest.TestCase):
                 for fragment in retired:
                     self.assertNotIn(fragment, normalized_generated)
 
+    def test_local_vlm_work_has_standing_authorization_for_both_providers(self) -> None:
+        required = (
+            "Do not ask for approval for local workstation VLM work.",
+            "Captioning, semantic extraction, validation, and local retries have standing authorization",
+            "make no external provider contact",
+            "change no pod lifecycle state",
+            "incur no spend",
+            "External or paid provider actions still require exact user approval.",
+        )
+        for provider, filename in (("codex", "AGENTS.md"), ("claude", "CLAUDE.md")):
+            with self.subTest(provider=provider):
+                source = (
+                    REPO_ROOT
+                    / "source"
+                    / provider
+                    / "modules"
+                    / "005-minimal-doctrine.md"
+                ).read_text(encoding="utf-8")
+                generated = (REPO_ROOT / "generated" / provider / filename).read_text(encoding="utf-8")
+                for text in (source, generated):
+                    normalized = " ".join(text.split())
+                    for fragment in required:
+                        self.assertIn(fragment, normalized)
+
+        registry = json.loads(
+            (REPO_ROOT / "source" / "rule-provenance.json").read_text(encoding="utf-8")
+        )
+        rule = registry["rules"]["operating.local-vlm-standing-authorization"]
+        self.assertEqual(rule["providers"], ["codex", "claude"])
+        self.assertEqual(rule["promotion"], "provider-general")
+        self.assertEqual(rule["origin"], "local-vlm-standing-authorization-2026-08-11")
+        self.assertEqual(
+            registry["origins"][rule["origin"]]["kind"],
+            "direct-user-direction",
+        )
+
     def test_owner_defect_routing_uses_external_repo_boundary_without_recursion(self) -> None:
         required = (
             "file or update a ticket for that owning repo; do not silently work around it",

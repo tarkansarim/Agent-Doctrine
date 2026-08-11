@@ -11,6 +11,7 @@
     "operating.reply-clarity",
     "operating.next-reporting",
     "operating.agentic-judgment",
+    "operating.local-vlm-standing-authorization",
     "operating.autonomous-progress",
     "operating.ticket-queue-attention",
     "operating.owner-defect-routing",
@@ -139,6 +140,11 @@
       "reference": "Plane ticket PLANE-529",
       "certainty": "The user explicitly limited mandatory owner-ticket creation to defects outside the current task repo, retained durable exceptions for deferred or separately tracked local repairs, and prohibited recursive process-friction tickets."
     },
+    "local-vlm-standing-authorization-2026-08-11": {
+      "kind": "direct-user-direction",
+      "reference": "Direct user direction in the Helmsman-Trainer session on 2026-08-11",
+      "certainty": "The user explicitly granted standing authorization for local workstation VLM captioning, semantic extraction, validation, and retries, while retaining exact approval for external or paid provider actions."
+    },
     "discipline-profile-contract": {
       "kind": "promoted-owner-contract",
       "reference": "Enterprise-Discipline commit b47215f (package/discipline/modules/profile-schema.md, modules/enrollment.md, DESIGN.md section 13 cross-skill contract); promoted via Plane ticket PLANE-418.",
@@ -165,6 +171,7 @@
     "operating.process-ceiling": {"title": "No process stacking", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "planning-classification-reconciliation", "override_status": "none"},
     "operating.agentic-tools-scope": {"title": "Agentic tool design scope", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "agentic-judgment-runtime-boundary-2026-07-24", "override_status": "Does not weaken product or engineering constraints."},
     "operating.agentic-judgment": {"title": "Minimal agent-tool design boundary", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "modern-model-doctrine-reduction-2026-07-25", "override_status": "Combines judgment preservation, runtime promotion, simple prompts, and concrete-risk gates only for agent-facing tool design."},
+    "operating.local-vlm-standing-authorization": {"title": "Standing authorization for local VLM work", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "local-vlm-standing-authorization-2026-08-11", "override_status": "Overrides per-task approval gates only for local VLM work with no external provider contact, pod lifecycle action, or spend; external or paid provider actions still require exact approval."},
     "operating.agentic-runtime": {"title": "Deterministic runtime for agent workflow mechanics", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "agentic-judgment-runtime-boundary-2026-07-24", "override_status": "Judgment and product decisions stay agentic."},
     "operating.simple-agent-system-prompts": {"title": "Simple agent system prompts", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "agent-system-prompt-clarity-2026-07-24", "override_status": "Exact names, necessary technical terms, and instruction strength remain intact."},
     "operating.inspect-owner-path": {"title": "Inspect owner and caller path", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "user-doctrine-cleanup-2026-07-20", "override_status": "Tiny direct work does not require broad archaeology."},
