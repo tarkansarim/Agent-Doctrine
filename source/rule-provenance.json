@@ -134,6 +134,11 @@
       "reference": "Agent-Doctrine user direction on 2026-08-10",
       "certainty": "The user explicitly required automatic attention to Backlog, Human Review, stalled, and otherwise hidden Plane tickets at chat start."
     },
+    "owner-defect-routing-boundary-2026-08-10": {
+      "kind": "direct-user-direction",
+      "reference": "Plane ticket PLANE-529",
+      "certainty": "The user explicitly limited mandatory owner-ticket creation to defects outside the current task repo, retained durable exceptions for deferred or separately tracked local repairs, and prohibited recursive process-friction tickets."
+    },
     "discipline-profile-contract": {
       "kind": "promoted-owner-contract",
       "reference": "Enterprise-Discipline commit b47215f (package/discipline/modules/profile-schema.md, modules/enrollment.md, DESIGN.md section 13 cross-skill contract); promoted via Plane ticket PLANE-418.",
@@ -151,7 +156,7 @@
     "operating.reply-clarity": {"title": "Plain and scannable replies", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "user-doctrine-cleanup-2026-07-20", "override_status": "Detailed verbosity procedure remains Reply-Verbosity-owned."},
     "operating.next-reporting": {"title": "Future-only Next reporting", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "modern-model-doctrine-reduction-2026-07-25", "override_status": "Kept as a direct user preference while Reply-Verbosity becomes opt-in."},
     "operating.no-silent-tool-workaround": {"title": "No silent tool workaround", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "legacy-adoption", "override_status": "none"},
-    "operating.owner-defect-routing": {"title": "Required reusable defect handling", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "modern-model-doctrine-reduction-2026-07-25", "override_status": "Combines required-tool reporting with cross-repo owner routing; exploratory misses remain excluded."},
+    "operating.owner-defect-routing": {"title": "Cross-repo defect ticket routing", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "owner-defect-routing-boundary-2026-08-10", "override_status": "Current-repo repairs use implementation, validation, and history unless requested, deferred, or independently tracked; only external ownership requires an automatic ticket, and process friction does not recursively create tickets."},
     "operating.supervisor-verification": {"title": "Minimal supervisor ownership and verification", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "modern-model-doctrine-reduction-2026-07-25", "override_status": "Workers implement; supervisors verify the claimed user result without repeating sound read-only work."},
     "operating.supervision-procedure-durability": {"title": "Durable supervised procedures", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "supervision-procedure-correction", "override_status": "none"},
     "operating.classify-tiny-direct": {"title": "Tiny direct classification", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "planning-classification-reconciliation", "override_status": "Agent-Doctrine owns the compact label; Planning Harness owns elaboration."},

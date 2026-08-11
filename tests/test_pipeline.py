@@ -237,7 +237,7 @@ class PipelineTests(unittest.TestCase):
         required = (
             "Only when designing agent-facing tools: preserve model judgment",
             "Continue through clear implementation and verification steps.",
-            "If a skill or repo rule blocks the task or causes friction",
+            "If a skill or repo rule defect or friction belongs to a repository outside the current task repo",
         )
         retired = (
             "Do not silently bypass a broken required tool",
@@ -269,6 +269,33 @@ class PipelineTests(unittest.TestCase):
                     self.assertIn(fragment, normalized_generated)
                 for fragment in retired:
                     self.assertNotIn(fragment, normalized_generated)
+
+    def test_owner_defect_routing_uses_external_repo_boundary_without_recursion(self) -> None:
+        required = (
+            "file or update a ticket for that owning repo; do not silently work around it",
+            "For defects owned by the current task repo, the active implementation, validation evidence, and repository history are sufficient",
+            "unless the user requests a ticket, the repair is deferred, or separate durable rollout or tracking is needed",
+            "Do not create recursive tickets solely because this ticketing process causes friction",
+        )
+        retired = (
+            "If a skill or repo rule blocks the task or causes friction, file or update a ticket",
+        )
+        for provider, filename in (("codex", "AGENTS.md"), ("claude", "CLAUDE.md")):
+            with self.subTest(provider=provider):
+                source = (
+                    REPO_ROOT
+                    / "source"
+                    / provider
+                    / "modules"
+                    / "005-minimal-doctrine.md"
+                ).read_text(encoding="utf-8")
+                generated = (REPO_ROOT / "generated" / provider / filename).read_text(encoding="utf-8")
+                for text in (source, generated):
+                    normalized = " ".join(text.split())
+                    for fragment in required:
+                        self.assertIn(fragment, normalized)
+                    for fragment in retired:
+                        self.assertNotIn(fragment, normalized)
 
     def test_specialist_skill_routes_are_not_always_loaded_by_user_doctrine(self) -> None:
         retired = (
