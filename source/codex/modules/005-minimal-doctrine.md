@@ -17,8 +17,7 @@
 <!-- agent-doctrine-rule:operating.autonomous-progress -->
 - Continue through clear implementation and verification steps. An explicit request to stay awake continues until completion, a real blocker, or a decision only the user can make.
 <!-- agent-doctrine-rule:operating.codex-scope-discipline -->
-- Stay inside the task the user asked for. Do not add features, redesign systems, investigate side paths, or repeat work unless it is needed to finish the task or the user asks.
-- Use the smallest check that proves the claimed result. Do not run broad or repeated verification when a focused check is enough; if work stops making direct progress, return to the last clear task boundary.
+- Stay inside the task the user asked for. Do not add features, redesign systems, investigate side paths, or repeat work unless it is needed to finish the task or the user asks. Use the smallest check that proves the claimed result; do not run broad or repeated verification when a focused check is enough. If work stops making direct progress, return to the last clear task boundary.
 <!-- agent-doctrine-rule:operating.ticket-queue-attention -->
 - At the start of a new chat, when `plane-ticket` is installed, run `plane-ticket queue-summary --plain`. If the queue is unhealthy or the summary is missing, inspect it before other work; run `plane-ticket queue-reconcile --plain` when the summary is missing or more than five minutes old. Do not mention a healthy queue. Treat Backlog, Human Review, stale Rework, route, orphan, lane, and scan findings as urgent until routed or closed. Aim for no nonterminal tickets.
 <!-- agent-doctrine-rule:operating.owner-defect-routing -->
