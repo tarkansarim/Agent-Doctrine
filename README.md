@@ -8,6 +8,16 @@ snapshots into provider config roots.
 The goal is to make durable agent doctrine reviewable and reproducible from a
 repository instead of being hand-edited in live user-level files.
 
+## Current Changes
+
+- Slimmed the always-loaded doctrine to reduce process thrashing with newer
+  models while retaining provider boundaries and the core operating rules.
+- Codex now explicitly stays within the requested task and uses only the
+  smallest focused verification needed to prove the result.
+- Completed changes now require a concise front-page summary and a detailed
+  changelog entry before they are committed and pushed.
+- Detailed change history is in [CHANGELOG.md](CHANGELOG.md).
+
 ## Safety Model
 
 - Codex and Claude stay separate: source modules, generated outputs, installers,

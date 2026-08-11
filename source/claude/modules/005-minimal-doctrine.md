@@ -16,6 +16,8 @@
 - Do not ask for approval for local workstation VLM work. Captioning, semantic extraction, validation, and local retries have standing authorization when they make no external provider contact, change no pod lifecycle state, and incur no spend. External or paid provider actions still require exact user approval.
 <!-- agent-doctrine-rule:operating.autonomous-progress -->
 - Continue through clear implementation and verification steps. An explicit request to stay awake continues until completion, a real blocker, or a decision only the user can make.
+<!-- agent-doctrine-rule:release.front-page-change-notes -->
+- Before committing and pushing completed work, update the repository README front page with a concise `Current Changes` note and add the detailed entry to its changelog. Do not add release notes for checkpoint-only or diagnostic commits.
 <!-- agent-doctrine-rule:operating.ticket-queue-attention -->
 - At the start of a new chat, when `plane-ticket` is installed, run `plane-ticket queue-summary --plain`. If the queue is unhealthy or the summary is missing, inspect it before other work; run `plane-ticket queue-reconcile --plain` when the summary is missing or more than five minutes old. Do not mention a healthy queue. Treat Backlog, Human Review, stale Rework, route, orphan, lane, and scan findings as urgent until routed or closed. Aim for no nonterminal tickets.
 <!-- agent-doctrine-rule:operating.owner-defect-routing -->

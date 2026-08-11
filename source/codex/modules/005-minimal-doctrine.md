@@ -16,6 +16,8 @@
 - Do not ask for approval for local workstation VLM work. Captioning, semantic extraction, validation, and local retries have standing authorization when they make no external provider contact, change no pod lifecycle state, and incur no spend. External or paid provider actions still require exact user approval.
 <!-- agent-doctrine-rule:operating.autonomous-progress -->
 - Continue through clear implementation and verification steps. An explicit request to stay awake continues until completion, a real blocker, or a decision only the user can make.
+<!-- agent-doctrine-rule:release.front-page-change-notes -->
+- Before committing and pushing completed work, update the repository README front page with a concise `Current Changes` note and add the detailed entry to its changelog. Do not add release notes for checkpoint-only or diagnostic commits.
 <!-- agent-doctrine-rule:operating.codex-scope-discipline -->
 - Stay inside the task the user asked for. Do not add features, redesign systems, investigate side paths, or repeat work unless it is needed to finish the task or the user asks. Use the smallest check that proves the claimed result; do not run broad or repeated verification when a focused check is enough. If work stops making direct progress, return to the last clear task boundary.
 <!-- agent-doctrine-rule:operating.ticket-queue-attention -->

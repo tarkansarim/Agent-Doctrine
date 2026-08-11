@@ -13,6 +13,7 @@
     "operating.agentic-judgment",
     "operating.local-vlm-standing-authorization",
     "operating.autonomous-progress",
+    "release.front-page-change-notes",
     "operating.codex-scope-discipline",
     "operating.ticket-queue-attention",
     "operating.owner-defect-routing",
@@ -30,6 +31,11 @@
       "kind": "agent-doctrine-source",
       "reference": "Agent-Doctrine commit 6fa9880",
       "certainty": "Known Agent-Doctrine introduction point."
+    },
+    "front-page-change-notes-2026-08-11": {
+      "kind": "direct-user-direction",
+      "reference": "Agent-Doctrine user correction on 2026-08-11",
+      "certainty": "The user required visible README front-page change notes and detailed changelog entries before completed work is committed and pushed."
     },
     "user-doctrine-cleanup-2026-07-20": {
       "kind": "direct-user-direction",
