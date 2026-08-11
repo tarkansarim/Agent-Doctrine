@@ -13,6 +13,7 @@
     "operating.agentic-judgment",
     "operating.local-vlm-standing-authorization",
     "operating.autonomous-progress",
+    "operating.codex-scope-discipline",
     "operating.ticket-queue-attention",
     "operating.owner-defect-routing",
     "rewind.patch-stacking",
@@ -135,6 +136,11 @@
       "reference": "Agent-Doctrine user direction on 2026-08-10",
       "certainty": "The user explicitly required automatic attention to Backlog, Human Review, stalled, and otherwise hidden Plane tickets at chat start."
     },
+    "codex-scope-discipline-2026-08-11": {
+      "kind": "direct-user-direction",
+      "reference": "Agent-Doctrine user direction on 2026-08-11",
+      "certainty": "The user explicitly requested a Codex-only guard against overreach, drift, repeated work, and excessive verification during task execution."
+    },
     "owner-defect-routing-boundary-2026-08-10": {
       "kind": "direct-user-direction",
       "reference": "Plane ticket PLANE-529",
@@ -183,6 +189,7 @@
     "operating.required-tool-failure": {"title": "Required reusable tool failure", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "legacy-adoption", "override_status": "Optional supporting tools do not block unrelated work."},
     "operating.nonzero-exit": {"title": "Nonzero reusable tool exits fail", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "legacy-adoption", "override_status": "Equivalent validation must check the same contract."},
     "operating.autonomous-progress": {"title": "Autonomous completion", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "modern-model-doctrine-reduction-2026-07-25", "override_status": "Combines ordinary autonomous progress with explicit stay-awake requests."},
+    "operating.codex-scope-discipline": {"title": "Codex scope and verification discipline", "providers": ["codex"], "promotion": "provider-specific", "origin": "codex-scope-discipline-2026-08-11", "override_status": "Codex-only user direction; focused checks remain sufficient when they prove the requested result."},
     "operating.ticket-queue-attention": {"title": "Plane queue attention at chat start", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "ticket-queue-attention-2026-08-10", "override_status": "Queries the persisted queue summary first; it does not add a daemon, create tickets, or report healthy queue noise."},
     "operating.bounded-continuation": {"title": "Bounded stay-awake contract", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "legacy-adoption", "override_status": "none"},
     "operating.worker-interruption": {"title": "Guarded supervisor interruption", "providers": ["codex", "claude"], "promotion": "provider-general", "origin": "worker-interruption-contract", "override_status": "Raw PTY or direct tmux input requires explicit authorization for the exact bypass."},
